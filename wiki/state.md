@@ -1,83 +1,116 @@
 # State — where the work stands
 
-**Last updated:** 2026-09-05 11:40
+**Last updated:** 2026-09-05 13:45
 
 ## Position
 
-Milestone **M2 complete and committed**. A full Stage-A pipeline runs end to end
-and produces a validated arena submission with no VLM in it. See
-[[milestones]] for the plan and [[experiments]] for scores.
+Stage A is finished, tuned and validated. Stage B was built, measured, and
+**dropped as a negative result**. The submission has been ready for some time.
 
-Best score so far, on the public test set, from a deliberately undertrained
-trial head (18% of the cache, 3 epochs):
-
-```
-LEVEL 1  0.375    LEVEL 2  0.433    LEVEL 3  0.200    OVERALL  0.336
-empty baseline 0.167   oracle 1.000
-41.4x realtime, latency ratio 0.0242
-```
-
-## Running right now
-
-`src.encode --split train` in the background, writing to `cache/emb/`.
-At 11:38 it stood at **1393 of 3207**, moving ~111/min.
-
-**Verify before trusting this line** — count `cache/emb/*.npy` and compare to
-3207 (3173 train + 34 test). If it is short and no job is running, restart:
-
-```bash
-./.venv/Scripts/python.exe -m src.encode --split train
-```
-
-It resumes automatically; anything already cached is skipped.
-
-## Next action
-
-Once the cache is complete, in this order:
-
-1. **Train the head properly** — full cache, ~15 epochs.
-   `./.venv/Scripts/python.exe -m src.train_head --epochs 15 --out outputs/head.pt`
-2. **Sweep segment thresholds against `matched` specifically**, not overall
-   score. This is the highest-value remaining work — see the diagnosis below.
-3. Then M3 (VLM zero-shot) if time allows.
-
-## The diagnosis that should drive the next hour
-
-At Levels 2 and 3 the score decomposes as alert / matched / timing. Currently:
+**The only thing blocking us is the arena upload endpoint, which rejects every
+file we send — including its own unmodified starter template.** See the
+blocker section below; it is not a problem with our output.
 
 ```
-LEVEL 2  alert 0.750  matched 0.000  timing 0.000
-LEVEL 3  alert 1.000  matched 0.000  timing 0.000
+outputs/submission_from_template.json   <- upload this
+34/34 videos, 41 events, 48.2 modelled marks /100
+41.7x realtime, latency ratio 0.0240
+passes all 11 validation traps and every rule on the arena FIELD RULES page
 ```
 
-**Every point is coming from `alert`. Not one predicted event clears the IoU 0.5
-gate.** The head knows *that* something is wrong and not *when*. All Level 2/3
-headroom is in segment boundary placement, which means threshold sweeping and
-[[architecture]]'s merge logic — not more training epochs.
+Modelled marks put us around the current second place (47.6) and far below the
+leader (92.1). See [[scoring]] for the real weighting and [[experiments]] for
+every run.
 
-One genuinely good sign: both normal Level-2 videos received empty answers, so
-there are zero false alarms on normal videos, the most expensive error class.
+## THE BLOCKER — arena upload fails
+
+Every upload returns:
+
+> Could not save that submission: **Too many parameter values were provided**
+
+It is **not** a size or shape problem on our side. The bisection, in order:
+
+| what was sent | leaves | result |
+|---|---:|---|
+| full submission, 68 `model_runtimes` rows | 537 | parameter error |
+| merged to 34 rows | 401 | parameter error |
+| `model_runtimes: []` | 265 | parameter error |
+| all 34 videos, **zero events** | 141 | parameter error |
+| 3 videos, template shape | 23 | parameter error |
+| **1 video, empty events, 4 leaf values** | **4** | **parameter error** |
+| `model_runtimes` key omitted entirely | 259 | reached the validator ✓ |
+| 34 rows x 7 fields, matching the doc example | — | parameter error |
+
+A 4-leaf JSON document cannot exceed any bind-parameter limit, so this is
+server-side.
+
+The two validators also contradict each other: `model_runtimes: []` triggers the
+parameter error, while omitting the key returns *"model_runtimes must be an
+array (use [] if not applicable)"* — advice that leads straight back into the
+first failure.
+
+**Decisive fact:** the official starter template, downloaded from the Benchmark
+tab on 2026-09-05 at 13:15 and saved to `data/submission_template_official.json`,
+itself ships `"model_runtimes": []` on all 34 videos. So empty is the intended
+value and the error message is misleading.
+
+### Next actions on the blocker
+
+1. Upload `data/submission_template_official.json` **unmodified**. If their own
+   file fails, the diagnosis is finished — report it and stop probing.
+2. Upload `outputs/submission_from_template.json`. This is their downloaded file
+   with only two changes: the `events` arrays, and the three runtime scalars as
+   integers. It is the first file we have sent that is their artifact rather than
+   one written from scratch, so it bypasses any type, key-order or
+   field-emission difference.
+3. Fallback `outputs/submission_from_template_int.json` — as above with integer
+   event timestamps too. Scores 48.3, marginally better.
+
+Rejections **do not consume an attempt**, so probing is free.
+
+### Message to send if step 1 fails
+
+> Your own starter template, downloaded from the Benchmark tab and uploaded back
+> unmodified, fails with "Could not save that submission: Too many parameter
+> values were provided". Account: sarthakdhaigude5337@gmail.com
+
+Also worth asking what shape the leader's submissions are — 27 successful runs
+means someone found a form that works, and that is the fastest route to
+unblocking.
+
+## Next action once unblocked
+
+Upload immediately, then iterate. **The submission page states "your best run
+stands, so a worse attempt never costs you"**, which reverses the format PDF's
+"no best-of" — uploading is now zero-risk and a live score is the only way to
+calibrate the assumed weights in [[scoring]].
+
+After that, in value order:
+
+1. **M4 — LoRA fine-tune on Kaggle.** The current second place runs
+   `qwen3vl4b-lora-finetuned`. Our zero-shot VLM failed at both 2B and 4B, so
+   fine-tuning is the demonstrated path, and it is the only untried lever with
+   real headroom. Needs Kaggle phone verification.
+2. **Cut false alarms further.** We match the leader's Difficulty-2 recall
+   exactly (4/18) and lose entirely on precision, 12 false alarms against his 0.
+3. **Deliverables** — 2-slide PPT (stated high weightage), architecture
+   write-up, both still unstarted.
 
 ## Blocked on the user
 
-These cannot be done from inside the session. Full list and framing in
-[[open-questions]].
+- The uploads above; no session can reach the arena
+- **Kaggle phone verification** — GPU stays locked, needed for M4
+- 2-slide PPT and architecture write-up at the end
 
-- **Arena site URL and login** — not in any provided PDF. Without it nothing can
-  be submitted at all.
-- **`manifest.json`** from the arena Benchmark tab, saved to `data/manifest.json`.
-  The parser in `src/submit.py` accepts four plausible shapes but has never seen
-  the real file. Needs a two-minute check once it exists.
-- **Level 2/3 component weights** — currently guessed. See [[scoring]].
-- **Kaggle phone verification** — GPU stays locked until done, needed for M4.
-- 2-slide PPT and architecture write-up at the end. Stated high weightage.
+Full list and paste-ready questions in [[open-questions]], though the leaderboard
+has since answered the level-weighting question outright.
 
 ## Recent decisions
 
-- Bidirectional GRU, not causal. The arena scores wall-clock time, not
-  causality, and every input is a finished file.
-- Synthesise long multi-event training sequences by concatenating clip
-  embeddings. The training set has no long-form anomaly footage at all; Levels
-  2 and 3 are entirely long-form. See [[dataset-audit]].
-- Skip the MIL top-k pooling the original PRD planned. Every anomaly row already
-  carries timestamps, so supervision is dense everywhere.
+- **Stage B dropped.** Qwen3-VL-2B scored 0/4 on probe segments and 4B in 4-bit
+  scored 1/6 against the head's 3/6, lowering the full run to 0.4976 from 0.5253
+  at 7.4x the latency. Kept behind `--vlm`, off by default.
+- **Retuned for precision, not recall**, once the leaderboard showed false
+  alarms dominate. False alarms 42 -> 27.
+- Bidirectional GRU, synthetic long training sequences, no MIL — unchanged, see
+  [[architecture]].

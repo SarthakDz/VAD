@@ -43,21 +43,30 @@ committed and pushed. Everything after this is upgrade.**
 Remaining work inside M2: train on the full cache, then sweep segment thresholds
 against the `matched` component. See [[experiments]].
 
-## M3 — VLM zero-shot ⬜ not started
+## M3 — VLM zero-shot ❌ built, measured, dropped
 
 `vlm.py`, `fuse.py`. Stock `Qwen3-VL-4B-Instruct`, constrained JSON output,
 shortlist prompting from `labels.CONFUSABLE_GROUPS`, running only on Stage A's
 candidate segments.
 
-Accept when class accuracy is measured head-only versus head+VLM on the public
-test set. Keep whichever wins.
+**Outcome: head-only wins, so Stage B is off.** Qwen3-VL-2B scored 0/4 on probe
+segments at every frame count and shortlist size; Qwen3-VL-4B in 4-bit scored
+1/6 against the head's 3/6 and lowered the full run to 0.4976 from 0.5253 at
+7.4x the latency. Both relabelled correct predictions to wrong ones. Kept behind
+`--vlm`, off by default — the negative result is worth showing on the slides,
+and the motion-crop and shortlist code is reusable if a fine-tuned model appears.
+See [[experiments]] exp-006 and exp-007.
 
 Optional 45-minute timebox in parallel: TAU-R1's Qwen3-VL-2B classifier from
 HuggingFace (MIT licensed) as a second zero-shot baseline. It was trained on
 roadside CCTV in one US town with a different label set, so treat it as a free
 data point, not a foundation. Drop it if it is not producing output in 45 minutes.
 
-## M4 — LoRA fine-tune ⬜ not started, needs Kaggle
+## M4 — LoRA fine-tune ⬜ not started, needs Kaggle — now the highest-value work
+
+The current second place on the live leaderboard runs `qwen3vl4b-lora-finetuned`
+and scores 51.1. Zero-shot failed at both 2B and 4B, so fine-tuning is the
+demonstrated path and the only untried lever with real headroom.
 
 `build_vlm_sft.py` → `train.jsonl` / `val.jsonl` → ms-swift **or** Unsloth →
 merged adapter → swap into `vlm.py`.

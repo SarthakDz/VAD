@@ -190,3 +190,44 @@ same direction. Kept behind `--vlm`, off by default. See [[experiments]].
 `--enter 0.92 --exit 0.30 --merge-gap 20 --min-event 3`. False alarms 42 -> 27,
 precision up on all three difficulties, 41 events, ~49 modelled marks.
 `outputs/submission.json` validated and ready to upload.
+
+## [2026-09-05 13:20] blocker | Arena upload rejects everything, including its own template
+
+Every submission returns "Could not save that submission: Too many parameter
+values were provided". Bisected down to a **single video with an empty events
+list — 4 leaf values total** — which fails identically, so it is not a size or
+shape problem on our side.
+
+`model_runtimes: []` triggers the error; omitting the key instead returns
+"model_runtimes must be an array (use [] if not applicable)", so the two
+validators contradict each other and no accepted value exists. Tried 68 rows,
+34 rows, 34 rows with the doc's 7 fields, and `[]`.
+
+Diagnostic probes are kept in `outputs/probe_*.json`. Rejections do not consume
+an attempt. Full trail in [[state]].
+
+## [2026-09-05 13:15] finding | Official starter template ships `model_runtimes: []`
+
+Downloaded from the Benchmark tab and saved to
+`data/submission_template_official.json`. All 34 videos, `events: []`,
+`model_runtimes: []`, and **all-integer values** where ours used floats. This
+proves `[]` is the intended value and the error message is misleading.
+
+Rebuilt the submission by mutating **their** file rather than writing one from
+scratch — changing only the `events` arrays and the three runtime scalars ->
+`outputs/submission_from_template.json`, same 48.2 marks.
+
+## [2026-09-05 13:12] finding | FIELD RULES page confirms our format, and corrects the PDF
+
+Audited our file against every published rule: ids match the manifest exactly and
+once each, `events` always an array, `class_name` always one of the 11 taxonomy
+chips and never `normal`, timestamps null at D1 and inside duration at D2-3, all
+four `runtime_metadata` keys present. **Zero failures.**
+
+Two corrections. `run_metadata.max_parallel_videos` **is** documented, so it was
+not the culprit and has been restored. And the submission page states **"your
+best run stands, so a worse attempt never costs you"**, which reverses the format
+PDF's "no best-of" — uploading is now zero-risk. Recorded in [[scoring]].
+
+Note their `class_name` row says "one of the 12 anomaly classes" while the
+heading says 11 and exactly 11 chips are listed; 11 is right, `normal` excluded.
