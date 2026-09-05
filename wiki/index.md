@@ -21,6 +21,7 @@ by default.
 | [[environment]] | Paths, the Python 3.12 venv, GPU limits, the laptop-versus-Kaggle compute split and why videos never cross the network, cache layout, git remote. |
 | [[milestones]] | M0 through M5 with acceptance criteria and status, final deliverables, and an explicit list of things not to do. |
 | [[experiments]] | Every scored run with its full config. Reference points at the top. Newest last. |
+| [[prior-art]] | What the organisers's SOTA deck and the AI City Challenge paper contain: the VAD/VAU/VAR ladder, Track 3 leaderboard, and the named methods worth borrowing from. |
 | [[open-questions]] | Questions for the organisers in paste-ready prose, and manual tasks only the user can do. |
 
 ## Where to look for a given question
@@ -34,6 +35,7 @@ by default.
 - *"What did we already try?"* → [[experiments]]
 - *"Why was it built this way?"* → [[architecture]]
 - *"Why can't I just run this on the laptop?"* → [[environment]]
+- *"Has someone solved this already?"* → [[prior-art]]
 - *"What are we waiting on?"* → [[open-questions]]
 
 ## Source documents

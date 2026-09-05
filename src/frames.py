@@ -31,6 +31,13 @@ class VideoMeta:
     height: int
     sampled_frames: int
     sample_fps: float
+    # Native frames skipped between kept frames. Timestamps MUST be derived
+    # from this, not from spreading the samples across the full duration --
+    # `step` is an integer floor, so the kept frames span step*sampled_frames
+    # native frames, which is up to a few percent short of the whole video.
+    # Getting this wrong drifts every predicted boundary later and later; it
+    # cost ~9s by the end of a 240s clip and silently failed the IoU 0.5 gate.
+    frame_step: int = 1
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -112,16 +119,26 @@ def sample(
         height=h,
         sampled_frames=len(frames),
         sample_fps=round(effective_fps, 4),
+        frame_step=step,
     )
     return np.stack(frames), meta
 
 
 def timestamps(meta: VideoMeta) -> np.ndarray:
     """Wall-clock second of each sampled frame -- the bridge from head output
-    back to start_time_sec / end_time_sec."""
-    if meta.sampled_frames <= 1 or meta.duration_sec <= 0:
-        return np.zeros(meta.sampled_frames, dtype=np.float32)
-    return np.linspace(0.0, meta.duration_sec, meta.sampled_frames, dtype=np.float32)
+    back to start_time_sec / end_time_sec.
+
+    Kept frame j is native frame j*frame_step, so its time is
+    j*frame_step/native_fps. Do NOT use linspace over duration_sec.
+    """
+    n = meta.sampled_frames
+    if n <= 1 or meta.duration_sec <= 0:
+        return np.zeros(max(n, 0), dtype=np.float32)
+    fps = meta.native_fps if 1.0 <= meta.native_fps <= 240.0 else 30.0
+    ts = np.arange(n, dtype=np.float32) * (meta.frame_step / fps)
+    # Never claim a timestamp past the end of the video: end_time_sec beyond
+    # the duration is a documented submission rejection.
+    return np.minimum(ts, meta.duration_sec)
 
 
 if __name__ == "__main__":

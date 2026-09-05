@@ -92,6 +92,7 @@ def run(
             height=meta["height"],
             sampled_frames=meta["sampled_frames"],
             sample_fps=meta["sample_fps"],
+            frame_step=int(meta.get("frame_step", 1)),
         )
         segs = extract(a, c, timestamps(vm), enter, exit_, merge_gap_sec, min_event_sec)
         events = to_events(segs, level, explanations)

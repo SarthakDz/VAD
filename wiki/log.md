@@ -109,3 +109,25 @@ VLM in it.
 
 Set up `wiki/` plus `CLAUDE.md` as persistent cross-session memory, seeded with
 everything established so far.
+
+## [2026-09-05 11:50] milestone | Train split encoded — cache complete
+
+3207/3207 embeddings cached (3173 train + 34 test). Full head training started.
+
+## [2026-09-05 11:52] finding | Prior art from the organisers' deck and the AI City paper
+
+`research paper.pdf` is The 10th AI City Challenge, arXiv:2608.17044. Its Track 3
+(TAR) is the closest published benchmark to this task. Top score 0.6788, Qwen3-VL
+family dominant, a GPT-based entry placed 16th. The paper concludes there is
+"a shift from simple VLM prompting toward agentic pipelines that first extract
+visual evidence, then match it to a task-specific answer format" — which is the
+Stage A / Stage B cascade already built.
+
+**Track 3's official mean excludes temporal localization; ours does not.** So
+their numbers are not comparable and the published methods were not optimised for
+the dimension we are scored hardest on. Independently confirms the
+fragmented-oracle conclusion in [[scoring]].
+
+Also surfaced `nvidia/Cosmos-Embed1-448p-anomaly-detection`, a purpose-built VAD
+embedding model with the same 768 dims as our SigLIP encoder — attractive but
+clip-level not frame-level, and licensed "other". Full notes in [[prior-art]].
