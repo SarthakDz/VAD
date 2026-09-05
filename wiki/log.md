@@ -231,3 +231,21 @@ PDF's "no best-of" — uploading is now zero-risk. Recorded in [[scoring]].
 
 Note their `class_name` row says "one of the 12 anomaly classes" while the
 heading says 11 and exactly 11 chips are listed; 11 is right, `normal` excluded.
+
+## [2026-09-05 13:27] milestone | First arena submission accepted — 47.0/100
+
+D1 12.9/25, D2 22.6/35, D3 11.5/40. Arena reports precision 34%, recall 30%,
+27 false alarms, and advises that cutting false alarms beats finding more events.
+
+## [2026-09-05 13:40] finding | Scorer calibrated against the real result
+
+The real numbers show D1 is **F1-based**, not the PDF's `0.5*binary+0.5*class`,
+and D2's weights are nearer (.3,.4,.3) than the assumed (.2,.5,.3).
+`src/calibrated.py` now reproduces the arena exactly — 47.0 predicted, 47.0
+actual. **Use `calibrated.py`, not `score.py`, for all tuning from here.**
+
+## [2026-09-05 13:45] experiment | Threshold tuning exhausted
+
+1800 configs under the calibrated scorer; best gains +0.1 marks. The head's
+score curves are the ceiling. Retraining with a 512-timestep window to target
+D3, which holds 11.1 of 40 marks and is the largest pool. See [[experiments]].

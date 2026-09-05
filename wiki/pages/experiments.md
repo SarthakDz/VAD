@@ -306,3 +306,83 @@ leader (92.1).
 **The honest gap:** we match the leader's Difficulty-2 recall exactly — 4 of 18
 — and lose entirely on precision, 12 false alarms against his 0. Recall is not
 the problem and never was.
+
+## exp-009 — FIRST REAL ARENA RESULT, and scorer calibration
+
+**2026-09-05 13:27.** `outputs/submission.json` uploaded successfully.
+
+```
+                predicted (score.py)    ACTUAL
+D1                   16.1               12.9 / 25   51.6% correct, 24/24 answered
+D2                   20.9               22.6 / 35   64.7% correct,  6/6  answered
+D3                   11.2               11.5 / 40   28.8% correct,  4/4  answered
+TOTAL                48.2               47.0 / 100
+```
+
+Arena's own detection panel: **precision 34%, recall 30%, F1 32%, false alarms
+27** — and our `leaderboard.py` false-alarm count matched **exactly at 27**, so
+that module counts what the arena counts.
+
+The arena states the strategy outright:
+
+> *"You are flagging more events than are there. Cutting false alarms will raise
+> your marks more than finding extra events will."*
+
+Weakest classes reported: `fighting_or_violence` 0/3, `road_spill_or_debris` 0/3
+(3 false), `fire` 0/2 (1 false), `vehicle_blocking_traffic` 0/2 (1 false).
+
+### What the result revealed about the formula
+
+`score.py` was wrong per difficulty even though its total was close by luck:
+
+**D1 is F1-based, not the PDF's `0.5*binary + 0.5*class`.** With found 9, fa 5,
+n_gt 20: P .643, R .450, F1 .529 -> 13.2, against an actual 12.9. The PDF
+formula predicts 16.1. **So D1 false alarms cost marks directly.**
+
+**D2's weights are nearer (alert .3, matched .4, timing .3)** than the assumed
+(.2, .5, .3). Solving 2 normal videos at 1.0 plus 4 anomalous ones against
+22.6/35 requires `wa + .25*wm + .236*wt = .469`; (.3,.4,.3) gives .471.
+
+**D3's assumed (.2,.4,.4) was already right** — predicted .279 against .288.
+
+`src/calibrated.py` implements this and reproduces the real result exactly:
+**47.0 predicted, 47.0 actual**, each difficulty within 0.4 marks. Use it, not
+`score.py`, for all further tuning.
+
+### Where the 27 false alarms actually are
+
+```
+D1 (5)  T013 fire->smoke   T014 smoke->fire   (a pure swap)
+        T021, T022 fighting_or_violence -> loitering_or_suspicious_presence
+        T020 road_spill_or_debris -> traffic_accident
+        plus 6 misses answered normal: T008 T010 T011 T012 T018 T019
+
+D2/D3 (22)  T026  7 predicted, 0/4 matched -> 7 false
+            T033  8 predicted, 1/2 matched -> 7 false
+            T025  4 predicted, 0/6 matched -> 4 false
+            T027, T031, T032, T034  1 false each
+```
+
+Three videos produce 18 of the 22 temporal false alarms, and on T026 we matched
+nothing at all, so predicting less there costs no recall.
+
+## exp-010 — calibrated sweep (threshold tuning is exhausted)
+
+1800 configs scored with `calibrated.py`. Best is
+`--enter 0.5 --exit 0.4 --merge-gap 20 --min-event 3` at **47.1 marks, +0.1**
+over the submitted run. Every top config lands between 46 and 47.1.
+
+**Threshold tuning is finished.** The head's score curves are the ceiling;
+further gains require a better model, not better post-processing.
+
+Headroom by difficulty: D1 13.2/25, D2 22.7/35, **D3 11.1/40** — D3 is both the
+worst and the largest pool.
+
+## exp-011 — longer training window, targeting D3 (running)
+
+Hypothesis: training windows are 256 timesteps, about 128 s at 2 fps, but the
+Level-3 videos run 307-629 s. **The head has never seen a sequence as long as
+the ones it is scored on**, which is consistent with T031/T032/T034 saturating
+and calling the whole video anomalous.
+
+Running `--window 512 --epochs 18 --p-normal 0.4 --out outputs/head_w512.pt`.
