@@ -1,0 +1,227 @@
+<title>Cascade VAD Architecture</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F8FA; --surface:#FFFFFF; --sunk:#EEF1F5;
+  --ink:#16202C; --body:#33414F; --muted:#6B7C8D; --rule:#DCE2EA;
+  --accent:#B4690E; --accent-soft:#FBF0DF;
+  --pos:#2E6F52; --neg:#A8382F; --flat:#6B7C8D;
+  --serif:"IBM Plex Serif",Georgia,serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#101822; --surface:#16202C; --sunk:#1C2836;
+  --ink:#EEF2F7; --body:#C3CEDA; --muted:#8497A9; --rule:#2A3948;
+  --accent:#E9A34A; --accent-soft:#2A2114;
+  --pos:#6BC79A; --neg:#E0776C; --flat:#8497A9;
+}}
+:root[data-theme="dark"]{
+  --ground:#101822; --surface:#16202C; --sunk:#1C2836;
+  --ink:#EEF2F7; --body:#C3CEDA; --muted:#8497A9; --rule:#2A3948;
+  --accent:#E9A34A; --accent-soft:#2A2114;
+  --pos:#6BC79A; --neg:#E0776C; --flat:#8497A9;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--body);font-family:var(--sans);
+  font-size:16px;line-height:1.62;margin:0;padding:0 1.5rem 6rem}
+.wrap{max-width:50rem;margin:0 auto}
+.bleed{max-width:60rem;margin-left:calc((50rem - 60rem)/2)}
+@media(max-width:64rem){.bleed{max-width:100%;margin-left:0}}
+
+header{padding:4.5rem 0 2.25rem;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 1rem}
+h1{font-family:var(--serif);font-weight:600;font-size:2.55rem;line-height:1.14;
+  color:var(--ink);margin:0 0 .9rem;text-wrap:balance;letter-spacing:-.015em}
+.standfirst{font-size:1.1rem;color:var(--muted);margin:0;max-width:38rem}
+.meta{display:flex;flex-wrap:wrap;gap:1.75rem;margin-top:2rem;
+  font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+.meta b{display:block;color:var(--ink);font-weight:500;font-size:.95rem;margin-top:.15rem}
+
+h2{font-family:var(--serif);font-weight:600;font-size:1.5rem;color:var(--ink);
+  margin:3.5rem 0 .3rem;letter-spacing:-.01em;text-wrap:balance}
+h2 .num{font-family:var(--mono);font-size:.78rem;color:var(--accent);
+  font-weight:500;margin-right:.7rem;letter-spacing:.06em}
+h3{font-family:var(--sans);font-weight:600;font-size:1.02rem;color:var(--ink);margin:2rem 0 .3rem}
+p{margin:.85rem 0}
+a{color:var(--accent)}
+strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:.87em;background:var(--sunk);
+  padding:.1em .35em;border-radius:3px;color:var(--ink)}
+
+.lede{font-size:1.02rem;color:var(--muted);margin:.6rem 0 0}
+
+figure{margin:2rem 0}
+figcaption{font-size:.82rem;color:var(--muted);margin-top:.7rem;font-style:italic}
+
+table{border-collapse:collapse;width:100%;font-size:.88rem;margin:1.4rem 0}
+th,td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--rule)}
+th{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;border-bottom:1px solid var(--ink)}
+td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.pos{color:var(--pos);font-weight:600}
+.neg{color:var(--neg);font-weight:600}
+.flat{color:var(--flat)}
+
+.callout{background:var(--surface);border:1px solid var(--rule);border-radius:6px;
+  padding:1.15rem 1.35rem;margin:1.6rem 0}
+.callout p:first-child{margin-top:0}.callout p:last-child{margin-bottom:0}
+.callout .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:6px;
+  overflow:hidden;margin:1.8rem 0}
+.stat{background:var(--surface);padding:1.1rem 1.2rem}
+.stat .v{font-family:var(--mono);font-size:1.6rem;font-weight:500;color:var(--accent);
+  line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .k{font-size:.78rem;color:var(--muted);margin-top:.35rem;line-height:1.35}
+
+ul{padding-left:1.15rem;margin:.85rem 0}
+li{margin:.45rem 0}
+li::marker{color:var(--accent)}
+
+footer{margin-top:4.5rem;padding-top:1.75rem;border-top:1px solid var(--rule);
+  font-size:.84rem;color:var(--muted)}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">AHC Visual Intelligence Hackathon &middot; Architecture write-up</p>
+  <h1>A frozen encoder and a 2.2M-parameter head, with no VLM in the runtime path</h1>
+  <p class="standfirst">Near-real-time anomaly detection over drone, CCTV and dashcam footage. We built the vision-language stage the brief points toward, measured it, and shipped without it.</p>
+  <div class="meta">
+    <div>Public arena score<b>47.0 / 100</b></div>
+    <div>Throughput<b>41.7&times; realtime</b></div>
+    <div>Runtime parameters<b>2.18 M + frozen SigLIP</b></div>
+    <div>Repository<b><a href="https://github.com/SarthakDz/VAD">github.com/SarthakDz/VAD</a></b></div>
+  </div>
+</header>
+
+<h2><span class="num">01</span>What the problem actually demanded</h2>
+<p>The brief frames anomaly as contextual rather than object-level: a stationary car is unremarkable in a parking bay and a problem on a highway shoulder. That argues for a vision-language model. The constraint argues against one &mdash; inference must stay cheap enough to run across many drone feeds at once, and no hosted model may sit in the runtime path.</p>
+<p>Two findings from our own data audit shaped the design more than the brief did.</p>
+<p><strong>Training and test data have different shapes.</strong> All 3,173 training clips are single-event and about five seconds long. Difficulty 2 and 3 videos run 240&ndash;629 seconds and carry several events of several classes &mdash; one test video holds four different classes, another six separate accidents. Long-form footage exists in training <em>only</em> in the <code>normal</code> class: exactly eight videos exceed 50&nbsp;MB and all eight are normal.</p>
+<p><strong>Supervision is dense but localisation signal is thin.</strong> Every one of the 2,200 anomaly rows carries timestamps, so the multiple-instance learning we had planned was unnecessary. But 1,551 of them span their entire clip, which teaches nothing about boundaries. Only ~649 clips carry real boundary information.</p>
+
+<h2><span class="num">02</span>The pipeline</h2>
+<figure class="bleed">
+<svg viewBox="0 0 960 168" width="100%" role="img" aria-label="Five-stage pipeline: decode, frozen SigLIP encoder, temporal head, segment extraction, events JSON">
+  <defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/></marker></defs>
+  <g fill="none" stroke="currentColor" color="var(--accent)" stroke-width="1.4" marker-end="url(#ar)">
+    <line x1="176" y1="60" x2="196" y2="60"/><line x1="360" y1="60" x2="380" y2="60"/>
+    <line x1="544" y1="60" x2="564" y2="60"/><line x1="728" y1="60" x2="748" y2="60"/>
+  </g>
+  <g font-family="IBM Plex Sans,sans-serif">
+    <g>
+      <rect x="8" y="26" width="166" height="68" rx="5" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="24" y="52" font-size="13" font-weight="600" fill="var(--ink)">Decode @ 2 fps</text>
+      <text x="24" y="72" font-size="11" fill="var(--muted)">grab/skip, resize 224</text>
+      <text x="24" y="120" font-size="10.5" font-family="IBM Plex Mono,monospace" fill="var(--accent)">CPU-bound</text>
+    </g>
+    <g>
+      <rect x="196" y="26" width="164" height="68" rx="5" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="212" y="52" font-size="13" font-weight="600" fill="var(--ink)">SigLIP-base</text>
+      <text x="212" y="72" font-size="11" fill="var(--muted)">frozen &middot; cached (T,768)</text>
+      <text x="212" y="120" font-size="10.5" font-family="IBM Plex Mono,monospace" fill="var(--accent)">86M, never tuned</text>
+    </g>
+    <g>
+      <rect x="380" y="26" width="164" height="68" rx="5" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="396" y="52" font-size="13" font-weight="600" fill="var(--ink)">BiGRU head</text>
+      <text x="396" y="72" font-size="11" fill="var(--muted)">per-second scores</text>
+      <text x="396" y="120" font-size="10.5" font-family="IBM Plex Mono,monospace" fill="var(--accent)">2.18M &middot; trained</text>
+    </g>
+    <g>
+      <rect x="564" y="26" width="164" height="68" rx="5" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="580" y="52" font-size="13" font-weight="600" fill="var(--ink)">Segments</text>
+      <text x="580" y="72" font-size="11" fill="var(--muted)">hysteresis + merge</text>
+      <text x="580" y="120" font-size="10.5" font-family="IBM Plex Mono,monospace" fill="var(--accent)">decides L2/L3</text>
+    </g>
+    <g>
+      <rect x="748" y="26" width="164" height="68" rx="5" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="764" y="52" font-size="13" font-weight="600" fill="var(--ink)">Events JSON</text>
+      <text x="764" y="72" font-size="11" fill="var(--muted)">class + interval</text>
+      <text x="764" y="120" font-size="10.5" font-family="IBM Plex Mono,monospace" fill="var(--accent)">validated locally</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Stage A end to end. A vision-language stage was designed to sit on the candidate segments, consuming under 5% of frames. It was built and measured, and it lost &mdash; see section 05.</figcaption>
+</figure>
+
+<p>The encoder is never fine-tuned, so embeddings are computed once and cached per <code>video_id</code>. Every subsequent experiment reads that cache, which is why we could run an 1,800-configuration threshold sweep in seconds rather than re-encoding 15&nbsp;GB of video each time.</p>
+
+<h3>Decode is the bottleneck, so it gets the attention</h3>
+<p>At 2&nbsp;fps over 30&nbsp;fps footage we keep one frame in fifteen. OpenCV's <code>read()</code> fully decodes every frame, so fourteen of every fifteen decodes would be discarded. We use <code>grab()</code> to advance the demuxer without converting to an array, and <code>retrieve()</code> only on kept frames. Frames are resized to 224 during decode &mdash; not only for speed: one test video alone held 3.5&nbsp;GB of raw 720p frames in memory before this change.</p>
+
+<h3>Training on sequences that do not exist</h3>
+<p>Because no long anomalous footage exists in training, we synthesise it. Anomaly clips are concatenated with normal filler &mdash; drawn preferentially from the eight real long normal videos &mdash; and the offset arithmetic is carried through to exact interval labels. Concatenation happens in <em>embedding space</em>, so it costs microseconds and no video is ever re-decoded. Clips whose event does not span the whole clip carry 3&times; loss weight, since they are the only real boundary supervision available.</p>
+
+<h2><span class="num">03</span>The decision that mattered most</h2>
+<p>Before training anything we tested the scorer with a deliberately broken oracle: a <em>perfect</em> set of events, correct classes, every boundary right &mdash; then split each into five fragments.</p>
+<div class="scroll"><table>
+  <thead><tr><th>Prediction strategy</th><th>D1</th><th>D2</th><th>D3</th></tr></thead>
+  <tbody>
+    <tr><td>Oracle</td><td class="n">1.000</td><td class="n">1.000</td><td class="n">1.000</td></tr>
+    <tr><td>Oracle, each event split into five fragments</td><td class="n">1.000</td><td class="n neg">0.467</td><td class="n neg">0.200</td></tr>
+    <tr><td>Claim the whole clip is anomalous</td><td class="n">0.479</td><td class="n">0.133</td><td class="n">0.200</td></tr>
+    <tr><td>Predict nothing at all</td><td class="n">0.167</td><td class="n">0.333</td><td class="n">0.000</td></tr>
+  </tbody>
+</table></div>
+<p>Fragmentation alone destroys a perfect answer. Only the best-overlapping fragment can match at IoU&nbsp;0.5 and the rest count against you. <strong>Segment shaping matters more than detection accuracy</strong>, so the pipeline biases hard toward few, long, merged events: a high enter threshold with a lower exit threshold, a 20-second merge gap, and a minimum event length.</p>
+<p>The arena later confirmed this in its own words &mdash; <em>&ldquo;you are flagging more events than are there; cutting false alarms will raise your marks more than finding extra events will&rdquo;</em> &mdash; and the leaderboard proves it: the leading entry reached 85% of Difficulty 2 having found only 4 of 18 events, on zero false alarms.</p>
+<p class="lede">Note the third row: predicting nothing is not zero. Normal videos score full marks for an empty answer, so abstaining on a low-confidence video is a real strategy rather than a forfeit.</p>
+
+<h2><span class="num">04</span>Results</h2>
+<div class="stats">
+  <div class="stat"><div class="v">12.9<span style="font-size:.85rem;color:var(--muted)"> / 25</span></div><div class="k">D1 &mdash; Clear event</div></div>
+  <div class="stat"><div class="v">22.6<span style="font-size:.85rem;color:var(--muted)"> / 35</span></div><div class="k">D2 &mdash; When it happens</div></div>
+  <div class="stat"><div class="v">11.5<span style="font-size:.85rem;color:var(--muted)"> / 40</span></div><div class="k">D3 &mdash; Long context</div></div>
+  <div class="stat"><div class="v">0.024</div><div class="k">processing time &divide; video duration</div></div>
+</div>
+<p>Runtime accounting is measured, not estimated. Decode and encode times are recorded per video at encode time; head inference is timed at inference; the reported <code>end_to_end_internal_time_ms</code> is their sum, excluding model load exactly as the format requires.</p>
+
+<h3>A calibrated scorer, recovered from one submission</h3>
+<p>The published scoring description is incomplete, so we reverse-engineered it from a single real result. Difficulty 1 turns out to be <strong>F1-based</strong>, not the documented <code>0.5&middot;binary + 0.5&middot;class</code> &mdash; which matters, because it means D1 false alarms cost marks directly. Our local scorer now reproduces the arena exactly: 47.0 predicted against 47.0 actual, each difficulty within 0.4 marks. Every experiment after that point was ranked offline before spending an upload.</p>
+
+<h2><span class="num">05</span>What we tried that did not work</h2>
+<p>Reported because the negative results are the substance of what we learned.</p>
+<div class="scroll"><table>
+  <thead><tr><th>Experiment</th><th>Result</th><th>Marks</th></tr></thead>
+  <tbody>
+    <tr><td>Stage B: Qwen3-VL-2B zero-shot re-labelling</td><td>0/4 on probe segments</td><td class="n neg">dropped</td></tr>
+    <tr><td>Stage B: Qwen3-VL-4B in 4-bit</td><td>1/6, vs the head's 3/6</td><td class="n neg">&minus;3.7</td></tr>
+    <tr><td>Longer training window (512 timesteps)</td><td>73 events instead of 41</td><td class="n neg">&minus;3.5</td></tr>
+    <tr><td>Organisers' <code>wrong_way_driving</code> label correction</td><td>D3 recall falls 11.1 &rarr; 8.0</td><td class="n neg">&minus;5.2</td></tr>
+    <tr><td>Threshold sweep, 1,800 configurations</td><td>plateau</td><td class="n flat">&plusmn;0.1</td></tr>
+  </tbody>
+</table></div>
+<div class="callout">
+  <span class="tag">The finding we did not expect</span>
+  <p><strong>A small VLM is not a free upgrade.</strong> Both model sizes actively relabelled correct predictions to wrong ones, at 7.4&times; the latency. The fusion policy already refused out-of-shortlist answers &mdash; but the model returned <em>valid, in-shortlist, wrong</em> answers and overwrote correct ones. Guarding the interface was not enough; the model simply was not good enough at this task.</p>
+  <p>The runner-up on the live leaderboard runs a LoRA-fine-tuned Qwen3-VL-4B. So a 4B model does work here &mdash; but evidently only fine-tuned, never zero-shot. That is a data problem, not an architecture problem, and it is where we would spend the next day.</p>
+</div>
+
+<h2><span class="num">06</span>Where the ceiling actually is</h2>
+<p>Two independent models &mdash; the temporal head, and a separately trained clip classifier reaching <strong>86.8% held-out accuracy</strong> &mdash; both identify <strong>exactly 9 of 20</strong> Difficulty-1 videos. Every confidence threshold on either caps at the same score.</p>
+<p>Two different architectures hitting an identical wall points at the representation, not the classifier. The clearest instance: two test videos labelled <code>smoke</code> are predicted <code>fire</code> at 0.97 and 0.88 confidence. SigLIP-base at 224&nbsp;px does not separate those classes on unseen source footage.</p>
+<div class="callout">
+  <span class="tag">Assumption worth stating plainly</span>
+  <p>The dataset separates training and test at source-video level. So 86.8% held-out accuracy measures in-domain performance and <strong>overstates test accuracy</strong> &mdash; the same classifier reaches roughly 50% on the test split. That transfer gap, not model capacity, is what caps this system.</p>
+</div>
+
+<h2><span class="num">07</span>Limitations, and what we would do next</h2>
+<ul>
+  <li><strong>Difficulty 3 is the prize and our weakest result</strong> &mdash; 11.5 of 40 marks across only four videos, roughly seven marks each. On three of them the head scores nearly every frame above any threshold and collapses to one segment spanning the whole video, which fails the IoU gate outright.</li>
+  <li><strong>A stronger encoder is the first thing to try.</strong> Everything downstream reads cached embeddings, so swapping SigLIP-base for the so400m variant at 384&nbsp;px is a one-flag rerun of the entire pipeline. It attacks the transfer gap directly.</li>
+  <li><strong>Fine-tune, don't prompt.</strong> Zero-shot failed at both sizes; the leaderboard shows fine-tuning working. Our training set is ready for it &mdash; though it needs deduplicating first: <code>description_summary</code> holds only 526 unique strings across 3,173 rows, and all 300 loitering clips share one identical sentence.</li>
+  <li><strong>Label noise is real and worth auditing.</strong> Beyond the correction the organisers issued, our audit found rows in <code>fighting_or_violence</code> whose own descriptions read as a truck rollover and a vehicle striking a tree.</li>
+  <li><strong>The system is offline by design.</strong> The head is bidirectional because the task scores wall-clock time, not causality, and every input is a finished file. A streaming deployment would switch to the causal variant and lose some boundary precision.</li>
+</ul>
+
+<footer>
+  <p>Stage A runs at 41.7&times; realtime on a single RTX 4060 Laptop (8&nbsp;GB), processing 56.5 minutes of video in 81 seconds. No hosted model is used at inference. Large models were used only for evaluation and comparison, as the rules permit.</p>
+</footer>
+</div>
