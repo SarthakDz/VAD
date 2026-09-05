@@ -200,7 +200,8 @@ def _group(cls: str) -> list[str]:
 
 class QwenVLM:
     def __init__(self, model_name: str = DEFAULT_MODEL, device: str = "cuda",
-                 dtype: str = "bfloat16", max_new_tokens: int = 96):
+                 dtype: str = "bfloat16", max_new_tokens: int = 96,
+                 load_in_4bit: bool = False):
         import torch
         from transformers import AutoModelForImageTextToText, AutoProcessor
 
@@ -208,10 +209,22 @@ class QwenVLM:
         self.max_new_tokens = max_new_tokens
         self.device = device
         self.processor = AutoProcessor.from_pretrained(model_name)
+
+        kwargs = {"dtype": getattr(torch, dtype), "device_map": device}
+        if load_in_4bit:
+            # Qwen3-VL-4B is 8.89 GB in bf16 and this box has 8 GB of VRAM, so
+            # the 4B model only runs quantised. NF4 with a bf16 compute dtype
+            # keeps the vision tower's activations in full precision.
+            from transformers import BitsAndBytesConfig
+            kwargs["quantization_config"] = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.bfloat16,
+                bnb_4bit_use_double_quant=True,
+            )
         self.model = AutoModelForImageTextToText.from_pretrained(
-            model_name, dtype=getattr(torch, dtype), device_map=device,
-        ).eval()
-        self.name = model_name
+            model_name, **kwargs).eval()
+        self.name = model_name + ("-4bit" if load_in_4bit else "")
 
     def ask(self, frames: list[np.ndarray], options: list[str], duration: float) -> dict:
         from PIL import Image

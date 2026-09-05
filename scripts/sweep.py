@@ -19,7 +19,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.frames import VideoMeta, timestamps  # noqa: E402
 from src.io_dataset import TEST_COLS, _read_gt  # noqa: E402
-from src.score import gt_by_video, score  # noqa: E402
+from src.leaderboard import report  # noqa: E402
+from src.score import gt_by_video  # noqa: E402
 from src.segments import extract, to_events  # noqa: E402
 from src.submit import manifest_from_public_test  # noqa: E402
 
@@ -41,10 +42,11 @@ def load_all(cache: Path, manifest: dict):
     return out
 
 
-def predict(curves, manifest, enter, exit_, gap, min_ev):
+def predict(curves, manifest, enter, exit_, gap, min_ev, top_k=0, min_score=0.0):
     preds = {}
     for vid, (a, c, ts) in curves.items():
-        segs = extract(a, c, ts, enter, exit_, gap, min_ev)
+        segs = extract(a, c, ts, enter, exit_, gap, min_ev,
+                       top_k=top_k, min_score=min_score)
         preds[vid] = [e.to_json() for e in to_events(segs, manifest[vid])]
     return preds
 

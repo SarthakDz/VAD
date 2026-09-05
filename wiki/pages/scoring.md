@@ -145,3 +145,63 @@ accepted-and-worse ones cost you your standing.
 - Final submission section requires: code repository URL, architecture write-up
   (link or PDF/HTML up to 25 MB), and a **2-slide PPT stated to carry high
   weightage**.
+
+---
+
+# CORRECTION — real weights, read off the live leaderboard
+
+**2026-09-05 12:27.** Everything above about *level weighting* is superseded.
+The arena leaderboard states the scheme outright:
+
+```
+D1  "Clear event"      out of 25    which anomalies appear
+D2  "When it happens"  out of 35    class, anomaly and timing
+D3  "Long context"     out of 40    all of it, over long footage
+REASON bonus sits in its own column so it never hides weak accuracy.
+"A difficulty that is never submitted scores zero."
+```
+
+**Levels are not equally weighted. Level 3 alone is worth 40% of the total**, and
+it is our weakest level. Any tuning that trades Level 3 for Level 1 is going the
+wrong way. `score.py` now reports `marks` under 25/35/40; the old unweighted
+mean is kept only for continuity with earlier experiments.
+
+The leaderboard also reports per difficulty: marks, P, R, found (x/y), FA.
+
+## The two rows that should drive every tuning decision
+
+```
+Yash Waghmare   D1 P100 R100  20/20 FA0 -> 25.0
+                D2 P100 R 22   4/18 FA0 -> 29.9   (85%)
+                D3 P100 R 50    4/8 FA0 -> 37.2   (93%)   TOTAL 92.1, 27 runs
+Aryan Varale    D1 P 50 R 35   7/20 FA7 -> 10.6
+   (qwen3vl4b-  D2 P 38 R 28   5/18 FA8 -> 25.1   (72%)
+    lora-tuned) D3 P 25 R 25    2/8 FA6 -> 12.0            TOTAL 51.1 (47.6 +3.5 reason)
+```
+
+**Aryan found MORE Difficulty-2 events than Yash — 5 against 4 — and scored
+lower.** Eight false alarms cost more than the extra detection gained.
+
+**Yash reached 85% of Difficulty 2 while missing 78% of the events**, purely on
+perfect precision and zero false alarms.
+
+So the objective is precision and false-alarm suppression, not recall. Claim few
+events, confidently. This is a different objective from the one the earlier
+sweeps optimised, and it is the single most important thing on this page.
+
+Note also that Yash has **27 runs**, so the run budget is not tight — but there
+is still no best-of, so a worse upload still replaces a better standing score.
+
+## What the leaderboard rows imply about the formula
+
+The exact marks formula is unpublished. Event-level F1 is ruled out: Yash's D2
+of 85% cannot come from P100/R22, which is an F1 of 0.36. The numbers only fit a
+scheme where **anomalous videos earn substantial partial credit for alerting and
+approximate timing**, which is what `score.py`'s per-video model already does.
+So the per-video structure there appears roughly right; only the level weighting
+was wrong.
+
+`leaderboard.py` reports P / R / found / FA in the leaderboard's own units so our
+numbers can be read directly against theirs. Its `marks_proxy` is F1-based and is
+explicitly **not** the official formula — it fits D1 but underestimates D2 and
+D3, where the real scheme is far kinder to low recall.

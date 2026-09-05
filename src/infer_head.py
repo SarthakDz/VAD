@@ -53,6 +53,8 @@ def run(
     merge_gap_sec: float,
     min_event_sec: float,
     max_coverage: float = 1.0,
+    top_k: int = 0,
+    min_score: float = 0.0,
     save_scores: bool = True,
     vlm=None,
     paths: dict[str, str] | None = None,
@@ -104,7 +106,8 @@ def run(
             frame_step=int(meta.get("frame_step", 1)),
         )
         segs = extract(a, c, timestamps(vm), enter, exit_, merge_gap_sec, min_event_sec,
-                       max_coverage=1.0 if level == 1 else max_coverage)
+                       max_coverage=1.0 if level == 1 else max_coverage,
+                       top_k=top_k, min_score=min_score)
 
         explanations = None
         vlm_ms = 0.0
@@ -175,6 +178,9 @@ def main() -> None:
     ap.add_argument("--vlm-model", default="Qwen/Qwen3-VL-2B-Instruct")
     ap.add_argument("--vlm-frames", type=int, default=6)
     ap.add_argument("--no-motion-crop", action="store_true")
+    ap.add_argument("--vlm-4bit", action="store_true")
+    ap.add_argument("--top-k", type=int, default=0)
+    ap.add_argument("--min-score", type=float, default=0.0)
     ap.add_argument("--score", action="store_true", help="score against public test gt")
     a = ap.parse_args()
 
@@ -187,11 +193,12 @@ def main() -> None:
         from .vlm import QwenVLM
         paths = {r.video_id: r.path for r in load_test_videos(a.root).itertuples()}
         print(f"loading {a.vlm_model} ...")
-        vlm = QwenVLM(a.vlm_model, a.device)
+        vlm = QwenVLM(a.vlm_model, a.device, load_in_4bit=a.vlm_4bit)
 
     t0 = time.perf_counter()
     preds, stats = run(mf, Path(a.cache), model, a.device,
                        a.enter, a.exit_, a.merge_gap, a.min_event, a.max_coverage,
+                       a.top_k, a.min_score,
                        vlm=vlm, paths=paths, vlm_frames=a.vlm_frames,
                        vlm_motion_crop=not a.no_motion_crop)
     wall_ms = (time.perf_counter() - t0) * 1000.0

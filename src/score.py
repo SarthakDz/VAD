@@ -33,6 +33,7 @@ from .io_dataset import TEST_COLS, _read_gt
 from .labels import NORMAL
 
 IOU_GATE = 0.5
+MAX_POINTS = {1: 25.0, 2: 35.0, 3: 40.0}
 
 # (alert, matched, timing)
 DEFAULT_W2 = (0.2, 0.5, 0.3)
@@ -199,6 +200,13 @@ def score(gt: pd.DataFrame, preds: dict, w2=DEFAULT_W2, w3=DEFAULT_W3) -> dict:
     out.update(score_level_n(gtv, preds, 3, w3))
     vals = [out[k] for k in ("level1", "level2", "level3") if not np.isnan(out.get(k, np.nan))]
     out["overall_mean"] = float(np.mean(vals)) if vals else 0.0
+    # Real weights, read off the live leaderboard 2026-09-05 12:27:
+    # D1 out of 25, D2 out of 35, D3 out of 40. Level 3 is the single most
+    # valuable difficulty and "a difficulty that is never submitted scores zero".
+    out["marks"] = sum(
+        MAX_POINTS[lv] * out[f"level{lv}"]
+        for lv in (1, 2, 3) if not np.isnan(out.get(f"level{lv}", np.nan))
+    )
     return out
 
 

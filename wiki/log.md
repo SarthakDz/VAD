@@ -166,3 +166,27 @@ Overall 0.5253 locally.
 `vehicle_blocking_traffic`. Stage B built and wired (`vlm.py`, `fuse.py`,
 `--vlm` flag on `infer_head`), pipeline verified to be unchanged with it off.
 Escalating to Qwen3-VL-4B in 4-bit. Full detail in [[experiments]].
+
+## [2026-09-05 13:30] finding | Live leaderboard reveals the real scoring weights
+
+D1 out of 25, D2 out of 35, **D3 out of 40** — levels are not equally weighted,
+and Level 3 is both the most valuable and our weakest. Earlier tuning optimised
+an equal-weighted objective and was aiming at the wrong target.
+
+More important: the leaderboard shows **precision and false alarms dominate**.
+The leader scored 85% of D2 having found only 4 of 18 events, on zero false
+alarms; the runner-up found 5 and scored less with 8 false alarms. We had 42
+false alarms. Full analysis in [[scoring]], new module `src/leaderboard.py`
+reports P/R/found/FA in the arena's own units.
+
+## [2026-09-05 13:35] experiment | Stage B dropped after 4B also failed
+
+Qwen3-VL-4B in 4-bit scored 1/6 on probe segments against the head's 3/6 and
+lowered the full run to 0.4976 from 0.5253 at 7.4x the latency. Two model sizes,
+same direction. Kept behind `--vlm`, off by default. See [[experiments]].
+
+## [2026-09-05 13:40] milestone | Final Stage-A submission retuned for precision
+
+`--enter 0.92 --exit 0.30 --merge-gap 20 --min-event 3`. False alarms 42 -> 27,
+precision up on all three difficulties, 41 events, ~49 modelled marks.
+`outputs/submission.json` validated and ready to upload.

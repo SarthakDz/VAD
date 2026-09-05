@@ -241,3 +241,68 @@ overwrote a correct one. If 4B is also mixed, Stage B must be gated rather than
 applied blindly — for example, only overriding on segments where the head's
 class mass is below a threshold, accepting that this cannot fix T025, where the
 head is 98.2% confident and wrong.
+
+## exp-007 — Stage B with Qwen3-VL-4B in 4-bit (negative, decisive)
+
+**2026-09-05 13:10.** 4-bit NF4, loads in 23.9 s, **2.91 GB** weights, 6.89 GB
+peak VRAM, 3.8-9.5 s per call at 8 frames.
+
+Probe segments: **VLM 1/6 correct, head 3/6.** It broke both T028 segments the
+head had right, and missed all three T025 accidents exactly as 2B did.
+
+Full run, 59 calls over 472 frames, 39 of 57 segments relabelled, 0 parse
+failures:
+
+```
+              head only        head + VLM
+LEVEL 1         0.7083           0.6875
+LEVEL 2         0.5972           0.5347
+LEVEL 3         0.2704           0.2704
+OVERALL         0.5253           0.4976
+realtime          41.7x             5.6x
+```
+
+In leaderboard units the D2 collapse is worse than the average suggests: found
+drops 4/18 to 1/18 and false alarms rise 16 to 19.
+
+**Stage B is dropped.** Two model sizes, consistent direction, and a 7.4x
+latency cost for a lower score. `vlm.py` and `fuse.py` stay in the tree behind
+`--vlm`, off by default, because the negative result is worth showing and the
+motion-crop and shortlist code is reusable if a fine-tuned model appears.
+
+Note the runner-up on the live leaderboard runs `qwen3vl4b-lora-finetuned` and
+scores 51.1 — so a 4B Qwen *can* work here, but evidently only fine-tuned, not
+zero-shot. That is M4, and it needs Kaggle.
+
+## exp-008 — retune for the real objective ← current submission
+
+Once the real weighting was known (25/35/40) and the leaderboard showed
+precision dominating, the sweep was rerun on weighted marks with false alarms as
+tiebreak. 1188 configs.
+
+Marks plateau near 49 across a wide range, so the choice became false-alarm risk
+rather than modelled score. Chosen config trades 0.8 modelled marks to cut false
+alarms by a quarter:
+
+```
+--enter 0.92 --exit 0.30 --merge-gap 20 --min-event 3
+```
+
+```
+                     P      R    found   FA        (previous config)
+D1 Clear event      64%    45%    9/20    5              53% 10/20  9
+D2 When it happens  25%    22%    4/18   12              20%  4/18 16
+D3 Long context      9%    12%     1/8   10               6%  1/8  17
+                            41 events, FA 27            57 events, FA 42
+
+LEVEL 1 0.6458   LEVEL 2 0.5972   LEVEL 3 0.2787
+marks ~49/100    41.7x realtime, latency ratio 0.0240
+```
+
+Precision improves on all three difficulties and total false alarms fall 42 to
+27. Modelled marks put us near the current second place (47.6) and far below the
+leader (92.1).
+
+**The honest gap:** we match the leader's Difficulty-2 recall exactly — 4 of 18
+— and lose entirely on precision, 12 false alarms against his 0. Recall is not
+the problem and never was.
