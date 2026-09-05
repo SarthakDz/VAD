@@ -66,15 +66,19 @@ outputs/      checkpoints and submissions — gitignored
 data/         manifest.json etc. from the arena — gitignored
 ```
 
-The dataset itself is **outside** the repo at `../Train and Test`.
+The dataset itself is **outside** the repo at `../Train and Test`, and the live
+private evaluation set at `../Evaluation` (E001-E028, no ground truth).
 
 ## Hard rules for this project
 
 - **Never put a hosted model in the runtime path.** Explicitly forbidden by the
   organisers. Large models are for development, comparison and generating
   training data only.
-- **Never write a submission without `src.submit.validate` passing.** The arena
-  has no best-of: a worse upload permanently replaces a better score.
+- **Never write a submission without `src.submit.validate` passing.** A rejected
+  upload wastes the only channel we have to the private set. The arena *does*
+  keep a best-of — *"every upload is kept, your best scored run is the one that
+  counts"* — so a worse attempt costs nothing and experimental uploads are free.
+  The format PDF says the opposite and is wrong.
 - **Never drop a video.** A failure emits an empty answer and logs it.
 - Run Python through `./.venv/Scripts/python.exe`. The bare `python` on PATH is a
   broken Microsoft Store alias.

@@ -1,6 +1,6 @@
 .venv/
 cache/
-outputs/
+outputs/*
 data/
 __pycache__/
 *.pyc
@@ -8,3 +8,5 @@ node_modules/
 package-lock.json
 deck/*.pdf
 cache*/
+!outputs/submission.json
+!outputs/submission_v5.json
