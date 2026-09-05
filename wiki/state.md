@@ -1,6 +1,6 @@
 # State — where the work stands
 
-**Last updated:** 2026-09-05 17:10
+**Last updated:** 2026-09-05 17:45
 
 ## Position
 
@@ -19,9 +19,15 @@ uploads' strengths is worth building, it does not happen automatically.
 ## Next action — upload these two, in this order
 
 ```
-outputs/submission_v4.json    projected ~50.8   D2/D3 rebuild only, D1 unchanged
-outputs/submission_v5.json    projected ~53.8   v4 plus the D1 threshold at 0.70
+outputs/submission.json       projected ~51   (== v4)  D2/D3 rebuild, D1 near-unchanged
+outputs/submission_v5.json    projected ~54   v4 plus the D1 threshold at 0.70
 ```
+
+`submission.json` is the safe one: its gain comes entirely from D2/D3 mechanisms
+that follow from the scoring formula. v5 additionally bets that the six correct
+D1 calls sit among the nine most confident, which is worth +2.5 if it holds and
+-2.5 if it does not. Upload both; the best run stands either way. The retired
+practice-pack file is preserved as `outputs/submission_practice_47.json`.
 
 Both pass `src.submit.validate` against `data/manifest_eval.json`. v4 first so
 the D2/D3 change is readable on its own; v5 second so the D1 threshold move is

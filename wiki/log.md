@@ -348,3 +348,20 @@ confident ones that reads 15.0/25.
 `scripts/eval_v4.py` emits both. v4 changes D2/D3 only so its effect is readable
 on its own; v5 adds the D1 threshold move. Both pass `src.submit.validate`
 against `data/manifest_eval.json`. Projected 50.8 and 53.8 against 37.2.
+
+## [2026-09-05 17:45] milestone | Deliverables refreshed for the private pack and pushed
+
+`outputs/submission.json` is now v4 and is tracked in git (`.gitignore` uses
+`outputs/*` with negations so the final files survive). The 2-slide deck's slide
+2 was rebuilt around the private pack: MEASURED and PROJECTED constants sit at
+the top of `deck/build_deck.js` so a regenerate after the next upload is a
+one-line edit, and the three findings are now the collection fingerprint, the
+IoU-0.5 width geometry and the leaderboard-as-instrument result. Geometric QA
+clean at 90 shapes, 0 out of bounds.
+
+`README.md` written for a judge arriving cold: pipeline diagram, the results
+table with projections labelled as projections, what the score turned on, real
+run commands, and an honest-limits section. CLAUDE.md's "the arena has no
+best-of" hard rule was corrected — it is contradicted by the arena itself.
+
+Pushed to github.com/SarthakDz/VAD as 55bf8b1.
