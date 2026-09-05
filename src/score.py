@@ -1,244 +1,262 @@
-"""Local scorer with a pluggable metric interface.
+"""Local scorer mirroring the arena's published scheme.
 
-The private metric is not published -- it is revealed on the day. So this
-implements several plausible ones behind `--metric` and prints them all by
-default. Swap the primary once the organisers answer.
+Source: "AHC Visual Intelligence Hackathon Submission format" (2026-09-05).
 
-Metrics
-  binary_f1     video-level anomaly / not-anomaly F1
-  video_acc     primary-class accuracy (one class per video)
-  macro_f1      multilabel macro-F1 over the 12 classes, per video
-  per_class_f1  the same, broken out per class
-  tiou_f1       segment-level F1 at IoU thresholds, averaged (Levels 2-3)
-  frame_f1      per-second class labelling F1 -- the most forgiving temporal view
+    Level 1   pooled over all Level-1 videos:
+                  0.5 * anomaly-vs-normal accuracy  +  0.5 * class accuracy
+    Level 2/3 scored per video, then averaged:
+                  gt normal, predicted nothing  -> 1
+                  gt normal, predicted anything -> 0
+                  gt has events -> weighted mix of alert / matched / timing,
+                                   timing weighted higher at Level 3
+    An event matches only when the class is right AND IoU >= 0.5.
+    One predicted event can match at most one ground-truth event; the rest
+    count against you.
+
+ASSUMPTION -- the exact alert/matched/timing weights are not published. The
+defaults below are a guess consistent with "timing weighs more at Level 3".
+Ask the organisers and set --w2 / --w3. Components are always printed
+separately so a change in weights never hides a weak component.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-from .io_dataset import SUBMISSION_COLS, TEST_COLS, _read_gt
-from .labels import ANOMALY_CLASSES, NORMAL
+from .io_dataset import TEST_COLS, _read_gt
+from .labels import NORMAL
 
-TIOU_THRESHOLDS = (0.1, 0.3, 0.5)
-FRAME_STEP_SEC = 1.0
+IOU_GATE = 0.5
 
-METRICS = {}
+# (alert, matched, timing)
+DEFAULT_W2 = (0.2, 0.5, 0.3)
+DEFAULT_W3 = (0.2, 0.4, 0.4)
 
 
-def metric(name):
-    def deco(fn):
-        METRICS[name] = fn
-        return fn
-    return deco
+# --------------------------------------------------------------------------
+# loading
+
+
+def load_predictions(path: str | Path) -> dict[str, list[dict]]:
+    """video_id -> list of event dicts. Missing video means an empty answer."""
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    out: dict[str, list[dict]] = {}
+    for p in doc.get("predictions", []):
+        out[str(p["video_id"])] = list(p.get("events") or [])
+    return out
+
+
+def gt_by_video(gt: pd.DataFrame) -> dict[str, dict]:
+    """video_id -> {level, is_anomaly, classes, segments}."""
+    out: dict[str, dict] = {}
+    for vid, sub in gt.groupby("video_id"):
+        anom = sub[sub["class_name"] != NORMAL]
+        segs = [
+            (r.class_name, float(r.start_time_sec), float(r.end_time_sec))
+            for r in anom.itertuples()
+            if pd.notna(r.start_time_sec) and pd.notna(r.end_time_sec)
+        ]
+        out[str(vid)] = {
+            "level": int(sub["level"].iloc[0]),
+            "is_anomaly": bool(sub["is_anomaly"].any()),
+            "classes": list(anom["class_name"]),
+            "segments": segs,
+        }
+    return out
 
 
 # --------------------------------------------------------------------------
 # helpers
 
-def _f1(tp: int, fp: int, fn: int) -> float:
-    if tp == 0:
-        return 0.0
-    p, r = tp / (tp + fp), tp / (tp + fn)
-    return 2 * p * r / (p + r)
 
-
-def _video_classes(df: pd.DataFrame) -> dict:
-    """video_id -> set of anomaly classes claimed for it."""
-    out = defaultdict(set)
-    for vid, cls in zip(df["video_id"], df["class_name"]):
-        if cls != NORMAL:
-            out[vid].add(cls)
-    return out
-
-
-def _primary_class(df: pd.DataFrame) -> dict:
-    """video_id -> the single class that best represents it.
-
-    Longest total duration wins; falls back to first-listed for Level 1 rows
-    that carry no timestamps.
-    """
-    best = {}
-    for row in df.itertuples():
-        if row.class_name == NORMAL:
-            best.setdefault(row.video_id, (-1.0, NORMAL))
-            continue
-        dur = 0.0
-        if pd.notna(row.start_time_sec) and pd.notna(row.end_time_sec):
-            dur = float(row.end_time_sec) - float(row.start_time_sec)
-        cur = best.get(row.video_id)
-        if cur is None or dur > cur[0]:
-            best[row.video_id] = (dur, row.class_name)
-    return {v: c for v, (_, c) in best.items()}
-
-
-def _segments(df: pd.DataFrame) -> dict:
-    """(video_id, class_name) -> list of (start, end), anomalies only."""
-    out = defaultdict(list)
-    for row in df.itertuples():
-        if row.class_name == NORMAL:
-            continue
-        if pd.isna(row.start_time_sec) or pd.isna(row.end_time_sec):
-            continue
-        out[(row.video_id, row.class_name)].append(
-            (float(row.start_time_sec), float(row.end_time_sec))
-        )
-    return out
-
-
-def _iou(a, b) -> float:
+def _iou(a: tuple[float, float], b: tuple[float, float]) -> float:
     inter = max(0.0, min(a[1], b[1]) - max(a[0], b[0]))
     union = (a[1] - a[0]) + (b[1] - b[0]) - inter
     return inter / union if union > 0 else 0.0
 
 
-# --------------------------------------------------------------------------
-# metrics
+def _match(gt_segs: list, pred_segs: list) -> list[float]:
+    """Greedy one-to-one matching by IoU. Returns the IoU of each match.
 
-@metric("binary_f1")
-def binary_f1(gt: pd.DataFrame, pred: pd.DataFrame) -> dict:
-    g = gt.groupby("video_id")["is_anomaly"].any()
-    p = pred.groupby("video_id")["is_anomaly"].any().reindex(g.index, fill_value=False)
-    tp = int((g & p).sum())
-    fp = int((~g & p).sum())
-    fn = int((g & ~p).sum())
-    tn = int((~g & ~p).sum())
-    return {
-        "binary_f1": _f1(tp, fp, fn),
-        "binary_acc": (tp + tn) / max(1, len(g)),
-        "b_tp": tp, "b_fp": fp, "b_fn": fn, "b_tn": tn,
-    }
-
-
-@metric("video_acc")
-def video_acc(gt: pd.DataFrame, pred: pd.DataFrame) -> dict:
-    g, p = _primary_class(gt), _primary_class(pred)
-    hits = sum(1 for v, c in g.items() if p.get(v, NORMAL) == c)
-    return {"video_acc": hits / max(1, len(g)), "n_videos": len(g)}
-
-
-@metric("per_class_f1")
-def per_class_f1(gt: pd.DataFrame, pred: pd.DataFrame) -> dict:
-    g, p = _video_classes(gt), _video_classes(pred)
-    vids = set(gt["video_id"])
-    per = {}
-    for c in ANOMALY_CLASSES:
-        tp = sum(1 for v in vids if c in g.get(v, set()) and c in p.get(v, set()))
-        fp = sum(1 for v in vids if c not in g.get(v, set()) and c in p.get(v, set()))
-        fn = sum(1 for v in vids if c in g.get(v, set()) and c not in p.get(v, set()))
-        per[c] = {"f1": _f1(tp, fp, fn), "tp": tp, "fp": fp, "fn": fn, "support": tp + fn}
-    return {"_per_class": per}
+    Class must agree and IoU must clear the gate. Extra fragments cannot
+    double-match a single ground-truth event -- exactly the behaviour trap 4
+    warns about.
+    """
+    pairs = []
+    for pi, (pc, ps, pe) in enumerate(pred_segs):
+        for gi, (gc, gs, ge) in enumerate(gt_segs):
+            if pc != gc:
+                continue
+            v = _iou((ps, pe), (gs, ge))
+            if v >= IOU_GATE:
+                pairs.append((v, pi, gi))
+    pairs.sort(reverse=True)
+    used_p, used_g, ious = set(), set(), []
+    for v, pi, gi in pairs:
+        if pi in used_p or gi in used_g:
+            continue
+        used_p.add(pi)
+        used_g.add(gi)
+        ious.append(v)
+    return ious
 
 
-@metric("macro_f1")
-def macro_f1(gt: pd.DataFrame, pred: pd.DataFrame) -> dict:
-    per = per_class_f1(gt, pred)["_per_class"]
-    present = [c for c in ANOMALY_CLASSES if per[c]["support"] > 0]
-    return {
-        "macro_f1": float(np.mean([per[c]["f1"] for c in present])) if present else 0.0,
-        "n_classes_present": len(present),
-    }
-
-
-@metric("tiou_f1")
-def tiou_f1(gt: pd.DataFrame, pred: pd.DataFrame) -> dict:
-    gs, ps = _segments(gt), _segments(pred)
-    out = {}
-    for thr in TIOU_THRESHOLDS:
-        tp = fp = fn = 0
-        for key in set(gs) | set(ps):
-            gsegs, psegs = list(gs.get(key, [])), list(ps.get(key, []))
-            used = set()
-            for pseg in psegs:
-                best_i, best_v = -1, thr
-                for i, gseg in enumerate(gsegs):
-                    if i in used:
-                        continue
-                    v = _iou(pseg, gseg)
-                    if v >= best_v:
-                        best_i, best_v = i, v
-                if best_i >= 0:
-                    used.add(best_i)
-                    tp += 1
-                else:
-                    fp += 1
-            fn += len(gsegs) - len(used)
-        out["tiou_f1@" + str(thr)] = _f1(tp, fp, fn)
-    out["tiou_f1_avg"] = float(np.mean(list(out.values())))
+def _pred_segments(events: list[dict]) -> list:
+    out = []
+    for e in events:
+        s, t = e.get("start_time_sec"), e.get("end_time_sec")
+        if s is None or t is None:
+            continue
+        out.append((e.get("class_name"), float(s), float(t)))
     return out
 
 
-@metric("frame_f1")
-def frame_f1(gt: pd.DataFrame, pred: pd.DataFrame) -> dict:
-    """Quantise both sides to 1-second bins and compare class labels."""
-    horizon = defaultdict(float)
-    for df in (gt, pred):
-        for row in df.itertuples():
-            if pd.notna(row.end_time_sec):
-                horizon[row.video_id] = max(horizon[row.video_id], float(row.end_time_sec))
+# --------------------------------------------------------------------------
+# scoring
 
-    tp = fp = fn = 0
-    for vid, end in horizon.items():
-        n = max(1, int(np.ceil(end / FRAME_STEP_SEC)))
-        gl = [set() for _ in range(n)]
-        pl = [set() for _ in range(n)]
-        for df, lanes in ((gt, gl), (pred, pl)):
-            sub = df[df["video_id"] == vid]
-            for row in sub.itertuples():
-                if row.class_name == NORMAL or pd.isna(row.start_time_sec):
-                    continue
-                lo = int(np.floor(float(row.start_time_sec) / FRAME_STEP_SEC))
-                hi = int(np.ceil(float(row.end_time_sec) / FRAME_STEP_SEC))
-                for t in range(max(0, lo), min(n, hi)):
-                    lanes[t].add(row.class_name)
-        for a, b in zip(gl, pl):
-            tp += len(a & b)
-            fp += len(b - a)
-            fn += len(a - b)
-    return {"frame_f1": _f1(tp, fp, fn), "f_tp": tp, "f_fp": fp, "f_fn": fn}
+
+def score_level1(gtv: dict, preds: dict) -> dict:
+    vids = [v for v, g in gtv.items() if g["level"] == 1]
+    if not vids:
+        return {"level1": float("nan"), "l1_binary_acc": float("nan"),
+                "l1_class_acc": float("nan"), "l1_n": 0}
+
+    bin_hits = cls_hits = 0
+    for v in vids:
+        g = gtv[v]
+        ev = preds.get(v, [])
+        pred_anom = len(ev) > 0
+        if pred_anom == g["is_anomaly"]:
+            bin_hits += 1
+
+        # "One label for the whole clip" -- the first event is the answer;
+        # repeating a class earns nothing extra.
+        gt_cls = g["classes"][0] if g["classes"] else NORMAL
+        pred_cls = ev[0].get("class_name") if ev else NORMAL
+        if pred_cls == gt_cls:
+            cls_hits += 1
+
+    n = len(vids)
+    b, c = bin_hits / n, cls_hits / n
+    return {"level1": 0.5 * b + 0.5 * c, "l1_binary_acc": b, "l1_class_acc": c, "l1_n": n}
+
+
+def score_video_temporal(g: dict, events: list[dict], weights: tuple) -> tuple[float, dict]:
+    pred = _pred_segments(events)
+
+    if not g["is_anomaly"]:
+        # Trap 5: any prediction on a normal video scores that video zero.
+        return (1.0 if not events else 0.0), {"alert": 0.0, "matched": 0.0, "timing": 0.0}
+
+    if not pred:
+        return 0.0, {"alert": 0.0, "matched": 0.0, "timing": 0.0}
+
+    ious = _match(g["segments"], pred)
+    n_gt, n_pred, n_ok = len(g["segments"]), len(pred), len(ious)
+
+    alert = 1.0
+    recall = n_ok / n_gt if n_gt else 0.0
+    precision = n_ok / n_pred if n_pred else 0.0
+    matched = 2 * precision * recall / (precision + recall) if n_ok else 0.0
+    timing = float(np.mean(ious)) if ious else 0.0
+
+    wa, wm, wt = weights
+    return wa * alert + wm * matched + wt * timing, {
+        "alert": alert, "matched": matched, "timing": timing,
+    }
+
+
+def score_level_n(gtv: dict, preds: dict, level: int, weights: tuple) -> dict:
+    vids = [v for v, g in gtv.items() if g["level"] == level]
+    if not vids:
+        return {f"level{level}": float("nan"), f"l{level}_n": 0}
+
+    totals, comps = [], defaultdict(list)
+    for v in vids:
+        s, c = score_video_temporal(gtv[v], preds.get(v, []), weights)
+        totals.append(s)
+        if gtv[v]["is_anomaly"]:
+            for k, val in c.items():
+                comps[k].append(val)
+
+    out = {f"level{level}": float(np.mean(totals)), f"l{level}_n": len(vids)}
+    for k in ("alert", "matched", "timing"):
+        out[f"l{level}_{k}"] = float(np.mean(comps[k])) if comps[k] else float("nan")
+    return out
+
+
+def score(gt: pd.DataFrame, preds: dict, w2=DEFAULT_W2, w3=DEFAULT_W3) -> dict:
+    gtv = gt_by_video(gt)
+    out = {}
+    out.update(score_level1(gtv, preds))
+    out.update(score_level_n(gtv, preds, 2, w2))
+    out.update(score_level_n(gtv, preds, 3, w3))
+    vals = [out[k] for k in ("level1", "level2", "level3") if not np.isnan(out.get(k, np.nan))]
+    out["overall_mean"] = float(np.mean(vals)) if vals else 0.0
+    return out
+
+
+def confusion_l1(gtv: dict, preds: dict) -> list[tuple[str, str, str]]:
+    rows = []
+    for v, g in sorted(gtv.items()):
+        if g["level"] != 1:
+            continue
+        ev = preds.get(v, [])
+        rows.append((v, g["classes"][0] if g["classes"] else NORMAL,
+                     ev[0].get("class_name") if ev else NORMAL))
+    return rows
 
 
 # --------------------------------------------------------------------------
 
-def score_all(gt: pd.DataFrame, pred: pd.DataFrame, which=None) -> dict:
-    names = which or [n for n in METRICS if n != "per_class_f1"]
-    out = {}
-    for n in names:
-        out.update({k: v for k, v in METRICS[n](gt, pred).items() if not k.startswith("_")})
-    return out
+
+def _weights(s: str | None, default: tuple) -> tuple:
+    if not s:
+        return default
+    parts = tuple(float(x) for x in s.split(","))
+    if len(parts) != 3:
+        raise SystemExit("weights must be alert,matched,timing")
+    return parts
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pred", required=True)
-    ap.add_argument("--gt", required=True)
-    ap.add_argument("--metric", action="append", choices=sorted(METRICS),
-                    help="repeatable; default is every metric")
-    ap.add_argument("--per-class", action="store_true")
+    ap.add_argument("--pred", required=True, help="submission JSON")
+    ap.add_argument("--gt", required=True, help="public test ground_truth.csv")
+    ap.add_argument("--w2", help="Level-2 weights 'alert,matched,timing'")
+    ap.add_argument("--w3", help="Level-3 weights 'alert,matched,timing'")
+    ap.add_argument("--per-video", action="store_true")
     a = ap.parse_args()
 
     gt = _read_gt(Path(a.gt), TEST_COLS)
-    pred = _read_gt(Path(a.pred), SUBMISSION_COLS)
+    preds = load_predictions(a.pred)
+    gtv = gt_by_video(gt)
 
-    print("gt:   %4d rows / %d videos" % (len(gt), gt["video_id"].nunique()))
-    print("pred: %4d rows / %d videos\n" % (len(pred), pred["video_id"].nunique()))
+    answered = sum(1 for v in gtv if v in preds)
+    print(f"gt:   {len(gt)} rows / {len(gtv)} videos")
+    print(f"pred: {answered} videos answered "
+          f"({sum(1 for v in gtv if preds.get(v))} with events)\n")
 
-    for k, v in score_all(gt, pred, a.metric).items():
-        if isinstance(v, float):
-            print("  %-20s %.4f" % (k, v))
-        else:
-            print("  %-20s %s" % (k, v))
+    res = score(gt, preds, _weights(a.w2, DEFAULT_W2), _weights(a.w3, DEFAULT_W3))
 
-    if a.per_class:
-        print("\n  class                              f1     tp   fp   fn  supp")
-        for c, m in per_class_f1(gt, pred)["_per_class"].items():
-            print("  %-32s %.3f  %4d %4d %4d  %4d"
-                  % (c, m["f1"], m["tp"], m["fp"], m["fn"], m["support"]))
+    print(f"  LEVEL 1  {res['level1']:.4f}   (n={res['l1_n']})")
+    print(f"      binary_acc {res['l1_binary_acc']:.4f}   class_acc {res['l1_class_acc']:.4f}")
+    for lv in (2, 3):
+        print(f"  LEVEL {lv}  {res[f'level{lv}']:.4f}   (n={res[f'l{lv}_n']})")
+        print(f"      alert {res[f'l{lv}_alert']:.4f}   "
+              f"matched {res[f'l{lv}_matched']:.4f}   timing {res[f'l{lv}_timing']:.4f}")
+    print(f"\n  OVERALL (unweighted mean) {res['overall_mean']:.4f}")
+
+    if a.per_video:
+        print("\n  Level-1 predictions")
+        for v, g, p in confusion_l1(gtv, preds):
+            print(f"    {v}  gt={g:34s} pred={p}{'' if g == p else '   MISS'}")
 
 
 if __name__ == "__main__":
