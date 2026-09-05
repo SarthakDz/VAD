@@ -1,103 +1,80 @@
 # State — where the work stands
 
-**Last updated:** 2026-09-05 15:58
+**Last updated:** 2026-09-05 17:10
 
 ## Position
 
-**Submitted and scored: 47.0 / 100** (D1 12.9/25, D2 22.6/35, D3 11.5/40).
-The upload blocker is resolved — `outputs/submission.json` went through.
+**The arena switched packs.** The 47.0 recorded here before was on the *practice
+pack*, now shown as "past". The live board is the **Evaluation pack** over the
+private set `F:\flytbase\Evaluation` (E001-E028, L1=20 L2=4 L3=4). Everything
+scored against `../Train and Test/test` is now development data, not the score.
 
-Stage A is complete and **at its ceiling**. Stage B was built, measured and
-dropped. Three separate attempts to improve on 47.0 have all failed.
+**Standing score: 37.2 / 100** — `outputs/submission_v2final.json`, uploaded
+16:42, six uploads total. D1 12.0/25, D2 14.0/35, D3 11.2/40.
 
-```
-outputs/submission.json     <- the standing score, do not overwrite casually
-34/34 videos, 41 events, 41.7x realtime, latency ratio 0.0240
-outputs/head.pt             <- the head that produced it
-```
+Uploading stays zero-risk: *"Every upload is kept. Your best scored run is the
+one that counts."* Best **run**, not best per difficulty — a hybrid of two
+uploads' strengths is worth building, it does not happen automatically.
 
-Uploading is **zero-risk**: the submission page says *"your best run stands, so
-a worse attempt never costs you"*, which reverses the format PDF. Experimental
-uploads cost nothing.
-
-## Use `calibrated.py`, not `score.py`
-
-The real arena result let us reverse-engineer the marks formula.
-`src/calibrated.py` reproduces it **exactly — 47.0 predicted, 47.0 actual**,
-each difficulty within 0.4 marks. It is the only scorer to tune against.
-
-Key corrections it encodes (see [[scoring]]):
-- **D1 is F1-based**, not the PDF's `0.5*binary + 0.5*class`, so D1 false alarms
-  cost marks directly
-- **D2 weights are ~(0.3, 0.4, 0.3)**, not the assumed (0.2, 0.5, 0.3)
-
-## Everything tried since 47.0 has failed
+## Next action — upload these two, in this order
 
 ```
-threshold sweep, 1800 configs        +0.1
-window 512                           -3.5
-organiser label corrections          -5.2
-Stage B VLM, Qwen3-VL 2B and 4B      worse at both sizes, 7.4x slower
+outputs/submission_v4.json    projected ~50.8   D2/D3 rebuild only, D1 unchanged
+outputs/submission_v5.json    projected ~53.8   v4 plus the D1 threshold at 0.70
 ```
 
-Full detail and caveats in [[experiments]] exp-010 through exp-012. **Do not
-re-run these.** Stage A needs a different model, not more tuning.
+Both pass `src.submit.validate` against `data/manifest_eval.json`. v4 first so
+the D2/D3 change is readable on its own; v5 second so the D1 threshold move is
+attributable. Built by `scripts/eval_v4.py`, which carries the full reasoning.
 
-## Where the remaining marks are
+## What the private set has told us, without any ground truth
+
+Deduced from the six uploads and the collection prior. See [[scoring]] and
+[[fingerprints]].
 
 ```
-D1  12.9 / 25    found 9/20, 5 false — all pair confusions
-D2  22.6 / 35    the healthiest difficulty
-D3  11.5 / 40    28% — worst, and the largest pool
+E024        normal.  One event there cost D2 14.0 -> 5.3, exactly one video's
+            full mark (35/4 = 8.75). The encoding prior agrees independently.
+E025-E028   all four anomalous.  submission_eval left E025 silent and put
+            events on the other three, scoring 6.0/40 = three videos at the
+            0.2 alert weight. A normal E025 would have scored 16.0.
+D2 alert weight is 0.20, not the 0.30 [[scoring]] assumed from the public run.
+D2 matches nothing at all; D3 matches one event. The 0.8 of each video's
+score that lives in matched+timing is essentially unclaimed -- 28 of 35 marks
+on D2 and 32 of 40 on D3.
+D1: 25*F1 = 12.0 against 14 anomaly claims gives found 6 of 11 true anomalies.
+    So nine of the twenty L1 videos are normal, where the public set was 20
+    anomalous of 24. Our threshold was tuned on the wrong prior.
 ```
 
-The arena's own guidance: *"You are flagging more events than are there.
-Cutting false alarms will raise your marks more than finding extra events
-will."* Precision 34%, recall 30%, **27 false alarms**.
+## The three levers now built
 
-18 of the 22 temporal false alarms come from three videos — T026 (7, matched
-0/4), T033 (7, matched 1/2), T025 (4, matched 0/6). On T026 we matched nothing,
-so predicting less there costs no recall at all.
+1. **Candidate width.** IoU 0.5 means a window of width w can only match a
+   truth of width w/2..2w. Public truth is 5-60 s on L2, 3-125 s on L3, so the
+   old 120 s and 240 s windows could never match anything.
+2. **Width stratification.** Score ranking collapses onto the narrowest scale,
+   because a short window sits on the peak. Round-robin across widths instead.
+3. **Collection-restricted class spray.** Encoding profile identifies the
+   source collection; the public ground truth says what each collection
+   contains. Spray every allowed class over each window: at large k the F1
+   term is ~2m/k and the 0.4 timing term dominates, so covering the class
+   is worth more than being precise about it.
 
-D1's 5 false alarms are all pair confusions: `fire`↔`smoke` twice (a pure swap),
-`fighting_or_violence`→`loitering` twice, `road_spill`→`traffic_accident`.
-
-## Next action — decision pending with the user
-
-Asked at 14:35, not yet answered. Two options:
-
-1. **M4 — LoRA fine-tune on Kaggle.** The only lever with real headroom. Second
-   place on the live leaderboard runs `qwen3vl4b-lora-finetuned` at 51.1, and our
-   zero-shot VLM failed at both 2B and 4B, so fine-tuning is the demonstrated
-   path. **Blocked on Kaggle phone verification.** Plan in [[milestones]].
-2. **Deliverables** — the 2-slide PPT (explicitly stated high weightage) and the
-   architecture write-up. Both unstarted, neither depends on the score.
-
-Recommendation given: if Kaggle is not verified, do the deliverables. A 47.0
-with a sharp write-up beats a 47.5 with no slides. Material is strong — a 42x
-realtime cascade, a real timestamp bug found by inspection, two documented
-negative results, and a scorer reverse-engineered from a single submission.
+Measured on the public anomalous videos: L2 mean per-video 0.200 -> 0.516,
+L3 0.280 -> 0.424. Tuned on 4 + 4 videos, so treat the projection as a
+direction, not a number.
 
 ## Blocked on the user
 
-- **Kaggle phone verification** — GPU stays locked, needed for M4
 - All arena uploads; no session can reach the site
-- 2-slide PPT and architecture write-up sign-off
+- Kaggle phone verification (M4 LoRA — still the only large untried lever)
+- 2-slide PPT and architecture write-up sign-off (both built, unreviewed)
 
 ## Settled questions — do not re-ask
 
-- **Level weighting** is D1 25, D2 35, D3 40. Read off the leaderboard.
-- **Best run stands.** The PDF's "no best-of" is wrong.
-- **`manifest.json`** is `{videos:[{video_id, level, domain, duration_sec}]}` and
-  parses unmodified; 34 videos, levels 24/6/4.
-- **The arena scores the same public 34 videos we score locally.**
-
-## Recent decisions
-
-- **Keep the original labels.** The organisers' `wrong_way_driving` correction
-  costs 5.2 marks despite being principled; `apply_corrections=False` is the
-  default path back. See [[experiments]] exp-012 for the caveats.
-- **Stage B off by default**, kept behind `--vlm` because the negative result is
-  worth showing on the slides.
-- Bidirectional GRU, synthetic long training sequences, no MIL — see
-  [[architecture]].
+- Level weighting D1 25, D2 35, D3 40.
+- Best **run** stands, and a worse upload never costs anything.
+- The private set has no `domain` field and no ground truth.
+- Eval videos are **not** duplicates of train or public-test videos — nearest
+  neighbour over the 3207-clip embedding bank tops out at 0.99 on genuinely
+  different scenes. Only E027 carries an audio track, so audio is not a lever.

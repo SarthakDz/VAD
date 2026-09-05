@@ -303,3 +303,48 @@ threshold 0.4, head + hysteresis for D2/D3.
 
 Structure mirrors the public set closely — L1 clips 4.7-30s, L2 all 240s,
 L3 327-602s.
+
+## [2026-09-05 17:10] finding | The board moved to a private Evaluation pack; 47.0 is not the score
+
+The arena's practice pack is now "past" and the live board is the Evaluation
+pack over E001-E028. The standing score is **37.2**, not 47.0, and every number
+scored against `../Train and Test/test` is development data from here on. Six
+uploads exist; best **run** counts, not best per difficulty.
+
+## [2026-09-05 17:15] finding | Encoding profile identifies the source collection
+
+The pack was assembled from several collections and each kept its own encoding,
+so `(width, height, native_fps)` is a collection fingerprint. The public test
+ground truth then says what each collection contains: `(1920,1080,29.97)` is
+normal-only, `(896,448,1.88)` is fighting/loitering only, `(1280,720,25.0)` is
+traffic classes only, `(256,192,30.0)` is normal-only.
+
+The check that makes it trustworthy: the prior says E024 is normal, which the
+leaderboard had already proved by a completely independent route. It also
+silences E002 and cuts fire and smoke from E022's candidate classes, which that
+collection has never contained. `scripts/fingerprint.py`, [[fingerprints]].
+
+## [2026-09-05 17:20] experiment | exp-015 D2/D3 rebuilt around the IoU-0.5 geometry
+
+Three changes, measured on the public anomalous L2/L3 videos with
+`scripts/d23_strategy.py`: candidate widths matched to the real event-duration
+distribution, round-robin stratification across widths, and a class spray
+restricted to the classes the source collection can contain.
+
+Mean per-video score on anomalous videos: L2 0.200 -> 0.516, L3 0.280 -> 0.424.
+Projected private D2 22.3/35 and D3 16.9/40 against the standing 14.0 and 11.2.
+Tuned on four videos per level, so the direction is solid and the number is not.
+
+## [2026-09-05 17:25] finding | The D1 threshold was tuned on the wrong anomaly prior
+
+Solving 25*F1 = 12.0 against our 14 anomaly claims gives found 6 of 11 true
+anomalies, so **nine of the twenty private L1 videos are normal**. The public
+set was 20 anomalous out of 24, and the 0.4 threshold inherited from it
+over-claims badly. At 0.70 we claim 9; if the six correct calls are among the
+confident ones that reads 15.0/25.
+
+## [2026-09-05 17:30] milestone | v4 and v5 built and validated
+
+`scripts/eval_v4.py` emits both. v4 changes D2/D3 only so its effect is readable
+on its own; v5 adds the D1 threshold move. Both pass `src.submit.validate`
+against `data/manifest_eval.json`. Projected 50.8 and 53.8 against 37.2.

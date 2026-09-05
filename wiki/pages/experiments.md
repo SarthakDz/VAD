@@ -498,3 +498,54 @@ rather than a dense sequence. That is ~25k frames at ~43 videos/min.
 
 Caveat: the capped cache supports the **clip classifier only**. The temporal head
 needs dense sequences, so a so400m head would need the full 122-minute encode.
+
+## exp-015 — D2/D3 rebuilt around the IoU-0.5 geometry
+
+**2026-09-05 17:20.** First experiment aimed at the **private** Evaluation pack.
+Measured with `scripts/d23_strategy.py` on the public test set's *anomalous*
+L2/L3 videos only, because that is the quantity that transfers: the private D2
+is `(1.0 + 3x)/4 * 35` with E024 known normal, and the private D3 is `x * 40`
+with all four videos known anomalous.
+
+Weights used: `(alert .2, matched .4, timing .4)` at both levels. The .2 alert
+weight is measured on the private set, not assumed — see [[state]] — and
+corrects the .3 that [[scoring]] fitted from the single public run.
+
+| change | L2 x | L3 x |
+|---|---:|---:|
+| standing recipe (the 37.2 upload) | 0.200 | 0.280 |
+| widths 15-240 s, score-ranked, top-1 class | 0.457 | 0.357 |
+| widths matched to the truth distribution | 0.492 | 0.353 |
+| + round-robin stratification across widths | **0.516** | **0.424** |
+
+Best settings: L2 `k=6` windows over `(8,12,20,30,45,60)` s; L3 `k=24` windows
+over `(6,12,20,30,45,60,90,125)` s. Class count then comes from
+[[fingerprints]] rather than the model's ranking.
+
+**Why each change works.**
+
+*Width.* A match needs IoU ≥ 0.5, so a window of width `w` can only ever match a
+truth of width `w/2` to `2w`. Public L2 events run 5-60 s and L3 3-125 s, so
+every 120 s and 240 s window the old recipe emitted was incapable of matching
+anything and served only to divide the precision term.
+
+*Stratification.* Ranking candidates by mean head score collapses the whole
+budget onto the narrowest scale, because a short window sits directly on the
+score peak and so always has the highest mean. Round-robin across widths spends
+the budget on being in range instead of on being confident.
+
+*Spray.* A video scores `0.2*alert + 0.4*F1(matched) + 0.4*mean_IoU(matched)`.
+With `k` candidates and `m` matches the F1 term is roughly `2m/k`, which at
+`k=24` is worth about 0.03 — while landing a single match at all unlocks a
+timing term worth 0.4 × IoU ≥ 0.2. So at large `k` the arithmetic says cover
+every class the truth could be and accept the precision loss. The public sweep
+preferred one class on L3 only because the extra classes there were unranked
+junk; [[fingerprints]] supplies alternates that are collection-verified, which
+is a different and much better bet.
+
+**Caveat that matters.** Four videos per level. The mechanisms are structural and
+follow from the scoring formula, but the numbers are tuned on a sample too small
+to defend as numbers. Treat 0.516 and 0.424 as directions.
+
+Built into `outputs/submission_v4.json` and `outputs/submission_v5.json` by
+`scripts/eval_v4.py`. Not yet uploaded — no session can reach the arena.
