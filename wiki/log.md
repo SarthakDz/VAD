@@ -276,3 +276,30 @@ A clip classifier at 86.8% held-out accuracy finds **exactly 9/20 on D1 — the
 same as the temporal head**, and every ensemble and abstention threshold caps at
 47.0. Two independent architectures, one number: this is a representation limit.
 so400m re-encode started to test it. See [[experiments]] exp-013, exp-014.
+
+## [2026-09-05 16:25] experiment | Dual-encoder ensemble breaks the D1 wall — 49.1
+
+Three models had each found exactly 9/20 on D1: the temporal head, a SigLIP-base
+clip classifier, and a so400m clip classifier. **Averaging the base and so400m
+classifiers finds 11/20** — they make different mistakes (so400m fixed the
+fire/smoke confusion base got wrong at 0.88 confidence; base caught cases so400m
+missed). D1 13.2 -> 15.3, total **47.0 -> 49.1** on the public set.
+
+So the representation ceiling was real, but the fix was ensembling two
+representations rather than replacing one with a bigger one.
+
+## [2026-09-05 16:35] milestone | Private evaluation set found and processed
+
+`F:\flytbase\Evaluation` holds the private set: **E001-E028**, L1=20, L2=4, L3=4,
+ground truth excluded. This explains the earlier rejection — the arena had
+switched from the public T0xx set, so a T0xx file legitimately had "no videos
+belonging to this level".
+
+Encoded all 28 with base (1.4 min, 32.8x realtime) plus the 20 L1 videos with
+so400m for the ensemble. `data/manifest_eval.json` built from the per-level
+videos.csv files with real durations. Final submission
+`outputs/submission_eval.json` uses the best measured recipe: ensemble D1 at
+threshold 0.4, head + hysteresis for D2/D3.
+
+Structure mirrors the public set closely — L1 clips 4.7-30s, L2 all 240s,
+L3 327-602s.
