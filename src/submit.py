@@ -38,6 +38,30 @@ class SubmissionError(ValueError):
 # manifest
 
 
+def load_template(path: str | Path) -> list[str]:
+    """Video IDs, in order, from the arena's *starter template*.
+
+    The template is not the manifest. It is a pre-filled answer sheet -- every
+    entry is `{video_id, events, runtime_metadata}` and carries **no `level`
+    field**, so levels must still come from manifest.json. Passing a template
+    to `load_manifest` fails loudly rather than guessing, which is deliberate:
+    a wrong level means every event on that video is rejected (trap 2).
+
+    Level cannot be reliably inferred from the template either. A normal video
+    has an empty `events` list and says nothing about its level, and while
+    null timestamps imply Level 1 and populated ones imply Level 2 or 3, that
+    only covers entries that happen to carry an example event.
+    """
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    preds = doc.get("predictions")
+    if not isinstance(preds, list):
+        raise SubmissionError(f"{path}: no `predictions` list -- is this the starter template?")
+    ids = [str(p["video_id"]) for p in preds if "video_id" in p]
+    if not ids:
+        raise SubmissionError(f"{path}: template contains no video_ids")
+    return ids
+
+
 def load_manifest(path: str | Path) -> dict[str, int]:
     """video_id -> level.
 
@@ -71,6 +95,12 @@ def load_manifest(path: str | Path) -> dict[str, int]:
             raise SubmissionError(f"{path}: expected objects in the video list, got {type(r).__name__}")
         vid = r.get("video_id") or r.get("id") or r.get("video")
         lvl = r.get("level") or r.get("tier")
+        if vid is not None and lvl is None and "runtime_metadata" in r:
+            raise SubmissionError(
+                f"{path}: this is the arena STARTER TEMPLATE, not manifest.json -- "
+                "its entries carry answers but no `level`. Download manifest.json "
+                "from the Benchmark tab, or use load_template() for the ID list."
+            )
         if vid is None or lvl is None:
             raise SubmissionError(f"{path}: entry missing video_id/level: {r}")
         out[str(vid)] = int(lvl)
@@ -262,6 +292,7 @@ def build(
     model_name: str,
     total_wall_time_ms: float,
     hardware: str,
+    max_parallel_videos: int = 1,
 ) -> dict:
     return {
         "schema_version": SCHEMA_VERSION,
@@ -269,6 +300,8 @@ def build(
         "model_name": model_name,
         "run_metadata": {
             "total_wall_time_ms": round(total_wall_time_ms, 1),
+            # Seen in the arena starter template, absent from the format PDF.
+            "max_parallel_videos": int(max_parallel_videos),
             "hardware": hardware,
         },
         "predictions": [p.to_json() for p in predictions],

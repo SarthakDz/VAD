@@ -131,3 +131,30 @@ fragmented-oracle conclusion in [[scoring]].
 Also surfaced `nvidia/Cosmos-Embed1-448p-anomaly-detection`, a purpose-built VAD
 embedding model with the same 768 dims as our SigLIP encoder — attractive but
 clip-level not frame-level, and licensed "other". Full notes in [[prior-art]].
+
+## [2026-09-05 12:15] finding | Real manifest.json received and validated
+
+Shape is `{schema_version, videos: [{video_id, level, domain, duration_sec}]}`.
+`load_manifest` parsed it unmodified. **34 videos, levels 24/6/4** — so the arena
+runs the public test set, not a separate 28-video set as the format PDF's example
+implied. Zero level mismatches and zero duration deltas over 1 s against our own
+`test/ground_truth.csv` and decoded metadata, which independently confirms the
+dataset audit and the timestamp fix.
+
+Because the arena scores the same 34 videos we score locally, **our local scorer
+should track the live one closely** — the first real run can be used to calibrate
+the assumed Level 2/3 weights in [[scoring]].
+
+`domain` is empty on all 34; likely populated on the private set.
+
+Also processed the arena **starter template**, which is a different file: entries
+are `{video_id, events, runtime_metadata}` with **no `level`**, so it cannot drive
+output. Added `load_template()` for the ID list and made `load_manifest` detect a
+template and say so. The template also revealed an undocumented field,
+`run_metadata.max_parallel_videos`, now emitted.
+
+## [2026-09-05 12:16] milestone | First manifest-driven submission ready
+
+`outputs/submission.json` — 34/34 videos, 57 events, 17.2 KB of the 5 MB limit,
+0 events past their manifest duration, all 11 validation traps pass.
+Overall 0.5253 locally.
