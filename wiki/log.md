@@ -261,3 +261,18 @@ The corrections result is genuinely surprising and worth re-reading before
 anyone repeats it: re-labelling 108 of 164 `wrong_way_driving` videos as normal
 is the organisers' own fix and should help, but costs 5.2 marks here, almost all
 of it Level-3 recall.
+
+## [2026-09-05 15:45] milestone | Deliverables built
+
+`deck/AHC_VAD_submission.pptx` — 2 slides, validation passed, geometric QA clean
+(LibreOffice unavailable, so bounds were checked arithmetically via python-pptx,
+which caught a real right-edge overflow). `deck/architecture.html` — 18.5 KB,
+both themes, also published at
+https://claude.ai/code/artifact/2bd4ee9f-d91a-445b-96d0-df781d70f79c
+
+## [2026-09-05 15:55] finding | The ceiling is the encoder, not the head
+
+A clip classifier at 86.8% held-out accuracy finds **exactly 9/20 on D1 — the
+same as the temporal head**, and every ensemble and abstention threshold caps at
+47.0. Two independent architectures, one number: this is a representation limit.
+so400m re-encode started to test it. See [[experiments]] exp-013, exp-014.

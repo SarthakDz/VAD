@@ -455,3 +455,46 @@ organiser label corrections     -5.2
 
 `outputs/submission.json` at 47.0 stands. Further gains need a different model
 (M4 LoRA), not more tuning of this one.
+
+## exp-013 — clip classifier (the D1 diagnosis)
+
+Built `src/clip_classifier.py` + `train_clip.py`: mean+max pooled SigLIP features
+over a clip's event interval -> MLP -> 12 classes. Motivation: the GRU trains on
+synthesised 128 s concatenations, but every training clip is ~5 s, so a
+classifier trained on what the data actually *is* should convert Difficulty 1
+better than reading it off the temporal head.
+
+**86.8% held-out accuracy** (82% on anomalies only). Per class it names our exact
+failures: `wrong_way_driving` .58, `smoke` .50, `fire` .64, `fighting` .61.
+
+But on the real test set it scores **9/20 on D1 — identical to the temporal
+head**, and the full pipeline lands at 36.5 marks (D2/D3 are much worse than the
+head's windowing).
+
+Sweeping the D1 source (head / clip / ensemble) across seven abstention
+thresholds: **every combination caps at 47.0**. Both models find exactly 9 of 20.
+
+### The conclusion this forces
+
+Two independent architectures hitting an identical number is a **representation**
+limit, not a modelling one. The clearest case: T014 and T015 are `smoke`,
+predicted `fire` at 0.97 and 0.88 confidence.
+
+86.8% held-out against ~50% on test is the train/test **source-domain split**
+doing exactly what [[dataset-audit]] warned it would. In-domain validation
+overstates test accuracy, and that gap is what caps this system at 47.
+
+## exp-014 — so400m re-encode (running)
+
+The one lever that attacks the representation directly: swap
+`siglip-base-patch16-224` (86M, 768-dim) for `siglip-so400m-patch14-384` (400M,
+1152-dim). Every module already takes `--cache`, so it is a drop-in rerun.
+
+Measured throughput: **16.3 frames/s** against base's 102.8. The test split
+(6.6k frames) is encoded. The train split at 2 fps is **119,173 frames = 122
+minutes**, which does not fit before freeze — so the train encode runs capped at
+`--max-frames 8`, since the clip classifier needs one pooled vector per clip
+rather than a dense sequence. That is ~25k frames at ~43 videos/min.
+
+Caveat: the capped cache supports the **clip classifier only**. The temporal head
+needs dense sequences, so a so400m head would need the full 122-minute encode.
