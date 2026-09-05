@@ -1,34 +1,52 @@
 # State — where the work stands
 
-**Last updated:** 2026-09-05 18:30
+**Last updated:** 2026-09-05 18:55
 
 ## Position
 
-Live board is the private **Evaluation pack**. Standing score **47.6** (v8).
+**61.8 / 100 and 2nd place** on the private Evaluation pack, from `v9a`.
 
 ```
-v8         D1 11.8  D2 16.1  D3 19.7  = 47.6   <- counts now
-v6_lean    D1 13.4  D2 16.4  D3 16.3  = 46.1
-v7_lean    D1 11.8  D2 16.4  D3 16.3  = 44.5
-v4         D1 13.4  D2 16.1  D3 16.7  = 46.2
+v9a       D1 14.5  D2 27.6  D3 19.7  = 61.8   <- counts now
+v9b       D1 14.5  D2 13.8  D3 19.7  = 48.0
+v9probe   D1 14.5  D2 27.6  D3  0.0  = 42.1
+v8        D1 11.8  D2 16.1  D3 19.7  = 47.6
 ```
 
-Best per-difficulty across eleven uploads is 13.4 + 16.4 + 19.7 = **49.5**, so a
-hybrid alone was worth +1.9. The full Level-3 lattice is what took D3 from 16.3
-to 19.7; the lean version is not worth using.
+Both open questions are closed. **E021 is the second normal Level-2 video** —
+silencing it took D2 from 16.1 to 27.6, the best Difficulty-2 mark on the board,
+and v9b's 13.8 confirms it was not E022. **All four Level-3 videos are
+anomalous** — the probe returned exactly 0.0.
 
-## Next action — upload all three, in any order
+## Next action — two things, neither of them modelling
+
+1. **Upload `outputs/submission_v10.json`.** It is v9a with a reasoning string on
+   every one of its 19,778 events instead of 66 of them. The REASON column sits
+   outside the 100 and the leader takes +4.0 from it while ours reads "-": first
+   place is 58.1 + 4.0 against our 61.8 + nothing, so the bonus is the entire
+   gap. 3.99 MB against a 5 MB cap.
+2. **Fill in the Final Submission.** Our row reads **NONE** where the rest of the
+   field reads IN. It wants the repository URL `github.com/SarthakDz/VAD`, the
+   architecture write-up (published at
+   `https://claude.ai/code/artifact/2bd4ee9f-d91a-445b-96d0-df781d70f79c`, or
+   upload `deck/architecture.html`) and optional notes. Required, and separate
+   from the score.
+
+## Where the remaining marks are
 
 ```
-outputs/submission_v9a.json       silences E021 and E024 on D2
-outputs/submission_v9b.json       silences E022 and E024 on D2
-outputs/submission_v9probe.json   Level 3 silent -- a measurement, not an entry
+D1  14.5   P 50%  R 53%  found  9/17  FA     9
+D2  27.6   P  0%  R 42%  found  5/12  FA  1275
+D3  19.7   P  0%  R 83%  found  5/6   FA 18475
 ```
 
-Exactly one of v9a and v9b should jump about 8 marks on D2 and the other should
-drop about 4. Best run stands, so trying both is strictly better than choosing.
-The probe returns D3 as (normal L3 videos)/4 * 40, so 0.0, 10.0, 20.0 or 30.0.
-If it is not 0.0 there is a normal Level-3 video worth ten marks to silence.
+**Our recall is the highest in the field at both temporal difficulties** and it
+converts worst. Nobody else exceeds 2/6 or 3/12, so the lattice genuinely finds
+the events; we simply cannot say which of our candidates are the right ones, and
+the matched-F1 term therefore collects nothing. A rival turns 2/6 with 2 false
+alarms into 22.8 where our 5/6 with 18,475 earns 19.7. About nine marks at Level
+3 and four at Level 2 sit behind that single problem, and [[ranking]] records
+twelve failed attempts on it.
 
 ## The two corrections v9 is built on
 

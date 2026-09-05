@@ -478,3 +478,54 @@ upload that cannot cost anything.
 Standing score before these: **47.6** (v8: D1 11.8, D2 16.1, D3 19.7). Best
 per-difficulty across all eleven uploads is 13.4 + 16.4 + 19.7 = 49.5, so a
 hybrid was already worth +1.9 on its own.
+
+## [2026-09-05 18:45] milestone | v9a scores 61.8 and takes 2nd place
+
+**E021 is the normal Level-2 video.** v9a silenced E021 and E024 and D2 went
+16.1 -> **27.6**, the highest Difficulty-2 mark on the board. v9b silenced E022
+instead and scored 13.8, which settles it. Removing the Level-1 confidence gate
+took D1 11.8 -> 14.5. D3 unchanged at 19.7.
+
+```
+v9a       D1 14.5  D2 27.6  D3 19.7  = 61.8   <- 2nd place
+v9b       D1 14.5  D2 13.8  D3 19.7  = 48.0
+v9probe   D1 14.5  D2 27.6  D3  0.0  = 42.1
+```
+
+`v9probe` answered its question exactly: **D3 = 0.0 with everything silent, so
+all four Level-3 videos are anomalous.** No normal video is hiding there.
+
+## [2026-09-05 18:50] finding | We are the only entry earning no reasoning bonus
+
+The leaderboard's REASON column sits outside the 100 and the leader takes +4.0
+from it; ours reads "-". First place is 58.1 marks plus 4.0 against our 61.8
+plus nothing, so **the bonus is the entire gap between first and second**.
+
+v9a did carry explanations, but only 66 of its 19,778 events had one -- 0.33%
+coverage. `scripts/add_reasons.py` attaches one to every event: the first six
+per video get the full reasoning, the rest a compact form naming the class, the
+interval and the evidence. Length is set by the 5 MB cap, which leaves about 135
+bytes per event. `outputs/submission_v10.json` is v9a with 100% coverage at
+3.99 MB.
+
+Also visible: our Final Submission status reads **NONE** where the rest of the
+field reads IN. That is the repository URL, architecture write-up and notes at
+the bottom of the Benchmark tab, and it is required and separate from the score.
+
+## [2026-09-05 18:55] finding | Our recall is the best on the board and converts worst
+
+From the leaderboard's per-difficulty columns for v9a:
+
+```
+D1  14.5   P 50%  R 53%  found  9/17  FA     9
+D2  27.6   P  0%  R 42%  found  5/12  FA  1275
+D3  19.7   P  0%  R 83%  found  5/6   FA 18475
+```
+
+5 of 6 at Level 3 and 5 of 12 at Level 2 are both the highest recall in the
+field -- the lattice genuinely finds the events. Nobody else exceeds 2/6 or
+3/12. What we cannot do is say *which* of our candidates are the right ones, so
+the matched-F1 term collects nothing. A rival converts 2/6 with 2 false alarms
+into 22.8 where our 5/6 with 18,475 earns 19.7. Roughly nine marks at Level 3
+and four at Level 2 sit behind that one problem, and [[ranking]] records twelve
+failed attempts at it.

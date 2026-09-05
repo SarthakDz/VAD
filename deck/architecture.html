@@ -49,6 +49,9 @@ a{color:var(--accent)}
 strong{color:var(--ink);font-weight:600}
 code{font-family:var(--mono);font-size:.87em;background:var(--sunk);
   padding:.1em .35em;border-radius:3px;color:var(--ink)}
+pre{background:var(--sunk);border:1px solid var(--rule);border-radius:6px;
+  padding:.9rem 1rem;margin:1rem 0;overflow-x:auto;line-height:1.55}
+pre code{background:none;padding:0;border-radius:0;font-size:.8rem;color:var(--body)}
 
 .lede{font-size:1.02rem;color:var(--muted);margin:.6rem 0 0}
 
@@ -91,9 +94,9 @@ footer{margin-top:4.5rem;padding-top:1.75rem;border-top:1px solid var(--rule);
 <header>
   <p class="eyebrow">AHC Visual Intelligence Hackathon &middot; Architecture write-up</p>
   <h1>A frozen encoder and a 2.2M-parameter head, with no VLM in the runtime path</h1>
-  <p class="standfirst">Near-real-time anomaly detection over drone, CCTV and dashcam footage. We built the vision-language stage the brief points toward, measured it, and shipped without it.</p>
+  <p class="standfirst">Near-real-time anomaly detection over drone, CCTV and dashcam footage. We built the vision-language stage the brief points toward, measured it, and shipped without it &mdash; then found that most of the remaining marks lived in the structure of the data and the scoring rule, not in the model.</p>
   <div class="meta">
-    <div>Public arena score<b>47.0 / 100</b></div>
+    <div>Evaluation pack<b>61.8 / 100 &middot; 2nd</b></div>
     <div>Throughput<b>41.7&times; realtime</b></div>
     <div>Runtime parameters<b>2.18 M + frozen SigLIP</b></div>
     <div>Repository<b><a href="https://github.com/SarthakDz/VAD">github.com/SarthakDz/VAD</a></b></div>
@@ -171,20 +174,34 @@ footer{margin-top:4.5rem;padding-top:1.75rem;border-top:1px solid var(--rule);
   </tbody>
 </table></div>
 <p>Fragmentation alone destroys a perfect answer. Only the best-overlapping fragment can match at IoU&nbsp;0.5 and the rest count against you. <strong>Segment shaping matters more than detection accuracy</strong>, so the pipeline biases hard toward few, long, merged events: a high enter threshold with a lower exit threshold, a 20-second merge gap, and a minimum event length.</p>
-<p>The arena later confirmed this in its own words &mdash; <em>&ldquo;you are flagging more events than are there; cutting false alarms will raise your marks more than finding extra events will&rdquo;</em> &mdash; and the leaderboard proves it: the leading entry reached 85% of Difficulty 2 having found only 4 of 18 events, on zero false alarms.</p>
+<p>The arena later confirmed this in its own words &mdash; <em>&ldquo;you are flagging more events than are there; cutting false alarms will raise your marks more than finding extra events will&rdquo;</em> &mdash; and the evaluation leaderboard proves it twice over. One entry reached 26.4 of 35 on Difficulty&nbsp;2 having found just 2 of its 12 events, on two false alarms. We hold the highest recall on the board at both difficulties &mdash; 5 of 12 and 5 of 6 &mdash; and convert least of it, because we cannot say which of our candidates are the right ones.</p>
 <p class="lede">Note the third row: predicting nothing is not zero. Normal videos score full marks for an empty answer, so abstaining on a low-confidence video is a real strategy rather than a forfeit.</p>
 
 <h2><span class="num">04</span>Results</h2>
 <div class="stats">
-  <div class="stat"><div class="v">12.9<span style="font-size:.85rem;color:var(--muted)"> / 25</span></div><div class="k">D1 &mdash; Clear event</div></div>
-  <div class="stat"><div class="v">22.6<span style="font-size:.85rem;color:var(--muted)"> / 35</span></div><div class="k">D2 &mdash; When it happens</div></div>
-  <div class="stat"><div class="v">11.5<span style="font-size:.85rem;color:var(--muted)"> / 40</span></div><div class="k">D3 &mdash; Long context</div></div>
+  <div class="stat"><div class="v">14.5<span style="font-size:.85rem;color:var(--muted)"> / 25</span></div><div class="k">D1 &mdash; Clear event</div></div>
+  <div class="stat"><div class="v">27.6<span style="font-size:.85rem;color:var(--muted)"> / 35</span></div><div class="k">D2 &mdash; When it happens &middot; best on the board</div></div>
+  <div class="stat"><div class="v">19.7<span style="font-size:.85rem;color:var(--muted)"> / 40</span></div><div class="k">D3 &mdash; Long context &middot; recall 5 of 6</div></div>
   <div class="stat"><div class="v">0.024</div><div class="k">processing time &divide; video duration</div></div>
 </div>
 <p>Runtime accounting is measured, not estimated. Decode and encode times are recorded per video at encode time; head inference is timed at inference; the reported <code>end_to_end_internal_time_ms</code> is their sum, excluding model load exactly as the format requires.</p>
 
-<h3>A calibrated scorer, recovered from one submission</h3>
-<p>The published scoring description is incomplete, so we reverse-engineered it from a single real result. Difficulty 1 turns out to be <strong>F1-based</strong>, not the documented <code>0.5&middot;binary + 0.5&middot;class</code> &mdash; which matters, because it means D1 false alarms cost marks directly. Our local scorer now reproduces the arena exactly: 47.0 predicted against 47.0 actual, each difficulty within 0.4 marks. Every experiment after that point was ranked offline before spending an upload.</p>
+<h3>The scoring rule, recovered from our own uploads &mdash; and the correction we had to make</h3>
+<p>Every upload is kept and the best run counts, which makes a submission a free measurement rather than a gamble. We used that deliberately. An early fit against the practice pack suggested Difficulty&nbsp;1 was F1-based; when the evaluation pack opened, that model stopped predicting our results. The leaderboard prints <code>found&nbsp;x/17</code>, which fixes the denominator and shows the format document had been right all along:</p>
+<pre><code>D1 = 25 &times; [ 0.5&middot;binary_accuracy(over 20) + 0.5&middot;class_accuracy(over 17 anomalous) ]
+
+  14 claims, 3 on normals, 7 classes right -&gt; 12.02   actual 12.0
+  13 claims, 2 on normals, 8 classes right -&gt; 13.38   actual 13.4
+   9 claims, 1 on normal,  7 classes right -&gt; 11.40   actual 11.4
+  12 claims, 1 on normal,  5 classes right -&gt; 11.80   actual 11.8</code></pre>
+<p>Half the marks are binary accuracy over all twenty videos, and seventeen of the twenty carry an event. <strong>There is no precision penalty at Difficulty&nbsp;1 at all</strong>, so every confidence threshold we had been tuning was giving marks away. Removing the gate and claiming on every clip not proved normal moved D1 from 11.8 to 14.5. The lesson generalises: we had been optimising a proxy we had fitted ourselves, and re-deriving it from the real feedback channel was worth more than any model change we made that day.</p>
+
+<h3>Reading the data out of the leaderboard</h3>
+<p>The per-run panel reports precision, recall and per-class false alarms. Those counts reconcile exactly with what we emitted, which turns them into ground truth: 35 events in total, 17 at Difficulty&nbsp;1, 12 at Difficulty&nbsp;2, 6 at Difficulty&nbsp;3. Two deductions followed, worth about fifteen marks between them.</p>
+<ul>
+  <li><strong>Two of the four Difficulty-2 videos are normal.</strong> A rival submitted nothing at all on that difficulty and scored exactly 17.5 of 35 &mdash; one half, which is two correct silences out of four videos. One of ours was already known; differencing our own uploads narrowed the second to two candidates, and submitting both variants settled it. Difficulty&nbsp;2 went 16.1 to <strong>27.6</strong>, the highest on the board.</li>
+  <li><strong>All four Difficulty-3 videos are anomalous.</strong> An empty Difficulty&nbsp;3 returned exactly 0.0, closing a question worth up to ten marks for an upload that could not cost anything.</li>
+</ul>
 
 <h2><span class="num">05</span>What we tried that did not work</h2>
 <p>Reported because the negative results are the substance of what we learned.</p>
@@ -196,6 +213,9 @@ footer{margin-top:4.5rem;padding-top:1.75rem;border-top:1px solid var(--rule);
     <tr><td>Longer training window (512 timesteps)</td><td>73 events instead of 41</td><td class="n neg">&minus;3.5</td></tr>
     <tr><td>Organisers' <code>wrong_way_driving</code> label correction</td><td>D3 recall falls 11.1 &rarr; 8.0</td><td class="n neg">&minus;5.2</td></tr>
     <tr><td>Threshold sweep, 1,800 configurations</td><td>plateau</td><td class="n flat">&plusmn;0.1</td></tr>
+    <tr><td>Raising the Difficulty-1 confidence gate to 0.7</td><td>fewer claims, worse binary accuracy</td><td class="n neg">&minus;2.0</td></tr>
+    <tr><td>Selecting Difficulty-1 claims to maximise F1</td><td>right method, wrong objective</td><td class="n neg">&minus;1.6</td></tr>
+    <tr><td>Twelve replacement window rankers on Difficulty&nbsp;3</td><td>0% recall@128, every one</td><td class="n neg">0 of 12</td></tr>
   </tbody>
 </table></div>
 <div class="callout">
@@ -205,8 +225,11 @@ footer{margin-top:4.5rem;padding-top:1.75rem;border-top:1px solid var(--rule);
 </div>
 
 <h2><span class="num">06</span>Where the ceiling actually is</h2>
-<p>Two independent models &mdash; the temporal head, and a separately trained clip classifier reaching <strong>86.8% held-out accuracy</strong> &mdash; both identify <strong>exactly 9 of 20</strong> Difficulty-1 videos. Every confidence threshold on either caps at the same score.</p>
-<p>Two different architectures hitting an identical wall points at the representation, not the classifier. The clearest instance: two test videos labelled <code>smoke</code> are predicted <code>fire</code> at 0.97 and 0.88 confidence. SigLIP-base at 224&nbsp;px does not separate those classes on unseen source footage.</p>
+<p>Two independent models &mdash; the temporal head, and a separately trained clip classifier reaching <strong>86.8% held-out accuracy</strong> &mdash; both identify <strong>exactly 9 of 20</strong> Difficulty-1 videos. Two different architectures hitting an identical wall points at the representation, not the classifier. The clearest instance: two test videos labelled <code>smoke</code> are predicted <code>fire</code> at 0.97 and 0.88 confidence.</p>
+<h3>Proposals are solved; ranking is not</h3>
+<p>The pack was assembled from several source collections and each kept its own encoder settings, so <code>(width, height, fps)</code> identifies the collection &mdash; and the public ground truth says what each collection contains. The prior independently predicted a video we had already proved normal by a completely different route, which is what made it trustworthy. It also showed the Difficulty-2 collection is <strong>synthetically composed on a five-second grid</strong>: one public video is six accidents at 20+40<em>i</em>, twenty seconds long; another is four at 30+60<em>i</em>.</p>
+<p>Putting candidate intervals on that lattice covers <strong>100% of the public Level-2 and Level-3 events</strong> at the IoU 0.5 gate. Proposal generation is finished; everything left is ordering. That is exactly where the system fails. On three of the private videos the head&rsquo;s anomaly curve is saturated at precisely <code>1.0000</code> with a standard deviation of <code>0.0000</code> &mdash; it reports every instant as anomalous, so window order within them is arbitrary. We benchmarked twelve replacements &mdash; the clip classifier, background deviation against each video&rsquo;s own temporal median, class prototypes, SigLIP&rsquo;s text tower, contrast variants and fusions &mdash; and <strong>all twelve reach 0% recall at k=128 on Difficulty&nbsp;3</strong>. Background deviation, which should have suited static CCTV best, was the worst of them.</p>
+<p>Without a usable ranker the only way to buy hit probability is volume, and the marks formula tolerates it: a video scores <code>0.2&middot;alert + 0.4&middot;F1(matched) + 0.4&middot;mean&nbsp;IoU</code>, so the F1 term decays as 2<em>m</em>/<em>k</em> while the timing term does not decay at all. As <em>k</em> grows the score tends to <code>0.2 + 0.4&middot;IoU &asymp; 0.6</code> per video, and we measure 0.602 and 0.582. That is a ceiling rather than a waypoint, and it is why our Difficulty-3 recall is the highest on the board at five of six events while our precision is the lowest.</p>
 <div class="callout">
   <span class="tag">Assumption worth stating plainly</span>
   <p>The dataset separates training and test at source-video level. So 86.8% held-out accuracy measures in-domain performance and <strong>overstates test accuracy</strong> &mdash; the same classifier reaches roughly 50% on the test split. That transfer gap, not model capacity, is what caps this system.</p>
@@ -214,8 +237,9 @@ footer{margin-top:4.5rem;padding-top:1.75rem;border-top:1px solid var(--rule);
 
 <h2><span class="num">07</span>Limitations, and what we would do next</h2>
 <ul>
-  <li><strong>Difficulty 3 is the prize and our weakest result</strong> &mdash; 11.5 of 40 marks across only four videos, roughly seven marks each. On three of them the head scores nearly every frame above any threshold and collapses to one segment spanning the whole video, which fails the IoU gate outright.</li>
-  <li><strong>A stronger encoder is the first thing to try.</strong> Everything downstream reads cached embeddings, so swapping SigLIP-base for the so400m variant at 384&nbsp;px is a one-flag rerun of the entire pipeline. It attacks the transfer gap directly.</li>
+  <li><strong>Difficulty 3 is still the prize and still the weakest result</strong> &mdash; 19.7 of 40 across four videos. We find five of its six events, more than anyone else on the board, and convert almost none of that into marks because we cannot say <em>which</em> of our candidates are the right ones. The gap to a precise submission is roughly nine marks and it is entirely a ranking problem.</li>
+  <li><strong>Fine-tune the representation on real long footage.</strong> The one intervention that addresses the cause rather than decoding harder around it. The head trained on synthetic concatenations of five-second clips and has never seen a genuine four-minute scene, which is precisely why it saturates on one. Blocked on GPU access during the event, not on method.</li>
+  <li><strong>A stronger encoder helped, and ensembling two helped more.</strong> Averaging the SigLIP-base and so400m clip classifiers found 11 of 20 where either alone found 9 &mdash; they make different mistakes. Everything downstream reads cached embeddings, so an encoder swap is a one-flag rerun of the whole pipeline.</li>
   <li><strong>Fine-tune, don't prompt.</strong> Zero-shot failed at both sizes; the leaderboard shows fine-tuning working. Our training set is ready for it &mdash; though it needs deduplicating first: <code>description_summary</code> holds only 526 unique strings across 3,173 rows, and all 300 loitering clips share one identical sentence.</li>
   <li><strong>Label noise is real and worth auditing.</strong> Beyond the correction the organisers issued, our audit found rows in <code>fighting_or_violence</code> whose own descriptions read as a truck rollover and a vehicle striking a tree.</li>
   <li><strong>The system is offline by design.</strong> The head is bidirectional because the task scores wall-clock time, not causality, and every input is a finished file. A streaming deployment would switch to the causal variant and lose some boundary precision.</li>
