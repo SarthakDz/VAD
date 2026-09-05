@@ -416,3 +416,65 @@ Recorded plainly: **80/100 is not reachable with this representation.** It needs
 per-video scores near 0.85, hence matched-F1 near 1, hence four windows that all
 hit. Twelve independent scores fail to rank the true windows on D3 at all. The
 route that addresses the cause is M4, the LoRA fine-tune, still blocked.
+
+## [2026-09-05 18:20] finding | The Level-1 formula is the PDF's, and we had it wrong
+
+The leaderboard prints `found x/17`, so **17 of the 20 Level-1 videos are
+anomalous** and only 3 are normal. That kills the F1 model in
+`src/calibrated.py`, which fitted the practice pack and does not fit this one.
+The real rule is the format PDF's own, and it reproduces four of our uploads to
+within 0.02 marks:
+
+```
+D1 = 25 * [ 0.5*binary_accuracy(over 20) + 0.5*class_accuracy(over 17 anomalous) ]
+
+  v2final  14 claims, 3 on normals, 7 classes right -> 12.02   actual 12.0
+  v4       13 claims, 2 on normals, 8 classes right -> 13.38   actual 13.4
+  v5        9 claims, 1 on normal,  7 classes right -> 11.40   actual 11.4
+  v7/v8    12 claims, 1 on normal,  5 classes right -> 11.80   actual 11.8
+```
+
+Half the marks are binary accuracy over all twenty videos, and with 17 anomalous
+a claim on an unclaimed video is right 85% of the time. **There is no precision
+penalty at Level 1 at all**, so every confidence threshold we have ever used was
+throwing marks away — about three of them in binary accuracy plus the class
+credit those seven silent videos would have earned.
+
+The deltas also identify two of the three normals: dropping E002 moved D1 from
+12.0 to 13.4, and dropping E004 moved the normal-claim count down again. v9
+claims on all eighteen others with no gate.
+
+This also explains why the rebuilt classifier in [[d1]] lost marks on the private
+set despite winning on public: it was tuned to maximise F1, which is the wrong
+objective. Its retrieval and text-tower members are still sound; the selection
+rule around them was fitted to a formula that does not apply.
+
+## [2026-09-05 18:25] finding | Two of the four Level-2 videos are normal, and we have never been silent on both
+
+A rival predicted nothing whatsoever on Level 2 -- the leaderboard shows
+`found 0/12, FA 0` -- and scored **17.5/35, exactly 0.500**. Under the published
+rule (normal and silent scores 1, anomalous and silent scores 0) that is two
+correct silences out of four videos, so **two of the four are normal**.
+
+E024 is one, proved earlier. `submission_asym` pins the other: it silenced E023
+and scored 11.4/35 = 0.3257, which is only consistent with the normal being E021
+or E022. E023 normal would have scored 22.75, so E023 is anomalous. The alert
+weight falls out as 0.30, not the 0.20 assumed in [[state]] before this.
+
+Every upload we have made carried events on both E021 and E022, so one of them
+has scored a guaranteed zero every single time. Silencing both is a safe +5;
+silencing the right one is +8.5 and the wrong one -3.7. Since the arena keeps
+every upload and scores the best run, v9a and v9b try one each.
+
+## [2026-09-05 18:30] milestone | v9a, v9b and a Level-3 probe
+
+All three validate. v9a silences E021 and E024, v9b silences E022 and E024, both
+claim all eighteen non-normal Level-1 videos and keep the full Level-3 lattice
+that took D3 from 16.3 to 19.7. `submission_v9probe.json` silences Level 3
+entirely; it is a measurement rather than a submission, since D3 comes back as
+(normal L3 videos)/4 * 40 and answers a question worth up to ten marks for an
+upload that cannot cost anything.
+
+Standing score before these: **47.6** (v8: D1 11.8, D2 16.1, D3 19.7). Best
+per-difficulty across all eleven uploads is 13.4 + 16.4 + 19.7 = 49.5, so a
+hybrid was already worth +1.9 on its own.

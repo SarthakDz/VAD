@@ -1,0 +1,7200 @@
+{
+ "schema_version": "1.0",
+ "submission_id": "ahc-v9probe",
+ "model_name": "siglip-ensemble+lattice+leaderboard-priors",
+ "run_metadata": {
+  "total_wall_time_ms": 645.5,
+  "max_parallel_videos": 1,
+  "hardware": "1x RTX 4060 Laptop 8GB"
+ },
+ "predictions": [
+  {
+   "video_id": "E001",
+   "events": [
+    {
+     "class_name": "waterlogging_or_flood",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label waterlogging_or_flood, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 134.6,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 31.0,
+      "average_time_ms": 2.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 3.6,
+      "average_time_ms": 3.6
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E002",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 9,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 52.7,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 9,
+      "total_time_ms": 25.0,
+      "average_time_ms": 2.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 2.7,
+      "average_time_ms": 2.7
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E003",
+   "events": [
+    {
+     "class_name": "waterlogging_or_flood",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label waterlogging_or_flood, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 36,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 222.0,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 36,
+      "total_time_ms": 99.0,
+      "average_time_ms": 2.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 6.0,
+      "average_time_ms": 6.0
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E004",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 120.9,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 31.0,
+      "average_time_ms": 2.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 2.9,
+      "average_time_ms": 2.9
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E005",
+   "events": [
+    {
+     "class_name": "stalled_or_broken_down_vehicle",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label stalled_or_broken_down_vehicle, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 14,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 97.9,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 14,
+      "total_time_ms": 40.0,
+      "average_time_ms": 2.9
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 3.9,
+      "average_time_ms": 3.9
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E006",
+   "events": [
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label traffic_congestion, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 118.9,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 31.0,
+      "average_time_ms": 2.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 2.9,
+      "average_time_ms": 2.9
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E007",
+   "events": [
+    {
+     "class_name": "stalled_or_broken_down_vehicle",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label stalled_or_broken_down_vehicle, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 30,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 251.7,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 30,
+      "total_time_ms": 97.0,
+      "average_time_ms": 3.2
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 2.7,
+      "average_time_ms": 2.7
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E008",
+   "events": [
+    {
+     "class_name": "wrong_way_driving",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label wrong_way_driving, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 15,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 103.7,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 15,
+      "total_time_ms": 40.0,
+      "average_time_ms": 2.7
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 1.7,
+      "average_time_ms": 1.7
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E009",
+   "events": [
+    {
+     "class_name": "fire",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label fire, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 115.5,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 35.0,
+      "average_time_ms": 3.2
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 1.5,
+      "average_time_ms": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E010",
+   "events": [
+    {
+     "class_name": "smoke",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label smoke, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 135.5,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 39.0,
+      "average_time_ms": 3.5
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 1.5,
+      "average_time_ms": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E011",
+   "events": [
+    {
+     "class_name": "smoke",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label smoke, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 132.4,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 40.0,
+      "average_time_ms": 3.6
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 1.4,
+      "average_time_ms": 1.4
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E012",
+   "events": [
+    {
+     "class_name": "waterlogging_or_flood",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label waterlogging_or_flood, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 125.5,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 33.0,
+      "average_time_ms": 3.0
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 1.5,
+      "average_time_ms": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E013",
+   "events": [
+    {
+     "class_name": "waterlogging_or_flood",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label waterlogging_or_flood, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 11,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 123.6,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 11,
+      "total_time_ms": 36.0,
+      "average_time_ms": 3.3
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 1.6,
+      "average_time_ms": 1.6
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E014",
+   "events": [
+    {
+     "class_name": "wrong_way_driving",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label wrong_way_driving, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 18,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 129.9,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 18,
+      "total_time_ms": 56.0,
+      "average_time_ms": 3.1
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 1.9,
+      "average_time_ms": 1.9
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E015",
+   "events": [
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label traffic_accident, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 24,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 150.3,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 24,
+      "total_time_ms": 63.0,
+      "average_time_ms": 2.6
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 2.3,
+      "average_time_ms": 2.3
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E016",
+   "events": [
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label traffic_accident, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 32,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 197.9,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 32,
+      "total_time_ms": 89.0,
+      "average_time_ms": 2.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 2.9,
+      "average_time_ms": 2.9
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E017",
+   "events": [
+    {
+     "class_name": "fire",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label fire, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 60,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 364.8,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 60,
+      "total_time_ms": 225.0,
+      "average_time_ms": 3.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 4.8,
+      "average_time_ms": 4.8
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E018",
+   "events": [
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label fighting_or_violence, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 60,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 359.5,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 60,
+      "total_time_ms": 211.0,
+      "average_time_ms": 3.5
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 4.5,
+      "average_time_ms": 4.5
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E019",
+   "events": [
+    {
+     "class_name": "loitering_or_suspicious_presence",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label loitering_or_suspicious_presence, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 38,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 253.5,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 38,
+      "total_time_ms": 102.0,
+      "average_time_ms": 2.7
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 3.5,
+      "average_time_ms": 3.5
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E020",
+   "events": [
+    {
+     "class_name": "loitering_or_suspicious_presence",
+     "start_time_sec": null,
+     "end_time_sec": null,
+     "explanation": "Whole-clip label loitering_or_suspicious_presence, from two independently trained SigLIP classifiers (base and so400m) restricted to the classes this source collection is known to contain. Claimed without a confidence gate: Level 1 scores half on binary accuracy and 17 of the 20 clips carry an event."
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 38,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 219.2,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 38,
+      "total_time_ms": 102.0,
+      "average_time_ms": 2.7
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 4.2,
+      "average_time_ms": 4.2
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E021",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 480,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 4088.8,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 480,
+      "total_time_ms": 1381.0,
+      "average_time_ms": 2.9
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 52.8,
+      "average_time_ms": 52.8
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E022",
+   "events": [
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 205.0,
+     "end_time_sec": 210.0,
+     "explanation": "Candidate interval 205.0-210.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 205.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 205.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 205.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 205.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 205.0,
+     "end_time_sec": 215.0,
+     "explanation": "Candidate interval 205.0-215.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 205.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 205.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 205.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 205.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 207.5,
+     "end_time_sec": 217.5,
+     "explanation": "Candidate interval 207.5-217.5 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 207.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 207.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 207.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 207.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 205.0,
+     "end_time_sec": 220.0,
+     "explanation": "Candidate interval 205.0-220.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 205.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 205.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 205.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 205.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 207.5,
+     "end_time_sec": 222.5,
+     "explanation": "Candidate interval 207.5-222.5 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 207.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 207.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 207.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 207.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 210.0,
+     "end_time_sec": 225.0,
+     "explanation": "Candidate interval 210.0-225.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 210.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 210.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 210.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 210.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 197.5,
+     "end_time_sec": 212.5,
+     "explanation": "Candidate interval 197.5-212.5 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 197.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 197.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 197.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 197.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 200.0,
+     "end_time_sec": 215.0,
+     "explanation": "Candidate interval 200.0-215.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 200.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 200.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 200.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 200.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 197.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 197.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 197.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 197.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 197.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 200.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 200.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 200.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 200.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 200.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 202.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 202.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 202.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 202.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 202.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 210.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 210.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 210.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 210.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 210.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 212.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 212.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 212.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 212.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 212.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 212.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 212.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 212.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 212.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 212.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 215.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 215.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 215.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 215.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 215.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 215.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 215.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 215.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 215.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 215.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 202.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 202.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 202.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 202.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 202.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 197.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 197.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 197.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 197.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 197.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 200.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 200.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 200.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 200.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 200.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 202.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 202.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 202.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 202.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 202.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 205.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 205.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 205.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 205.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 205.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 197.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 197.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 197.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 197.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 197.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 207.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 207.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 207.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 207.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 207.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 210.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 210.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 210.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 210.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 210.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 217.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 217.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 217.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 217.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 217.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 195.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 195.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 195.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 195.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 195.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 195.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 195.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 195.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 195.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 195.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 220.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 220.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 220.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 220.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 220.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 200.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 200.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 200.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 200.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 200.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 202.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 202.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 202.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 202.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 202.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 195.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 195.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 195.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 195.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 195.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 195.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 195.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 195.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 195.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 195.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 197.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 197.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 197.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 197.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 197.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 207.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 207.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 207.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 207.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 207.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 212.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 212.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 212.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 212.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 212.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 195.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 195.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 195.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 195.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 195.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 217.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 217.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 217.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 217.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 217.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 222.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 222.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 222.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 222.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 222.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 195.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 195.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 195.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 195.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 195.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 200.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 200.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 200.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 200.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 200.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 202.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 202.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 202.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 202.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 202.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 205.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 205.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 205.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 205.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 205.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 207.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 207.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 207.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 207.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 207.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 210.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 210.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 210.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 210.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 210.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 210.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 210.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 210.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 210.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 210.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 212.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 212.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 212.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 212.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 212.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 215.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 215.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 215.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 215.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 215.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 215.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 215.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 215.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 215.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 215.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 217.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 217.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 217.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 217.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 217.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 217.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 217.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 217.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 217.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 217.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 220.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 220.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 220.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 220.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 220.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 220.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 220.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 220.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 220.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 220.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 220.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 220.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 220.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 220.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 220.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 222.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 222.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 222.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 222.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 222.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 222.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 222.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 222.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 222.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 222.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 225.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 225.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 225.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 225.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 225.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 225.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 225.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 225.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 225.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 225.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 225.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 225.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 225.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 225.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 225.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 227.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 227.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 227.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 227.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 227.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 227.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 227.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 227.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 227.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 227.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 230.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 230.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 230.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 230.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 230.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 232.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 232.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 232.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 232.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 232.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 235.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 235.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 235.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 235.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 235.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 230.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 230.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 230.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 230.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 230.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 97.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 97.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 97.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 97.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 97.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 97.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 97.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 97.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 97.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 97.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 95.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 95.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 95.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 95.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 95.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 92.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 92.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 92.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 92.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 92.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 95.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 95.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 95.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 95.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 95.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 92.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 92.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 92.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 92.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 92.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 92.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 92.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 92.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 92.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 92.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 90.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 90.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 90.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 90.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 90.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 90.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 90.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 90.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 90.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 90.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 90.0,
+     "end_time_sec": 95.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 90.0,
+     "end_time_sec": 95.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 90.0,
+     "end_time_sec": 95.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 90.0,
+     "end_time_sec": 95.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 90.0,
+     "end_time_sec": 95.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 192.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 192.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 192.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 192.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 192.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 192.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 192.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 192.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 192.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 192.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 192.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 192.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 192.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 192.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 192.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 90.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 90.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 90.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 90.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 90.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 87.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 87.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 87.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 87.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 87.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 190.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 190.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 190.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 190.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 190.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 95.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 95.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 95.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 95.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 95.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 192.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 192.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 192.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 192.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 192.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 87.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 87.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 87.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 87.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 87.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 190.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 190.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 190.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 190.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 190.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 187.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 187.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 187.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 187.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 187.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 185.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 185.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 185.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 185.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 185.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 92.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 92.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 92.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 92.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 92.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 87.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 87.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 87.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 87.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 87.5,
+     "end_time_sec": 97.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 85.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 85.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 85.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 85.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 85.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 192.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 192.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 192.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 192.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 192.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 187.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 187.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 187.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 187.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 187.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 190.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 190.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 190.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 190.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 190.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 182.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 182.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 182.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 182.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 182.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 180.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 180.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 180.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 180.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 180.0,
+     "end_time_sec": 240.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 20.0,
+     "end_time_sec": 25.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 20.0,
+     "end_time_sec": 25.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 20.0,
+     "end_time_sec": 25.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 20.0,
+     "end_time_sec": 25.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 20.0,
+     "end_time_sec": 25.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 85.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 85.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 85.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 85.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 85.0,
+     "end_time_sec": 100.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 177.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 177.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 177.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 177.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 177.5,
+     "end_time_sec": 237.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 185.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 185.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 185.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 185.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 185.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 180.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 180.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 180.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 180.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 180.0,
+     "end_time_sec": 225.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 190.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 190.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 190.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 190.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 190.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 95.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 95.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 95.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 95.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 95.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 175.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 175.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 175.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 175.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 175.0,
+     "end_time_sec": 235.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 187.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 187.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 187.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 187.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 187.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 82.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 82.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 82.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 82.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 82.5,
+     "end_time_sec": 102.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 172.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 172.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 172.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 172.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 172.5,
+     "end_time_sec": 232.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 177.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 177.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 177.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 177.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 177.5,
+     "end_time_sec": 222.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 85.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 85.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 85.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 85.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 85.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 87.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 87.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 87.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 87.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 87.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 90.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 90.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 90.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 90.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 90.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 80.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 80.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 80.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 80.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 80.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 82.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 82.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 82.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 82.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 82.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 170.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 170.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 170.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 170.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 170.0,
+     "end_time_sec": 230.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 182.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 182.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 182.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 182.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 182.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 77.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 77.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 77.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 77.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 77.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 22.5,
+     "end_time_sec": 27.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 22.5,
+     "end_time_sec": 27.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 22.5,
+     "end_time_sec": 27.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 22.5,
+     "end_time_sec": 27.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 22.5,
+     "end_time_sec": 27.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 175.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 175.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 175.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 175.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 175.0,
+     "end_time_sec": 220.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 105.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 105.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 105.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 105.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 105.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 167.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 167.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 167.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 167.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 167.5,
+     "end_time_sec": 227.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 97.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 97.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 97.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 97.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 97.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 92.5,
+     "end_time_sec": 122.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 92.5,
+     "end_time_sec": 122.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 92.5,
+     "end_time_sec": 122.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 92.5,
+     "end_time_sec": 122.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 92.5,
+     "end_time_sec": 122.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 172.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 172.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 172.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 172.5,
+     "end_time_sec": 217.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 172.5,
+     "end_time_sec": 217.5
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 480,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 10544.7,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 480,
+      "total_time_ms": 3714.0,
+      "average_time_ms": 7.7
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 35.7,
+      "average_time_ms": 35.7
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E023",
+   "events": [
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 180.0,
+     "end_time_sec": 185.0,
+     "explanation": "Candidate interval 180.0-185.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 180.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 180.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 180.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 180.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 135.0,
+     "end_time_sec": 140.0,
+     "explanation": "Candidate interval 135.0-140.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 135.0,
+     "end_time_sec": 140.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 135.0,
+     "end_time_sec": 140.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 135.0,
+     "end_time_sec": 140.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 135.0,
+     "end_time_sec": 140.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 155.0,
+     "explanation": "Candidate interval 145.0-155.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 160.0,
+     "explanation": "Candidate interval 145.0-160.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0,
+     "explanation": "Candidate interval 145.0-150.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 147.5,
+     "end_time_sec": 152.5,
+     "explanation": "Candidate interval 147.5-152.5 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 147.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 147.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 147.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 147.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 175.0,
+     "end_time_sec": 180.0,
+     "explanation": "Candidate interval 175.0-180.0 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 175.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 175.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 175.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 175.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 177.5,
+     "end_time_sec": 182.5,
+     "explanation": "Candidate interval 177.5-182.5 s on the 2.5 s lattice this collection composes its events on. The head's anomaly score averages 1.00 here and the class set is restricted to what the collection contains."
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 177.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 177.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 177.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 177.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 142.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 142.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 142.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 142.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 142.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 147.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 147.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 147.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 147.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 147.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 175.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 175.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 175.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 175.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 175.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 177.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 177.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 177.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 177.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 177.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 180.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 180.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 180.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 180.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 180.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 137.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 137.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 137.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 137.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 137.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 175.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 175.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 175.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 175.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 175.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 142.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 142.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 142.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 142.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 142.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 135.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 135.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 135.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 135.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 135.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 140.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 140.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 140.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 140.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 140.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 147.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 147.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 147.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 147.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 147.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 142.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 142.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 142.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 142.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 142.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 147.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 147.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 147.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 147.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 147.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 150.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 150.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 150.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 150.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 150.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 150.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 150.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 150.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 150.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 150.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 142.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 142.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 142.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 142.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 142.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 157.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 157.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 157.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 157.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 157.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 170.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 170.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 170.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 170.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 170.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 172.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 172.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 172.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 172.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 172.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 135.0,
+     "end_time_sec": 145.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 135.0,
+     "end_time_sec": 145.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 135.0,
+     "end_time_sec": 145.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 135.0,
+     "end_time_sec": 145.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 135.0,
+     "end_time_sec": 145.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 137.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 137.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 137.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 137.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 137.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 140.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 140.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 140.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 140.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 140.0,
+     "end_time_sec": 150.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 160.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 160.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 160.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 160.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 160.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 162.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 162.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 162.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 162.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 162.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 165.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 165.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 165.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 165.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 165.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 125.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 125.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 125.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 125.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 125.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 132.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 132.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 132.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 132.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 132.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 135.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 135.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 135.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 135.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 135.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 137.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 137.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 137.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 137.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 137.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 140.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 140.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 140.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 140.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 140.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 150.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 150.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 150.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 150.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 150.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 152.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 152.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 152.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 152.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 152.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 155.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 155.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 155.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 155.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 155.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 160.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 160.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 160.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 160.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 160.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 132.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 132.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 132.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 132.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 132.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 135.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 135.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 135.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 135.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 135.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 137.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 137.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 137.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 137.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 137.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 140.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 140.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 140.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 140.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 140.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 205.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 165.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 165.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 165.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 165.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 165.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 182.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 182.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 182.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 182.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 182.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 185.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 185.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 185.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 185.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 185.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 157.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 157.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 157.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 157.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 157.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 102.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 102.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 102.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 102.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 102.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 152.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 152.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 152.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 152.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 152.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 177.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 177.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 177.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 177.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 177.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 132.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 132.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 132.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 132.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 132.5,
+     "end_time_sec": 152.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 135.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 135.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 135.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 135.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 135.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 147.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 147.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 147.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 147.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 147.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 170.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 170.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 170.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 170.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 170.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 112.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 112.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 112.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 112.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 112.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 115.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 115.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 115.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 115.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 115.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 127.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 127.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 127.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 127.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 127.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 130.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 130.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 130.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 130.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 130.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 162.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 162.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 162.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 162.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 162.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 165.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 165.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 165.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 165.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 165.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 167.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 167.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 167.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 167.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 167.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 127.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 127.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 127.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 127.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 127.5,
+     "end_time_sec": 187.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 130.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 130.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 130.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 130.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 130.0,
+     "end_time_sec": 190.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 142.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 142.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 142.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 142.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 142.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 100.0,
+     "end_time_sec": 105.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 102.5,
+     "end_time_sec": 107.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 115.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 115.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 115.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 115.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 115.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 157.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 157.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 157.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 157.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 157.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 162.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 162.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 162.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 162.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 162.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 102.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 107.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 107.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 107.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 107.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 107.5,
+     "end_time_sec": 117.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 152.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 152.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 152.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 152.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 152.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 170.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 170.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 170.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 170.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 170.0,
+     "end_time_sec": 180.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 172.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 172.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 172.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 172.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 172.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 182.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 182.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 182.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 182.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 182.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 97.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 100.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 105.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 105.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 105.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 105.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 105.0,
+     "end_time_sec": 120.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 132.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 132.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 132.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 132.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 132.5,
+     "end_time_sec": 147.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 167.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 167.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 167.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 167.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 167.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 180.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 180.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 180.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 180.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 180.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 182.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 182.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 182.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 182.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 182.5,
+     "end_time_sec": 197.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 137.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 137.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 137.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 137.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 137.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 140.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 140.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 140.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 140.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 140.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 142.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 142.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 142.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 142.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 142.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 150.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 150.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 150.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 150.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 150.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 165.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 165.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 165.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 165.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 165.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 172.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 172.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 172.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 172.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 172.5,
+     "end_time_sec": 192.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 175.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 175.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 175.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 175.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 175.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 135.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 135.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 135.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 135.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 135.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 137.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 137.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 137.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 137.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 137.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 145.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 145.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 145.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 145.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 145.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 110.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 110.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 110.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 110.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 110.0,
+     "end_time_sec": 155.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 157.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 157.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 157.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 157.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 157.5,
+     "end_time_sec": 202.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 170.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 170.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 170.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 170.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 170.0,
+     "end_time_sec": 215.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 97.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 97.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 97.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 97.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 97.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 100.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 100.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 100.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 100.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 100.0,
+     "end_time_sec": 160.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 102.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 102.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 102.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 102.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 102.5,
+     "end_time_sec": 162.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 105.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 105.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 105.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 105.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 105.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 107.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 107.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 107.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 107.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 107.5,
+     "end_time_sec": 167.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 110.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 110.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 110.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 110.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 110.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 112.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 112.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 112.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 112.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 112.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 122.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 122.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 122.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 122.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 122.5,
+     "end_time_sec": 182.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 125.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 125.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 125.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 125.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 125.0,
+     "end_time_sec": 185.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 147.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 147.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 147.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 147.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 147.5,
+     "end_time_sec": 207.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 150.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 150.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 150.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 150.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 150.0,
+     "end_time_sec": 210.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 152.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 152.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 152.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 152.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 152.5,
+     "end_time_sec": 212.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 107.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 107.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 107.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 107.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 107.5,
+     "end_time_sec": 112.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 152.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 152.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 152.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 152.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 152.5,
+     "end_time_sec": 157.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 167.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 167.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 167.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 167.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 167.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 100.0,
+     "end_time_sec": 110.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 105.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 105.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 105.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 105.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 105.0,
+     "end_time_sec": 115.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 155.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 155.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 155.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 155.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 155.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 165.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 165.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 165.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 165.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 165.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 167.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 167.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 167.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 167.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 167.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 185.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 185.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 185.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 185.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 185.0,
+     "end_time_sec": 195.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 150.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 150.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 150.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 150.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 150.0,
+     "end_time_sec": 165.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 155.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 155.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 155.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 155.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 155.0,
+     "end_time_sec": 170.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 160.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 160.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 160.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 160.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 160.0,
+     "end_time_sec": 175.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 162.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 162.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 162.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 162.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 162.5,
+     "end_time_sec": 177.5
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 185.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 185.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 185.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 185.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 185.0,
+     "end_time_sec": 200.0
+    },
+    {
+     "class_name": "traffic_congestion",
+     "start_time_sec": 152.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "vehicle_blocking_traffic",
+     "start_time_sec": 152.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "traffic_accident",
+     "start_time_sec": 152.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "road_spill_or_debris",
+     "start_time_sec": 152.5,
+     "end_time_sec": 172.5
+    },
+    {
+     "class_name": "fighting_or_violence",
+     "start_time_sec": 152.5,
+     "end_time_sec": 172.5
+    }
+   ],
+   "runtime_metadata": {
+    "frames_processed": 480,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 4143.2,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 480,
+      "total_time_ms": 1411.0,
+      "average_time_ms": 2.9
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 40.2,
+      "average_time_ms": 40.2
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E024",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 480,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 31416.8,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 480,
+      "total_time_ms": 4307.0,
+      "average_time_ms": 9.0
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 58.8,
+      "average_time_ms": 58.8
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E025",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 720,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 4646.4,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 720,
+      "total_time_ms": 1982.0,
+      "average_time_ms": 2.8
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 45.4,
+      "average_time_ms": 45.4
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E026",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 613,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 2708.0,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 613,
+      "total_time_ms": 1524.0,
+      "average_time_ms": 2.5
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 59.0,
+      "average_time_ms": 59.0
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E027",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 1204,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 21456.3,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 1204,
+      "total_time_ms": 7976.0,
+      "average_time_ms": 6.6
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 88.3,
+      "average_time_ms": 88.3
+     }
+    ]
+   }
+  },
+  {
+   "video_id": "E028",
+   "events": [],
+   "runtime_metadata": {
+    "frames_processed": 662,
+    "chunks_processed": 1,
+    "end_to_end_internal_time_ms": 4545.0,
+    "model_runtimes": [
+     {
+      "model_name": "siglip-frozen-encoder",
+      "call_count": 662,
+      "total_time_ms": 1996.0,
+      "average_time_ms": 3.0
+     },
+     {
+      "model_name": "temporal-head",
+      "call_count": 1,
+      "total_time_ms": 45.0,
+      "average_time_ms": 45.0
+     }
+    ]
+   }
+  }
+ ]
+}

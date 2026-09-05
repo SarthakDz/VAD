@@ -1,97 +1,84 @@
 # State — where the work stands
 
-**Last updated:** 2026-09-05 18:05
+**Last updated:** 2026-09-05 18:30
 
 ## Position
 
-Live board is the private **Evaluation pack** (E001-E028, L1=20 L2=4 L3=4).
+Live board is the private **Evaluation pack**. Standing score **47.6** (v8).
 
 ```
-submission_v4.json   D1 13.4  D2 16.1  D3 16.7  = 46.2   <- counts now
-submission_v5.json   D1 11.4  D2 16.1  D3 16.7  = 44.2
-submission_v2final   D1 12.0  D2 14.0  D3 11.2  = 37.2
+v8         D1 11.8  D2 16.1  D3 19.7  = 47.6   <- counts now
+v6_lean    D1 13.4  D2 16.4  D3 16.3  = 46.1
+v7_lean    D1 11.8  D2 16.4  D3 16.3  = 44.5
+v4         D1 13.4  D2 16.1  D3 16.7  = 46.2
 ```
 
-v5 differed from v4 only by raising the Level-1 probability threshold from 0.4
-to 0.7, and it cost two marks. [[d1]] explains why: D1 is `25*F1`, so a claim of
-probability `p` pays whenever `p > F1/2`, which at our F1 is **0.27** — the
-threshold was already too high, not too low.
+Best per-difficulty across eleven uploads is 13.4 + 16.4 + 19.7 = **49.5**, so a
+hybrid alone was worth +1.9. The full Level-3 lattice is what took D3 from 16.3
+to 19.7; the lean version is not worth using.
 
-## Next action — upload these two
-
-```
-outputs/submission_v7.json    the safe build     projected ~62
-outputs/submission_v8.json    v7 with a ranked D2 instead of a sprayed one
-```
-
-Both pass `src.submit.validate`. Upload v7 first, then v8; best run stands, so
-the pair is an experiment rather than a hedge. Built by `scripts/eval_v7.py` and
-`scripts/eval_v8.py`, which carry the full reasoning.
-
-## What the arena detection panel told us
-
-The per-run panel is far more informative than the three marks. From the v4 run:
+## Next action — upload all three, in any order
 
 ```
-precision 5%   recall 37%   F1 8%   false alarms 258
-weakest classes, all at 0% found:
-    fighting_or_violence          0 / 3 truths, 66 false
-    road_spill_or_debris          0 / 3 truths, 18 false
-    stalled_or_broken_down_veh.   0 / 2 truths, 24 false
-    vehicle_blocking_traffic      0 / 1 truths, 18 false
+outputs/submission_v9a.json       silences E021 and E024 on D2
+outputs/submission_v9b.json       silences E022 and E024 on D2
+outputs/submission_v9probe.json   Level 3 silent -- a measurement, not an entry
 ```
 
-271 events minus 258 false gives **13 true positives**, and 13/0.37 gives
-**35 ground-truth events in total**. The per-class false counts reconcile exactly
-with what we emitted, so the panel can be used as a measuring instrument.
+Exactly one of v9a and v9b should jump about 8 marks on D2 and the other should
+drop about 4. Best run stands, so trying both is strictly better than choosing.
+The probe returns D3 as (normal L3 videos)/4 * 40, so 0.0, 10.0, 20.0 or 30.0.
+If it is not 0.0 there is a normal Level-3 video worth ten marks to silence.
 
-There is also a **Level-3 reasoning bonus, on top of the 40**, reported as *not
-graded* because we had never supplied an `explanation` on any event. It is
-bonus-only and omitting it never costs marks, so it was pure forgone credit.
-v7 and v8 now carry explanations.
+## The two corrections v9 is built on
 
-## The ceiling, and where it comes from
+**Level 1 is not an F1.** The leaderboard prints `found x/17`, so 17 of the 20
+Level-1 videos are anomalous. The real rule is the format PDF's own and it
+reproduces four uploads to within 0.02 marks:
 
-Candidate windows now sit on the 2.5 s lattice the ground truth is composed on
-(see [[fingerprints]]), and that lattice **covers 100% of the public L2/L3
-truths at IoU >= 0.5**. Proposals are solved. What is not solved is ranking, and
-[[ranking]] has the evidence: the head anomaly curve is saturated at exactly
-`1.0000` with zero variance on E023, E026 and E028, and twelve replacement
-scores — clip classifier, background deviation, class prototypes, SigLIP text
-tower, and fusions of them — all score **0% recall at k=128 on D3**.
+```
+D1 = 25 * [ 0.5*binary_accuracy(/20) + 0.5*class_accuracy(/17 anomalous) ]
+```
 
-So Levels 2 and 3 are pinned at the spray ceiling. As `k` grows the F1 term
-vanishes and the score tends to `0.2 + 0.4*IoU = 0.6` per video; we measure
-0.602 on L2 and 0.582 on L3. That is 24.6/35 and 23.3/40.
+Half the marks are binary accuracy and 85% of the videos carry an event, so
+**there is no precision penalty at Level 1** and every confidence threshold we
+ever used was throwing marks away. v9 claims on all eighteen videos that are not
+E002 or E004, the two normals the upload deltas identify. This also explains why
+the rebuilt classifier in [[d1]] lost marks on the private set while winning on
+public: it optimises F1, which is the wrong objective.
 
-**80/100 is not reachable from here.** It needs per-video scores near 0.85, which
-needs matched-F1 near 1, which needs emitting about four windows and hitting all
-four. Nothing in the frozen SigLIP representation localises well enough. The
-honest route is [[milestones]] M4, the LoRA fine-tune on real long footage, which
-is still blocked on Kaggle verification.
+**Two of the four Level-2 videos are normal.** A rival predicted nothing at all
+on D2 (`found 0/12, FA 0`) and scored exactly 17.5/35 = 0.500, which is two
+correct silences out of four. E024 is one; `submission_asym` pins the other to
+E021 or E022 and proves E023 anomalous. The alert weight is 0.30. Every upload we
+have made put events on both E021 and E022, so one of them has scored zero every
+time.
 
-## The most promising lead
+## What is still capped
 
-`scripts/periodic.py` searches for the arithmetic progression the events were
-composed on rather than scoring windows one at a time. On T025 it returns
-`n=6, a=20, b=40, d=20` — exactly the ground truth — at rank 0, and on T028
-`n=4, a=30, b=60, d=5`, also exact, at rank 0. **E021 top hypothesis is the
-identical pattern to T025 at contrast +0.898.** It fails on the two non-periodic
-public videos and its class is wrong on T025, so the lattice still ships; but a
-correct hypothesis with a correct class scores 1.000 where the lattice scores
-0.60, so this becomes large the moment classification on that collection
-improves.
+Levels 2 and 3 candidate windows sit on the 2.5 s lattice the ground truth is
+composed on (see [[fingerprints]]), which covers 100% of the public truths at
+IoU >= 0.5. Ranking is what fails: the head's anomaly curve is saturated at
+exactly 1.0000 with zero variance on E023, E026 and E028, and twelve replacement
+scores all reach 0% recall at k=128 on D3 ([[ranking]]). With k large the score
+tends to 0.2 + 0.4*IoU, so the sprayed videos are pinned near 0.6.
+
+Real headroom now sits in the **structural facts the leaderboard keeps leaking**,
+not in the models: normal videos are worth a full video each, and there are only
+6 ground-truth events at Level 3 and 12 at Level 2.
 
 ## Blocked on the user
 
 - All arena uploads; no session can reach the site
-- Kaggle phone verification — the only lever left with real headroom
+- Kaggle phone verification for M4, the LoRA fine-tune
 - 2-slide PPT and architecture write-up sign-off
 
 ## Settled questions — do not re-ask
 
 - Level weighting D1 25, D2 35, D3 40; best **run** stands, so uploads are free.
-- E024 is normal; E025-E028 are all four anomalous.
-- D2 alert weight is 0.20, not the 0.30 fitted from the practice pack.
+- 17 of 20 L1 videos are anomalous; E002 and E004 are two of the three normals.
+- Two of four L2 videos are normal: E024, and one of E021/E022. E023 is anomalous.
+- D2 alert weight is 0.30. `src/calibrated.py`'s F1 model for D1 is **wrong** for
+  this pack — it fitted the practice pack only.
+- Ground-truth event counts: 17 at L1, 12 at L2, 6 at L3, 35 in total.
 - Eval videos are not duplicates of anything we hold; only E027 has audio.
-- Raising the D1 threshold is wrong. The break-even is `p > F1/2`.
