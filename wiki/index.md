@@ -21,6 +21,8 @@ by default.
 | [[environment]] | Paths, the Python 3.12 venv, GPU limits, the laptop-versus-Kaggle compute split and why videos never cross the network, cache layout, git remote. |
 | [[milestones]] | M0 through M5 with acceptance criteria and status, final deliverables, and an explicit list of things not to do. |
 | [[fingerprints]] | The encoding profile `(width, height, fps)` identifies the source collection, what each collection contains, why the prior is trustworthy, and how it constrains classes on D1 and the D2/D3 spray. |
+| [[ranking]] | Why Levels 2 and 3 are capped: the lattice covers every truth, the head's anomaly curve is saturated, and twelve replacement rankers benchmarked. |
+| [[d1]] | The Level-1 classifier: the F1 break-even rule for claiming, the retrieval and text-tower members, and what still fails. |
 | [[experiments]] | Every scored run with its full config. Reference points at the top. Newest last. |
 | [[prior-art]] | What the organisers's SOTA deck and the AI City Challenge paper contain: the VAD/VAU/VAR ladder, Track 3 leaderboard, and the named methods worth borrowing from. |
 | [[open-questions]] | Questions for the organisers in paste-ready prose, and manual tasks only the user can do. |

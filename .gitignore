@@ -10,3 +10,5 @@ deck/*.pdf
 cache*/
 !outputs/submission.json
 !outputs/submission_v5.json
+!outputs/submission_v7.json
+!outputs/submission_v8.json

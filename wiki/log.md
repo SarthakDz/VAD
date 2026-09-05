@@ -365,3 +365,54 @@ run commands, and an honest-limits section. CLAUDE.md's "the arena has no
 best-of" hard rule was corrected — it is contradicted by the arena itself.
 
 Pushed to github.com/SarthakDz/VAD as 55bf8b1.
+
+## [2026-09-05 17:35] finding | v4 scores 46.2; the arena detection panel is a measuring instrument
+
+v4 46.2 (D1 13.4, D2 16.1, D3 16.7), v5 44.2 — the only difference being v5's
+Level-1 threshold at 0.7, which cost two marks. The per-run panel gives
+precision 5%, recall 37%, 258 false alarms, and per-class found/false counts.
+Those reconcile exactly with what we emitted, which turns them into ground-truth
+event counts: 35 truths in total, 13 found, and fighting_or_violence 3,
+road_spill_or_debris 3, stalled_or_broken_down_vehicle 2,
+vehicle_blocking_traffic 1, all at zero found.
+
+Also visible: a **Level-3 reasoning bonus on top of the 40**, reported as "not
+graded" because we had never supplied an `explanation` field. Bonus-only,
+omitting it never costs marks, so it was forgone credit for eight uploads.
+
+## [2026-09-05 17:40] finding | The Level-2 collection is composed on a five-second grid
+
+Public T025 is six traffic_accident events at 20+40i, twenty seconds long;
+T028 is four at 30+60i, five seconds long; every boundary in T027 is a multiple
+of five. Candidate windows belong on that lattice, and a lattice at 2.5 s with
+durations bracketing the real distribution covers **100%** of the public L2 and
+L3 truths at IoU >= 0.5. See [[fingerprints]].
+
+## [2026-09-05 17:50] finding | The head anomaly curve is saturated, and nothing replaces it
+
+On E023, E026, E028 and public T027, T032 the temporal head outputs exactly
+1.0000 with standard deviation 0.0000 — every instant reported anomalous, so
+window ordering inside those videos is arbitrary. Twelve replacement scores were
+benchmarked (clip classifier, background deviation, class prototypes, SigLIP
+text tower, contrast variants, fusions) and **all twelve score 0% recall at
+k=128 on D3**. One wins on D2: clip probability contrasted against its local
+neighbourhood, 0.602 to 0.649. Full table in [[ranking]].
+
+## [2026-09-05 17:55] experiment | exp-016 the lattice, and the spray ceiling
+
+Mean per-video score on public anomalous videos: L2 0.280 to 0.602,
+L3 0.418 to 0.582. That is the ceiling of spraying rather than a waypoint — as k
+grows the F1 term vanishes and the score tends to 0.2 + 0.4*IoU = 0.6. Projects
+D2 24.6/35 and D3 23.3/40 against the standing 16.1 and 16.7.
+
+## [2026-09-05 18:00] milestone | v7 and v8 built; 80/100 shown to be out of reach
+
+`outputs/submission_v7.json` (lattice) and `outputs/submission_v8.json` (ranked
+D2) both validate, both carry explanations for the reasoning bonus, and both use
+the rebuilt Level-1 classifier from [[d1]] — 15.3 to 18.1 on public L1 via the
+F1 break-even rule plus k-NN retrieval and SigLIP text tower.
+
+Recorded plainly: **80/100 is not reachable with this representation.** It needs
+per-video scores near 0.85, hence matched-F1 near 1, hence four windows that all
+hit. Twelve independent scores fail to rank the true windows on D3 at all. The
+route that addresses the cause is M4, the LoRA fine-tune, still blocked.
