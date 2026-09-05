@@ -1,0 +1,157 @@
+# Dataset audit
+
+Findings from a full audit of the pack on 2026-09-05. **Do not re-run this
+audit**; if something here looks wrong, check the specific claim rather than
+starting over.
+
+Location: `../Train and Test` (outside the repo). 15 GB, verified complete.
+
+## Integrity — all green
+
+- 3173 / 3173 train videos, 34 / 34 test videos present
+- 0 broken `videos.csv` → disk mappings (checked all 3207 by filename)
+- 0 orphan files, 0 zero-byte or truncated files
+- 0 bad mp4 headers; 0 missing `moov` atoms across a 40-file random sample
+
+An earlier partial download had only 384 of 3173 train videos with six classes
+entirely absent. That is fixed. If counts ever look short again, that is the
+symptom to check first.
+
+## Two schemas, not one
+
+This is the most load-bearing correction to the original PRD, which assumed both
+splits shared a format.
+
+```
+train/<class>/ground_truth.csv
+    video_id,is_anomaly,class_name,start_time_sec,end_time_sec,description_summary
+test/ground_truth.csv
+    video_id,level,is_anomaly,class_name,start_time_sec,end_time_sec,description_summary
+```
+
+**Train has no `level` column.** `src/io_dataset.py` has two loaders for exactly
+this reason; keep them separate.
+
+## Class distribution
+
+| class | train rows |
+|---|---:|
+| normal | 973 |
+| traffic_accident | 565 |
+| loitering_or_suspicious_presence | 300 |
+| traffic_congestion | 268 |
+| stalled_or_broken_down_vehicle | 223 |
+| wrong_way_driving | 164 |
+| road_spill_or_debris | 151 |
+| vehicle_blocking_traffic | 148 |
+| fighting_or_violence | 124 |
+| waterlogging_or_flood | 95 |
+| smoke | 85 |
+| fire | 77 |
+
+Skewed roughly 7:1 across anomaly classes. `dataset_head.py` samples inversely to
+class frequency to compensate.
+
+## Dense temporal supervision everywhere
+
+**All 2200 anomaly rows carry timestamps.** There are no video-level-only
+anomaly labels, so the MIL top-k pooling the PRD planned is unnecessary and was
+dropped — roughly 40 lines and an hour of debugging saved.
+
+The caveat that matters: **1551 of those 2200 events start at `0.000` and span
+the entire clip.** For those the interval says "the event is the whole video"
+and carries no localisation signal. Median event length is 5.3 s, p90 is 30 s,
+max is 30 s. The real boundary supervision is the ~649 clips where
+`start_time_sec > 0`, which is why `localised_weight` (default 3.0) upweights
+their timesteps in training.
+
+## The structural gap between train and test
+
+Train is **one event per video, always** — 3173 rows, 3173 unique video_ids, all
+short clips.
+
+Test Levels 2 and 3 are **long, multi-event and multi-class**: T026 carries four
+different classes, T025 has six separate accidents, T033 has an event at
+490–535 s in a 629 s video.
+
+Long-form footage exists in the training set **only in `normal`** — exactly 8
+videos exceed 50 MB (804, 774, 586, 527, 244, 212, 191, 104 MB) and all 8 are
+normal. Every anomaly class is short clips, none above 50 MB.
+
+So a model trained naively sees no transitions, no two-class sequences, and no
+long normal stretches — precisely what Levels 2 and 3 score. The mitigation is
+in [[architecture]]: synthesise long sequences by concatenating clip embeddings,
+preferring the 8 real long normal videos as filler. Concatenation happens in
+embedding space, so it is nearly free and no video is re-decoded.
+
+## `description_summary` is mostly templated
+
+**526 unique strings across 3173 rows.** Seven of twelve classes are
+near-constant:
+
+| class | unique | rows |
+|---|---:|---:|
+| loitering_or_suspicious_presence | **1** | 300 |
+| waterlogging_or_flood | **1** | 95 |
+| normal | 6 | 973 |
+| fighting_or_violence | 6 | 124 |
+| fire | 7 | 77 |
+| smoke | 12 | 85 |
+| traffic_congestion | 21 | 268 |
+
+All 300 loitering videos share the identical string *"A person remains in the
+aerial scene for an anomalously prolonged period."*
+
+By length: **2392 rows are short templated one-liners, 781 are genuinely rich
+VLM-style descriptions** (504 unique). The rich ones concentrate in five
+classes — `wrong_way_driving` (164/164), `vehicle_blocking_traffic` (148/148),
+`road_spill_or_debris` (151/151), `traffic_accident` (135/565),
+`stalled_or_broken_down_vehicle` (124/223).
+
+**Consequence for M4:** dedupe the SFT set to the ~526 distinct
+(class, description) pairs and upweight the five descriptive classes. Training on
+the raw rows burns LoRA steps on 300 byte-identical loitering targets. It also
+shrinks the Kaggle upload.
+
+## Label noise
+
+The rich descriptions expose mislabelled rows. Inside `fighting_or_violence`:
+
+- *"A red truck navigating a sharp curve completely loses its balance and flips
+  over… cargo… spill across both lanes"* — that is `traffic_accident` /
+  `road_spill_or_debris`
+- *"A dark green SUV… collides head-on with a tree… engulfed in dust"* — that is
+  `traffic_accident`
+
+At least 2 of the 8 rich `fighting` rows are misfiled. The pattern suggests the
+rich descriptions were generated by a large VLM and the class assignment did not
+always follow. The descriptions are therefore usable as an **audit tool**: a
+keyword pass over the 504 rich strings against their folder label would surface
+the rest cheaply. Worth ~10 minutes during M4 prep, not before.
+
+## Probable single-source classes
+
+`waterlogging_or_flood` caps at 2.3 MB with a very tight size spread;
+`loitering_or_suspicious_presence` sits in a narrow 9–15 MB band. Both look like
+rips from a single benchmark. Expect a model to latch onto source artifacts
+rather than the anomaly, and prefer holding out by source over random splits.
+
+## Public test set profile
+
+56.5 minutes total, matching the stated ~56.
+
+```
+Level 1  T001-T024   5.7s - 26.1s     short clips, 24 videos
+Level 2  T025-T030   240.0s all six   6 videos, 2 of them normal
+Level 3  T031-T034   307s - 628s      4 videos, all anomalous
+```
+
+- Native fps ranges **1.88 to 30**. T021–T024, T032 and T034 are already ~1.9 fps,
+  so sampling at 2 fps keeps every frame. Any code assuming 30 fps is wrong.
+- Resolution ranges **256x192 to 1920x1080**, including several 640x640 square
+  crops. Pre-resizing to 224 for the encoder normalises this but destroys small
+  distant objects in the 1080p drone footage — relevant to Stage B, which should
+  read original frames and crop to the motion region.
+- **28 of 34 test videos are anomalous (82%).** A predictor that always says
+  "anomaly" therefore looks strong on any naive binary metric. See [[scoring]]
+  for why that does not survive the real scheme.
