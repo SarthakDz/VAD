@@ -78,7 +78,32 @@ def _read_videos_csv(path: Path) -> pd.DataFrame:
     return df
 
 
-def load_train(root: str | Path) -> pd.DataFrame:
+CORRECTIONS_PATH = Path(__file__).resolve().parents[1] / "data" / "ground_truth_corrected_v2.csv"
+
+
+def load_corrections(path: str | Path | None = None) -> pd.DataFrame | None:
+    """Organiser-issued label corrections, applied over the shipped ground truth.
+
+    Announced 2026-09-05: "in the training dataset we provided, the
+    wrong_way_driving class contains some incorrect labels". The replacement
+    file re-labels **108 of the 164 wrong_way_driving videos as normal**,
+    keeping only 56 as genuine wrong-way events. Same video_ids throughout, so
+    it is a straight override rather than a merge.
+
+    This matters more than its size suggests: training treated 108 ordinary
+    driving clips as anomalies, which both inflates wrong_way_driving
+    predictions and teaches the model that normal footage is anomalous. The
+    arena's own feedback was that false alarms, not misses, are what cost us
+    marks.
+    """
+    path = Path(path) if path else CORRECTIONS_PATH
+    if not path.exists():
+        return None
+    return _read_gt(path, TRAIN_COLS)
+
+
+def load_train(root: str | Path, corrections: str | Path | None = None,
+               apply_corrections: bool = True) -> pd.DataFrame:
     """Concatenate all 12 class folders into one frame.
 
     Adds `source_class` (the folder it came from -- useful for source-aware
@@ -101,6 +126,18 @@ def load_train(root: str | Path) -> pd.DataFrame:
     df = pd.concat(frames, ignore_index=True)
     if df["video_id"].duplicated().any():
         raise ValueError("train video_ids are not unique across class folders")
+
+    if apply_corrections:
+        corr = load_corrections(corrections)
+        if corr is not None:
+            idx = df.set_index("video_id")
+            hit = corr[corr["video_id"].isin(idx.index)].set_index("video_id")
+            cols = ["is_anomaly", "class_name", "start_time_sec", "end_time_sec",
+                    "description_summary"]
+            changed = int((idx.loc[hit.index, "class_name"] != hit["class_name"]).sum())
+            idx.loc[hit.index, cols] = hit[cols]
+            df = idx.reset_index()
+            df.attrs["corrections_applied"] = changed
     return df
 
 

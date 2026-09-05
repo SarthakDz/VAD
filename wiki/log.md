@@ -249,3 +249,15 @@ actual. **Use `calibrated.py`, not `score.py`, for all tuning from here.**
 1800 configs under the calibrated scorer; best gains +0.1 marks. The head's
 score curves are the ceiling. Retraining with a 512-timestep window to target
 D3, which holds 11.1 of 40 marks and is the largest pool. See [[experiments]].
+
+## [2026-09-05 14:30] experiment | Stage A confirmed at its ceiling — three negatives
+
+Window 512 (-3.5 marks) and the organiser label corrections (-5.2 marks) both
+made things worse, after a 1800-config threshold sweep gained +0.1. The
+submitted 47.0 run stands. Details and caveats in [[experiments]] exp-011,
+exp-012.
+
+The corrections result is genuinely surprising and worth re-reading before
+anyone repeats it: re-labelling 108 of 164 `wrong_way_driving` videos as normal
+is the organisers' own fix and should help, but costs 5.2 marks here, almost all
+of it Level-3 recall.

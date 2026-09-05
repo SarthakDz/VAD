@@ -386,3 +386,72 @@ the ones it is scored on**, which is consistent with T031/T032/T034 saturating
 and calling the whole video anomalous.
 
 Running `--window 512 --epochs 18 --p-normal 0.4 --out outputs/head_w512.pt`.
+
+## exp-011 — longer training window (negative)
+
+Hypothesis: training windows were 256 timesteps (~128 s at 2 fps) but Level-3
+videos run 307-629 s, so the head had never seen a sequence as long as the ones
+it is scored on. Plausible, and wrong.
+
+`--window 512 --epochs 18 --p-normal 0.4`, old labels:
+
+```
+                    D1     D2     D3   TOTAL
+submitted (w256)   13.2   22.7   11.1   47.0
+w512               10.6   22.7   10.3   43.5
+```
+
+73 events instead of 41 — more fragmentation, more false alarms, worse D1.
+Sequence length is not the Level-3 bottleneck.
+
+## exp-012 — organiser label corrections (negative, and surprising)
+
+The organisers announced on 2026-09-05 that `wrong_way_driving` contains
+incorrect labels and issued `ground_truth_corrected_v2.csv`. It re-labels
+**108 of the 164 wrong_way_driving videos as normal**, keeping 56. Same
+video_ids, so a straight override. Applied via `io_dataset.load_corrections()`;
+anomaly pool 2200 -> 2092, normal pool 973 -> 1081.
+
+This was expected to help, for three reasons: it explains T025 (the head called
+six accidents `wrong_way_driving` at 98.2% confidence), it removes 108 ordinary
+driving clips that were teaching the model normal footage is anomalous, and the
+arena's own feedback was that false alarms are what cost us marks.
+
+**It did not help.**
+
+```
+                          D1     D2     D3   TOTAL
+submitted (old labels)   13.2   22.7   11.1   47.0
+w512 + corrected         12.1   20.9    8.8   41.8
+w256 + corrected         11.1   22.7    8.0   41.8   <- clean A/B
+```
+
+Best corrected config is 5.2 marks below the submitted run, and the loss is
+concentrated in D3 (11.1 -> 8.0).
+
+Likely cause: removing 108 anomaly clips shrinks the pool and cuts
+`wrong_way_driving` from 164 clips to 56, after which inverse-frequency
+sampling over-weights those 56. Fewer and noisier positives make the head more
+conservative, which reads as lost Level-3 recall.
+
+Caveats worth keeping: one seed, a 34-video test set, and Level 3 is only 4
+videos. The 5.2-mark gap is too large to be noise but this is not a clean
+scientific result. Note also that the correction applies to *training* labels
+while the test ground truth is unchanged, so in principle the corrected model
+should generalise better — it simply does not here.
+
+`apply_corrections=False` reproduces the old behaviour; the flag is one line if
+the organisers' labels are preferred on principle.
+
+## Stage A is at its ceiling
+
+Three independent attempts since the 47.0 upload, all negative:
+
+```
+threshold sweep, 1800 configs   +0.1
+window 512                      -3.5
+organiser label corrections     -5.2
+```
+
+`outputs/submission.json` at 47.0 stands. Further gains need a different model
+(M4 LoRA), not more tuning of this one.
