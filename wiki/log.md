@@ -158,3 +158,11 @@ template and say so. The template also revealed an undocumented field,
 `outputs/submission.json` — 34/34 videos, 57 events, 17.2 KB of the 5 MB limit,
 0 events past their manifest duration, all 11 validation traps pass.
 Overall 0.5253 locally.
+
+## [2026-09-05 12:45] experiment | Qwen3-VL-2B is not good enough for Stage B
+
+0/4 on known accident segments at 6, 12 and 20 frames, and with both a
+6-class shortlist and all 11 classes. It relabelled a correct T028 prediction to
+`vehicle_blocking_traffic`. Stage B built and wired (`vlm.py`, `fuse.py`,
+`--vlm` flag on `infer_head`), pipeline verified to be unchanged with it off.
+Escalating to Qwen3-VL-4B in 4-bit. Full detail in [[experiments]].

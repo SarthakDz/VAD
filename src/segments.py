@@ -146,19 +146,28 @@ def _split_by_class(class_prob: np.ndarray, lo: int, hi: int,
     return [(lo + a, lo + b) for a, b in cuts if b > a]
 
 
-def to_events(segments: list[Segment], level: int, explanations: dict | None = None):
-    """Segments -> arena event dicts. Level 1 must carry null timestamps."""
+def to_events(segments: list[Segment], level: int,
+              explanations: dict[int, str] | None = None):
+    """Segments -> arena event dicts. Level 1 must carry null timestamps.
+
+    `explanations` is keyed by **segment index**, not class name: two segments
+    in one video can share a class but describe different moments (T025 has six
+    separate accidents), and keying by class would collapse them.
+    """
     from .submit import Event
 
+    ex = explanations or {}
     if level == 1:
         if not segments:
             return []
-        best = max(segments, key=lambda s: s.score * (s.end_sec - s.start_sec))
-        ex = (explanations or {}).get(best.class_name)
-        return [Event(best.class_name, None, None, ex)]
+        # One label for the whole clip; repeating a class earns nothing extra.
+        best = max(range(len(segments)),
+                   key=lambda i: segments[i].score
+                   * (segments[i].end_sec - segments[i].start_sec))
+        return [Event(segments[best].class_name, None, None, ex.get(best))]
 
-    return [Event(s.class_name, round(s.start_sec, 2), round(s.end_sec, 2),
-                  (explanations or {}).get(s.class_name)) for s in segments]
+    return [Event(s.class_name, round(s.start_sec, 2), round(s.end_sec, 2), ex.get(i))
+            for i, s in enumerate(segments)]
 
 
 if __name__ == "__main__":

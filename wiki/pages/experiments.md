@@ -194,3 +194,50 @@ the `_split_by_class` blip guard is not aggressive enough on long videos.
 Failure 1 is the largest and is Stage B's job. Failure 3 is worth another pass
 at `min_run`. Failure 2 needs different training data and probably cannot be
 fixed today.
+
+## exp-006 — Stage B with Qwen3-VL-2B (negative result)
+
+**2026-09-05 12:45.** Zero-shot re-labelling of Stage-A segments. Model loads in
+15.5 s and occupies **4.26 GB** VRAM, 2.3-3.9 s per call at 6 frames.
+
+Targeted test on segments whose ground truth is known:
+
+```
+T025 20-40s   head wrong_way_driving   gt traffic_accident   vlm traffic_congestion      MISS
+T025 60-80s   head wrong_way_driving   gt traffic_accident   vlm traffic_congestion      MISS
+T028 30-35s   head traffic_accident    gt traffic_accident   vlm vehicle_blocking_traffic MISS
+T027 65-125s  head traffic_congestion  gt traffic_congestion vlm traffic_congestion      OK
+```
+
+**It is worse than the head, and it actively broke T028**, which Stage A had
+right. The explanations are fluent and confidently wrong — *"A blue car is seen
+blocking the road in the center of the lane"* for a genuine collision.
+
+Ablations on four accident segments across T025 and T028:
+
+```
+6 frames,  shortlist of 6   0/4
+12 frames, shortlist of 6   0/4
+20 frames, shortlist of 6   0/4
+12 frames, all 11 classes   0/4
+```
+
+Frame count does not help, so this is not the sampling hypothesis (an accident
+lasts about a second, and 6 frames over 20 s samples every 3.3 s — plausible,
+but ruled out). Shortlist size does not help either. **Qwen3-VL-2B simply cannot
+identify traffic accidents in this footage.** It reads every accident as
+congestion or a blocking vehicle.
+
+Consistent with [[prior-art]]: the AI City Track 3 leaderboard is dominated by
+Qwen3-VL-**8B**, and the top score there was 0.6788 on a task that did not even
+score temporal localisation. 2B is well below the size that worked.
+
+Escalating to Qwen3-VL-4B in 4-bit (8.89 GB will not fit 8 GB VRAM in bf16).
+
+**Fusion policy note.** `fuse.py` never lets a failed or out-of-shortlist VLM
+answer through — the head's class stands. But this experiment shows that is not
+enough protection: the VLM returned a *valid, in-shortlist, wrong* answer and
+overwrote a correct one. If 4B is also mixed, Stage B must be gated rather than
+applied blindly — for example, only overriding on segments where the head's
+class mass is below a threshold, accepting that this cannot fix T025, where the
+head is 98.2% confident and wrong.

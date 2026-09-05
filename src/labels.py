@@ -33,6 +33,12 @@ CONFUSABLE_GROUPS = [
     ["traffic_congestion", "vehicle_blocking_traffic", "stalled_or_broken_down_vehicle"],
     ["normal", "loitering_or_suspicious_presence"],
     ["traffic_accident", "stalled_or_broken_down_vehicle"],
+    # Measured, not assumed: on T025 the temporal head assigns 98.2% of its
+    # class mass to wrong_way_driving for six intervals whose ground truth is
+    # traffic_accident, and traffic_accident does not appear in its top four.
+    # Without this pair the shortlist handed to the VLM would not contain the
+    # right answer at all, so Stage B could never recover the error.
+    ["wrong_way_driving", "traffic_accident", "vehicle_blocking_traffic"],
 ]
 
 
