@@ -68,11 +68,27 @@ def extract(
     merge_gap_sec: float = 5.0,
     min_event_sec: float = 2.0,
     split_on_class_change: bool = True,
+    max_coverage: float = 1.0,
 ) -> list[Segment]:
     """Score curves -> segments. `timestamps[i]` is the wall-clock second of
-    timestep i, so every boundary comes back in real seconds."""
+    timestep i, so every boundary comes back in real seconds.
+
+    `max_coverage` guards against a saturated curve. On four of the public
+    Level-2/3 videos the head scores essentially every frame above any fixed
+    threshold, which collapses to one segment spanning the whole video -- trap 6,
+    and it fails the IoU 0.5 gate outright (T034: a 10 s event inside a 377 s
+    claim scores 0.027). When coverage exceeds this cap the absolute threshold
+    carries no information for that video, so fall back to a per-video quantile
+    and keep only the strongest region. Leave at 1.0 to disable; it should stay
+    disabled at Level 1, where a short clip really can be anomalous throughout
+    and the output collapses to one event anyway.
+    """
     if len(anomaly) == 0:
         return []
+
+    if max_coverage < 1.0 and (anomaly >= enter).mean() > max_coverage:
+        enter = float(np.quantile(anomaly, 1.0 - max_coverage))
+        exit_ = min(exit_, enter * 0.95)
 
     step = float(np.median(np.diff(timestamps))) if len(timestamps) > 1 else 0.5
     step = max(step, 1e-3)

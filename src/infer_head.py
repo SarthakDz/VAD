@@ -52,6 +52,7 @@ def run(
     exit_: float,
     merge_gap_sec: float,
     min_event_sec: float,
+    max_coverage: float = 1.0,
     explanations: dict | None = None,
     save_scores: bool = True,
 ) -> tuple[list[VideoPrediction], dict]:
@@ -94,7 +95,8 @@ def run(
             sample_fps=meta["sample_fps"],
             frame_step=int(meta.get("frame_step", 1)),
         )
-        segs = extract(a, c, timestamps(vm), enter, exit_, merge_gap_sec, min_event_sec)
+        segs = extract(a, c, timestamps(vm), enter, exit_, merge_gap_sec, min_event_sec,
+                       max_coverage=1.0 if level == 1 else max_coverage)
         events = to_events(segs, level, explanations)
         n_events += len(events)
 
@@ -140,6 +142,8 @@ def main() -> None:
     ap.add_argument("--exit", dest="exit_", type=float, default=0.45)
     ap.add_argument("--merge-gap", type=float, default=5.0)
     ap.add_argument("--min-event", type=float, default=2.0)
+    ap.add_argument("--max-coverage", type=float, default=1.0,
+                    help="per-video quantile fallback for saturated curves (L2/3 only)")
     ap.add_argument("--submission-id", default="stage-a-head")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--score", action="store_true", help="score against public test gt")
@@ -150,7 +154,7 @@ def main() -> None:
 
     t0 = time.perf_counter()
     preds, stats = run(mf, Path(a.cache), model, a.device,
-                       a.enter, a.exit_, a.merge_gap, a.min_event)
+                       a.enter, a.exit_, a.merge_gap, a.min_event, a.max_coverage)
     wall_ms = (time.perf_counter() - t0) * 1000.0
 
     doc = build(preds, a.submission_id, "siglip-gru-stage-a", wall_ms,
