@@ -1,116 +1,103 @@
 # State — where the work stands
 
-**Last updated:** 2026-09-05 14:35
+**Last updated:** 2026-09-05 14:40
 
 ## Position
 
-Stage A is finished, tuned and validated. Stage B was built, measured, and
-**dropped as a negative result**. The submission has been ready for some time.
+**Submitted and scored: 47.0 / 100** (D1 12.9/25, D2 22.6/35, D3 11.5/40).
+The upload blocker is resolved — `outputs/submission.json` went through.
 
-**The only thing blocking us is the arena upload endpoint, which rejects every
-file we send — including its own unmodified starter template.** See the
-blocker section below; it is not a problem with our output.
+Stage A is complete and **at its ceiling**. Stage B was built, measured and
+dropped. Three separate attempts to improve on 47.0 have all failed.
 
 ```
-outputs/submission_from_template.json   <- upload this
-34/34 videos, 41 events, 48.2 modelled marks /100
-41.7x realtime, latency ratio 0.0240
-passes all 11 validation traps and every rule on the arena FIELD RULES page
+outputs/submission.json     <- the standing score, do not overwrite casually
+34/34 videos, 41 events, 41.7x realtime, latency ratio 0.0240
+outputs/head.pt             <- the head that produced it
 ```
 
-Modelled marks put us around the current second place (47.6) and far below the
-leader (92.1). See [[scoring]] for the real weighting and [[experiments]] for
-every run.
+Uploading is **zero-risk**: the submission page says *"your best run stands, so
+a worse attempt never costs you"*, which reverses the format PDF. Experimental
+uploads cost nothing.
 
-## THE BLOCKER — arena upload fails
+## Use `calibrated.py`, not `score.py`
 
-Every upload returns:
+The real arena result let us reverse-engineer the marks formula.
+`src/calibrated.py` reproduces it **exactly — 47.0 predicted, 47.0 actual**,
+each difficulty within 0.4 marks. It is the only scorer to tune against.
 
-> Could not save that submission: **Too many parameter values were provided**
+Key corrections it encodes (see [[scoring]]):
+- **D1 is F1-based**, not the PDF's `0.5*binary + 0.5*class`, so D1 false alarms
+  cost marks directly
+- **D2 weights are ~(0.3, 0.4, 0.3)**, not the assumed (0.2, 0.5, 0.3)
 
-It is **not** a size or shape problem on our side. The bisection, in order:
+## Everything tried since 47.0 has failed
 
-| what was sent | leaves | result |
-|---|---:|---|
-| full submission, 68 `model_runtimes` rows | 537 | parameter error |
-| merged to 34 rows | 401 | parameter error |
-| `model_runtimes: []` | 265 | parameter error |
-| all 34 videos, **zero events** | 141 | parameter error |
-| 3 videos, template shape | 23 | parameter error |
-| **1 video, empty events, 4 leaf values** | **4** | **parameter error** |
-| `model_runtimes` key omitted entirely | 259 | reached the validator ✓ |
-| 34 rows x 7 fields, matching the doc example | — | parameter error |
+```
+threshold sweep, 1800 configs        +0.1
+window 512                           -3.5
+organiser label corrections          -5.2
+Stage B VLM, Qwen3-VL 2B and 4B      worse at both sizes, 7.4x slower
+```
 
-A 4-leaf JSON document cannot exceed any bind-parameter limit, so this is
-server-side.
+Full detail and caveats in [[experiments]] exp-010 through exp-012. **Do not
+re-run these.** Stage A needs a different model, not more tuning.
 
-The two validators also contradict each other: `model_runtimes: []` triggers the
-parameter error, while omitting the key returns *"model_runtimes must be an
-array (use [] if not applicable)"* — advice that leads straight back into the
-first failure.
+## Where the remaining marks are
 
-**Decisive fact:** the official starter template, downloaded from the Benchmark
-tab on 2026-09-05 at 13:15 and saved to `data/submission_template_official.json`,
-itself ships `"model_runtimes": []` on all 34 videos. So empty is the intended
-value and the error message is misleading.
+```
+D1  12.9 / 25    found 9/20, 5 false — all pair confusions
+D2  22.6 / 35    the healthiest difficulty
+D3  11.5 / 40    28% — worst, and the largest pool
+```
 
-### Next actions on the blocker
+The arena's own guidance: *"You are flagging more events than are there.
+Cutting false alarms will raise your marks more than finding extra events
+will."* Precision 34%, recall 30%, **27 false alarms**.
 
-1. Upload `data/submission_template_official.json` **unmodified**. If their own
-   file fails, the diagnosis is finished — report it and stop probing.
-2. Upload `outputs/submission_from_template.json`. This is their downloaded file
-   with only two changes: the `events` arrays, and the three runtime scalars as
-   integers. It is the first file we have sent that is their artifact rather than
-   one written from scratch, so it bypasses any type, key-order or
-   field-emission difference.
-3. Fallback `outputs/submission_from_template_int.json` — as above with integer
-   event timestamps too. Scores 48.3, marginally better.
+18 of the 22 temporal false alarms come from three videos — T026 (7, matched
+0/4), T033 (7, matched 1/2), T025 (4, matched 0/6). On T026 we matched nothing,
+so predicting less there costs no recall at all.
 
-Rejections **do not consume an attempt**, so probing is free.
+D1's 5 false alarms are all pair confusions: `fire`↔`smoke` twice (a pure swap),
+`fighting_or_violence`→`loitering` twice, `road_spill`→`traffic_accident`.
 
-### Message to send if step 1 fails
+## Next action — decision pending with the user
 
-> Your own starter template, downloaded from the Benchmark tab and uploaded back
-> unmodified, fails with "Could not save that submission: Too many parameter
-> values were provided". Account: sarthakdhaigude5337@gmail.com
+Asked at 14:35, not yet answered. Two options:
 
-Also worth asking what shape the leader's submissions are — 27 successful runs
-means someone found a form that works, and that is the fastest route to
-unblocking.
+1. **M4 — LoRA fine-tune on Kaggle.** The only lever with real headroom. Second
+   place on the live leaderboard runs `qwen3vl4b-lora-finetuned` at 51.1, and our
+   zero-shot VLM failed at both 2B and 4B, so fine-tuning is the demonstrated
+   path. **Blocked on Kaggle phone verification.** Plan in [[milestones]].
+2. **Deliverables** — the 2-slide PPT (explicitly stated high weightage) and the
+   architecture write-up. Both unstarted, neither depends on the score.
 
-## Next action once unblocked
-
-Upload immediately, then iterate. **The submission page states "your best run
-stands, so a worse attempt never costs you"**, which reverses the format PDF's
-"no best-of" — uploading is now zero-risk and a live score is the only way to
-calibrate the assumed weights in [[scoring]].
-
-After that, in value order:
-
-1. **M4 — LoRA fine-tune on Kaggle.** The current second place runs
-   `qwen3vl4b-lora-finetuned`. Our zero-shot VLM failed at both 2B and 4B, so
-   fine-tuning is the demonstrated path, and it is the only untried lever with
-   real headroom. Needs Kaggle phone verification.
-2. **Cut false alarms further.** We match the leader's Difficulty-2 recall
-   exactly (4/18) and lose entirely on precision, 12 false alarms against his 0.
-3. **Deliverables** — 2-slide PPT (stated high weightage), architecture
-   write-up, both still unstarted.
+Recommendation given: if Kaggle is not verified, do the deliverables. A 47.0
+with a sharp write-up beats a 47.5 with no slides. Material is strong — a 42x
+realtime cascade, a real timestamp bug found by inspection, two documented
+negative results, and a scorer reverse-engineered from a single submission.
 
 ## Blocked on the user
 
-- The uploads above; no session can reach the arena
 - **Kaggle phone verification** — GPU stays locked, needed for M4
-- 2-slide PPT and architecture write-up at the end
+- All arena uploads; no session can reach the site
+- 2-slide PPT and architecture write-up sign-off
 
-Full list and paste-ready questions in [[open-questions]], though the leaderboard
-has since answered the level-weighting question outright.
+## Settled questions — do not re-ask
+
+- **Level weighting** is D1 25, D2 35, D3 40. Read off the leaderboard.
+- **Best run stands.** The PDF's "no best-of" is wrong.
+- **`manifest.json`** is `{videos:[{video_id, level, domain, duration_sec}]}` and
+  parses unmodified; 34 videos, levels 24/6/4.
+- **The arena scores the same public 34 videos we score locally.**
 
 ## Recent decisions
 
-- **Stage B dropped.** Qwen3-VL-2B scored 0/4 on probe segments and 4B in 4-bit
-  scored 1/6 against the head's 3/6, lowering the full run to 0.4976 from 0.5253
-  at 7.4x the latency. Kept behind `--vlm`, off by default.
-- **Retuned for precision, not recall**, once the leaderboard showed false
-  alarms dominate. False alarms 42 -> 27.
-- Bidirectional GRU, synthetic long training sequences, no MIL — unchanged, see
+- **Keep the original labels.** The organisers' `wrong_way_driving` correction
+  costs 5.2 marks despite being principled; `apply_corrections=False` is the
+  default path back. See [[experiments]] exp-012 for the caveats.
+- **Stage B off by default**, kept behind `--vlm` because the negative result is
+  worth showing on the slides.
+- Bidirectional GRU, synthetic long training sequences, no MIL — see
   [[architecture]].
