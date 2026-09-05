@@ -22,15 +22,15 @@ withheld). Level weights are 25 / 35 / 40.
 
 | | D1 clear event | D2 when it happens | D3 long context | total |
 |---|---:|---:|---:|---:|
-| standing upload | 12.0 / 25 | 14.0 / 35 | 11.2 / 40 | **37.2 / 100** |
-| `outputs/submission.json` (projected) | 12.5 | 22.3 | 16.9 | ~51 |
-| `outputs/submission_v5.json` (projected) | 15.0 | 22.3 | 16.9 | ~54 |
+| standing upload (`submission_v4.json`) | 13.4 / 25 | 16.1 / 35 | 16.7 / 40 | **46.2 / 100** |
+| `outputs/submission_v7.json` (projected) | ~18 | ~24.6 | ~23.3 | **~62** |
+| `outputs/submission_v8.json` (projected) | ~18 | ~25.8 | ~23.3 | **~63** |
 
 Projections are carried across from the public test set by
-`scripts/d23_strategy.py`, tuned on four videos per level. Treat them as a
-direction, not a promise. Upload `submission.json` first so the D2/D3 change is
-readable on its own; the arena keeps every upload and scores your best run, so a
-worse attempt costs nothing.
+`scripts/grid_strategy.py`, tuned on four videos per level. Treat them as a
+direction, not a promise — the D3 projection transferred to within 0.6 marks
+last time, the D2 one was 6 marks optimistic. The arena keeps every upload and
+scores your best run, so upload both.
 
 ## What the score turned on
 
@@ -45,18 +45,28 @@ The prior independently predicts that E024 is normal, which upload deltas had
 already proved by a different route. See
 [`wiki/pages/fingerprints.md`](wiki/pages/fingerprints.md).
 
-**A third of our candidate windows could never match.** A match needs IoU ≥ 0.5,
-so a window of width *w* can only ever match a truth of width *w/2* to *2w*.
-Real events run 5–125 s; we were emitting 240 s windows. They could not score,
-only dilute precision. Fixing the widths, and spending the candidate budget
-round-robin across them instead of on the highest-scoring narrow window, moved
-the public anomalous-video mean from 0.492 to 0.516 on L2 and 0.353 to 0.424 on L3.
+**The candidate windows sit on the grid the truth is composed on.** A match needs
+IoU ≥ 0.5, and the public L2 collection turns out to be synthetically composed:
+T025 is six `traffic_accident` events at 20+40i, twenty seconds long; T028 is
+four at 30+60i. Every boundary is a multiple of five seconds. A 2.5 s lattice
+with durations bracketing the real distribution **covers 100% of the public L2
+and L3 ground-truth events**, so proposal generation is no longer the constraint.
 
-**The leaderboard is a measuring instrument.** Six uploads with no ground truth
-pinned the D2 alert weight at 0.20, proved all four L3 videos are anomalous, and
-showed that nine of the twenty L1 videos are normal — where the public set was
-20 anomalous out of 24. Our detection threshold had been tuned on the wrong
-prior and was over-claiming by a third.
+**The leaderboard is a measuring instrument.** Eight uploads with no ground truth
+pinned the Level-2 alert weight at 0.20, proved E024 normal and all four Level-3
+videos anomalous, and — from per-class false-alarm counts that reconcile exactly
+with what we emitted — recovered that there are 35 ground-truth events in total
+and which four classes we never find. It also showed Level 1 is `25*F1`, so a
+claim of probability `p` pays whenever `p > F1/2 ≈ 0.27`: our threshold was too
+high, not too low, which is why raising it to 0.7 cost two marks.
+
+**What is still broken: ranking.** On E023, E026 and E028 the temporal head's
+anomaly curve is saturated at exactly `1.0000` with zero standard deviation — it
+reports every instant as anomalous, so window order inside those videos is
+arbitrary. Twelve replacement scores were benchmarked (clip classifier,
+background deviation, class prototypes, SigLIP's text tower, contrast variants,
+fusions) and **all twelve reach 0% recall at k=128 on Level 3**. See
+[`wiki/pages/ranking.md`](wiki/pages/ranking.md).
 
 ## Running it
 
@@ -123,6 +133,12 @@ it and the wiki disagree, the wiki wins.
 
 - Projections come from four videos per level. The mechanisms follow from the
   scoring formula and are structural; the numbers are not defensible as numbers.
+- **Levels 2 and 3 are at the spray ceiling and 80/100 is not reachable from
+  here.** With `k` candidates the score tends to `0.2 + 0.4*IoU = 0.6` per video,
+  and we measure 0.602 and 0.582. Beating it needs matched-F1 near 1, meaning
+  about four windows that all hit, and nothing in the frozen representation
+  localises that well. The route that addresses the cause is the LoRA fine-tune
+  on real long footage, not more decoding on top of these features.
 - The collection prior generalises only as far as the private set reuses the same
   source collections. It constrains 22 of 28 videos; the other six get no
   constraint and are handled by the model alone.

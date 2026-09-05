@@ -18,8 +18,8 @@ const WHITE = "FFFFFF";
 // The live board is the private Evaluation pack (E001-E028). MEASURED is the
 // standing upload; PROJECTED is what scripts/d23_strategy.py measures on the
 // public set carried across. Update MEASURED and rerun after the next upload.
-const MEASURED  = { d1: "12.0", d2: "14.0", d3: "11.2", total: "37.2" };
-const PROJECTED = { d1: "15.0", d2: "22.3", d3: "16.9", total: "53.8" };
+const MEASURED  = { d1: "13.4", d2: "16.1", d3: "16.7", total: "46.2" };
+const PROJECTED = { d1: "18.1", d2: "24.6", d3: "23.3", total: "62.0" };
 
 const H = "Cambria";       // safe-list serif header
 const B = "Calibri";       // safe-list sans body
@@ -141,12 +141,12 @@ card(s2, 0.55, 3.06, 6.1, 2.92);
 s2.addText("What actually moved the score", { x: 0.75, y: 3.2, w: 5.7, h: 0.3,
   fontFace: B, fontSize: 13, bold: true, color: WHITE, margin: 0 });
 const moves = [
-  ["Timestamp drift bug, found by inspection", "L2 matches ×4", GREEN],
-  ["Dual-encoder ensemble on D1", "9 → 11 / 20", GREEN],
-  ["Candidate widths matched to the IoU gate", "+8.3 proj.", GREEN],
-  ["Collection-fingerprint class prior", "+5.7 proj.", GREEN],
+  ["Collection-fingerprint class prior", "37.2 → 46.2", GREEN],
+  ["Candidates on the 5 s composition lattice", "+8.5 proj.", GREEN],
+  ["Level 1 cut at the F1 break-even p > F1/2", "+4.7 proj.", GREEN],
+  ["Raising the Level-1 threshold to 0.7", "−2.0", RED],
   ["Stage B VLM — Qwen3-VL 2B and 4B zero-shot", "−3.7", RED],
-  ["Organisers' wrong_way label corrections", "−5.2", RED],
+  ["12 replacement rankers on Level 3", "0 of 12", RED],
 ];
 moves.forEach((m, i) => {
   const y = 3.62 + i * 0.39;
@@ -161,11 +161,11 @@ s2.addText("Three things we learned", { x: 7.15, y: 3.2, w: 5.4, h: 0.3,
   fontFace: B, fontSize: 13, bold: true, color: WHITE, margin: 0 });
 const finds = [
   ["The encoding profile leaks the class.",
-   "(width, height, fps) identifies which source collection a video came from, and the public ground truth says what each collection contains. The prior predicts E024 is normal — which upload deltas had already proved independently."],
-  ["A third of our windows could never match.",
-   "IoU ≥ 0.5 means a window of width w only matches a truth of width w/2 to 2w. Real events run 5–125 s and we were emitting 240 s windows. Arithmetic, not modelling."],
+   "(width, height, fps) identifies the source collection, and the public ground truth says what each contains. It predicts E024 is normal, which upload deltas had already proved independently, and it showed the L2 collection is composed on a 5 s grid — T025 is six events at 20+40i."],
+  ["Proposals are solved; ranking is not.",
+   "A 2.5 s lattice covers 100% of public truths at IoU 0.5. But the head’s anomaly curve is saturated at exactly 1.0000, zero variance, on three private videos, and twelve replacement scores all reach 0% recall@128 on Level 3."],
   ["The leaderboard is a measuring instrument.",
-   "Six uploads and no ground truth pinned the alert weight at 0.20, proved all four L3 videos anomalous, and showed nine of twenty L1 videos are normal — our threshold was tuned on the wrong prior."],
+   "Eight uploads and no ground truth pinned the alert weight at 0.20, proved all four L3 videos anomalous, and recovered 35 ground-truth events plus the four classes we never find — from per-class false-alarm counts alone."],
 ];
 finds.forEach((f, i) => {
   const y = 3.6 + i * 0.81;
